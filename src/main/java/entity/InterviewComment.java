@@ -38,8 +38,8 @@ public class InterviewComment {
         return interviewId;
     }
 
-    public void setInterview(Interview interview) {
-        this.interviewId = interview;
+    public void setInterview(Interview interviewId) {
+        this.interviewId = interviewId;
     }
 
     public String getExperience() {
