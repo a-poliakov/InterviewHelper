@@ -9,7 +9,7 @@ public class Interviewer {
     @DatabaseField(generatedId = true)
     private int idInterviewer;
     @DatabaseField(canBeNull = false)
-    private String FIO;
+    private String fio;
 
     public Interviewer() {
     }
@@ -22,11 +22,11 @@ public class Interviewer {
         this.idInterviewer = idInterviewer;
     }
 
-    public String getFIO() {
-        return FIO;
+    public String getFio() {
+        return fio;
     }
 
-    public void setFIO(String FIO) {
-        this.FIO = FIO;
+    public void setFio(String fio) {
+        this.fio = fio;
     }
 }

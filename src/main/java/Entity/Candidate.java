@@ -13,13 +13,13 @@ public class Candidate {
     private int idCandidate;
 
     @DatabaseField(canBeNull = false)
-    private String FIO;
+    private String fio;
 
     @DatabaseField(canBeNull = false)
-    private Date BornDate;
+    private Date bornDate;
 
     @DatabaseField(canBeNull = false)
-    private String Banned;
+    private String banned;
 
     public Candidate() {
     }
@@ -32,28 +32,28 @@ public class Candidate {
         this.idCandidate = idCandidate;
     }
 
-    public String getFIO() {
-        return FIO;
+    public String getFio() {
+        return fio;
     }
 
-    public void setFIO(String FIO) {
-        this.FIO = FIO;
+    public void setFio(String fio) {
+        this.fio = fio;
     }
 
     public Date getBornDate() {
-        return BornDate;
+        return bornDate;
     }
 
     public void setBornDate(Date bornDate) {
-        BornDate = bornDate;
+        this.bornDate = bornDate;
     }
 
     public String getBanned() {
-        return Banned;
+        return banned;
     }
 
     public void setBanned(String banned) {
-        Banned = banned;
+        this.banned = banned;
     }
 
 }

@@ -17,8 +17,8 @@ public class Category {
     @DatabaseField(canBeNull = false)
     private String name;
 
-    @ForeignCollectionField
-    private ForeignCollection<Mark>  marks;
+//    @ForeignCollectionField
+//    private ForeignCollection<Mark>  marks;
 
     public Category() {
     }
@@ -39,11 +39,11 @@ public class Category {
         this.name = name;
     }
 
-    public ForeignCollection<Mark> getMarks() {
-        return marks;
-    }
-
-    public void setMarks(ForeignCollection<Mark> marks) {
-        this.marks = marks;
-    }
+//    public ForeignCollection<Mark> getMarks() {
+//        return marks;
+//    }
+//
+//    public void setMarks(ForeignCollection<Mark> marks) {
+//        this.marks = marks;
+//    }
 }
