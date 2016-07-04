@@ -7,8 +7,8 @@ import com.j256.ormlite.table.DatabaseTable;
 public class InterviewComment {
     @DatabaseField(generatedId = true)
     private int idIC;
-
-    @DatabaseField(canBeNull = false)
+    
+    @DatabaseField(canBeNull = false, foreign = true)
     private Interview interviewId;
 
     @DatabaseField
