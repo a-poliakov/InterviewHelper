@@ -35,11 +35,11 @@ public class InterviewComment {
     }
 
     public Interview getInterview() {
-        return interview;
+        return interviewId;
     }
 
     public void setInterview(Interview interview) {
-        this.interview = interview;
+        this.interviewId = interview;
     }
 
     public String getExperience() {
