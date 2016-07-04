@@ -36,6 +36,12 @@ public class DatabaseHelper {
         markDao = DaoManager.createDao(connectionSource,Mark.class);
     }
 
+    /*
+     * Метод для получения всех интервью, в которых собеседовали нужного кандидата
+     * @author Андрей Поляков
+     * @param fio ФамилияИмяОтчество необходимого кандидата
+     * @return List<Interview> все подходящие интервью
+     */
     public List<Interview> getInterviewsByCandidateFio(String fio) throws SQLException {
         // первая таблица в запросе
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
