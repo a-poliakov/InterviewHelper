@@ -14,10 +14,10 @@ public class Mark {
     @DatabaseField(canBeNull = false)
     private double value;
 
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = false , foreign = true)
     private Category idCategory;
 
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = false, foreign = true)
     private Interview idInterview;
 
     public Mark() {
