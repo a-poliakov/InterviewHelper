@@ -15,10 +15,10 @@ public class Category {
     private int idCategory;
 
     @DatabaseField(canBeNull = false)
-    private String Name;
+    private String name;
 
     @ForeignCollectionField
-    private ForeignCollection<Mark>  Marks;
+    private ForeignCollection<Mark>  marks;
 
     public Category() {
     }
@@ -28,7 +28,7 @@ public class Category {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setIdCategory(int idCategory) {
@@ -36,14 +36,14 @@ public class Category {
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public ForeignCollection<Mark> getMarks() {
-        return Marks;
+        return marks;
     }
 
     public void setMarks(ForeignCollection<Mark> marks) {
-        Marks = marks;
+        this.marks = marks;
     }
 }
