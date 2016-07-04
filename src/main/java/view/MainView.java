@@ -9,6 +9,9 @@ import java.util.List;
 
 public class MainView {
     public static void main(String[] args) throws SQLException {
-        List<Interview> interviews = HelperFactory.getHelper().getInterviewsByCandidateFio("polyakov");
+        List<Interview> interviews = HelperFactory.getHelper().getInterviewsByCandidateFio("poly");
+        for (Interview interview : interviews) {
+            System.out.println(interview.getIdCandidate().getFio() + " " + interview.getPost());
+        }
     }
 }

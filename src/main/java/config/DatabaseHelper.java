@@ -42,7 +42,7 @@ public class DatabaseHelper {
         // присоединяемая таблица
         QueryBuilder<Candidate, Integer> candidateQueryBuilder = candidateDao.queryBuilder();
         // делаем выборку по полям присоединяемой таблицы
-        candidateQueryBuilder.where().eq("fio", fio);
+        candidateQueryBuilder.where().like("fio", fio + "%");
         // делаем left join
         interviewQueryBuilder.leftJoin(candidateQueryBuilder);
         // готово!

@@ -1,7 +1,10 @@
 package entity;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -20,6 +23,9 @@ public class Candidate {
 
     @DatabaseField(canBeNull = false)
     private String banned;
+
+    @ForeignCollectionField(foreignFieldName = "idCandidate", eager = true)
+    private Collection<Interview> interviews;
 
     public Candidate() {
     }
@@ -56,4 +62,11 @@ public class Candidate {
         this.banned = banned;
     }
 
+    public Collection<Interview> getInterviews() {
+        return interviews;
+    }
+
+    public void setInterviews(Collection<Interview> interviews) {
+        this.interviews = interviews;
+    }
 }

@@ -12,10 +12,10 @@ public class Interview {
     @DatabaseField (generatedId = true)
     private int idInterview;
 
-    @DatabaseField (columnName = "idCandidate", canBeNull = false, foreign = true)
+    @DatabaseField (columnName = "idCandidate", foreignColumnName = "idCandidate", canBeNull = false, foreign = true)
     private Candidate idCandidate;
 
-    @DatabaseField (canBeNull = false, foreign = true)
+    @DatabaseField (columnName = "idInterviewer", foreignColumnName = "idInterviewer", canBeNull = false, foreign = true)
     private Interviewer idInterviewer;
 
     @DatabaseField (canBeNull = false)
@@ -27,8 +27,8 @@ public class Interview {
     @DatabaseField (canBeNull = false)
     private String Post;
 
-//    @ForeignCollectionField
-//    private ForeignCollection<Mark> marks;
+    @ForeignCollectionField
+    private ForeignCollection<Mark> marks;
 
     public Interview() {
     }
@@ -81,11 +81,11 @@ public class Interview {
         Post = post;
     }
 
-//    public ForeignCollection<Mark> getMarks() {
-//        return marks;
-//    }
-//
-//    public void setMarks(ForeignCollection<Mark> marks) {
-//        this.marks = marks;
-//    }
+    public ForeignCollection<Mark> getMarks() {
+        return marks;
+    }
+
+    public void setMarks(ForeignCollection<Mark> marks) {
+        this.marks = marks;
+    }
 }
