@@ -36,7 +36,7 @@ public class Category {
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public ForeignCollection<Mark> getMarks() {
@@ -44,6 +44,6 @@ public class Category {
     }
 
     public void setMarks(ForeignCollection<Mark> marks) {
-        marks = marks;
+        this.marks = marks;
     }
 }
