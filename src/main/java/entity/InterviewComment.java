@@ -34,12 +34,12 @@ public class InterviewComment {
         this.idIC = idIC;
     }
 
-    public Interview getInterview() {
-        return interview;
+    public Interview getInterviewId() {
+        return interviewId;
     }
 
-    public void setInterview(Interview interview) {
-        this.interview = interview;
+    public void setInterviewId(Interview interviewId) {
+        this.interviewId = interviewId;
     }
 
     public String getExperience() {
