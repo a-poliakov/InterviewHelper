@@ -8,7 +8,7 @@ public class InterviewComment {
     @DatabaseField(generatedId = true)
     private int idIC;
     
-    @DatabaseField(canBeNull = false, foreign = true)
+    @DatabaseField(foreignColumnName = "idInterview", canBeNull = false, foreign = true)
     private Interview interviewId;
 
     @DatabaseField
