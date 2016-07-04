@@ -9,6 +9,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import entity.*;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public class DatabaseHelper {
@@ -35,7 +36,7 @@ public class DatabaseHelper {
         markDao = DaoManager.createDao(connectionSource,Mark.class);
     }
 
-    public List<Interview> getPersonsByFio(String fio) throws SQLException {
+    public List<Interview> getInterviewsByCandidateFio(String fio) throws SQLException {
         // первая таблица в запросе
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
         // присоединяемая таблица
@@ -49,6 +50,22 @@ public class DatabaseHelper {
         // SELECT `interview`.* FROM `interview`
         // LEFT JOIN `candidate` ON `interview`.`idCandidate` = `candidate`.`idCandidate`
         // WHERE `candidate`.`fio` = 'polyakov'
+        PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
+        List<Interview> interviews = interviewDao.query(preparedQuery);
+        return interviews;
+    }
+
+    public List<Interview> getInterviewsByDate(Date date) throws SQLException {
+        QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
+        interviewQueryBuilder.where().eq("Date", date);
+        PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
+        List<Interview> interviews = interviewDao.query(preparedQuery);
+        return interviews;
+    }
+
+    public List<Interview> getInterviewsByPost(String post) throws SQLException {
+        QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
+        interviewQueryBuilder.where().eq("Post", post);
         PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
