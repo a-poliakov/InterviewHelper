@@ -6,22 +6,22 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class InterviewComment {
     @DatabaseField(generatedId = true)
-    int idIC;
+    private int idIC;
 
     @DatabaseField(canBeNull = false)
-    Interview interview;
+    private Interview interviewId;
 
     @DatabaseField
-    String experience;
+    private String experience;
 
     @DatabaseField
-    String recommendations;
+    private String recommendations;
 
     @DatabaseField
-    String lastWork;
+    private String lastWork;
 
     @DatabaseField
-    String comment;
+    private String comment;
 
     public InterviewComment() {
     }
