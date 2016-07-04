@@ -34,11 +34,11 @@ public class InterviewComment {
         this.idIC = idIC;
     }
 
-    public Interview getInterview() {
+    public Interview getInterviewId() {
         return interviewId;
     }
 
-    public void setInterview(Interview interviewId) {
+    public void setInterviewId(Interview interviewId) {
         this.interviewId = interviewId;
     }
 
