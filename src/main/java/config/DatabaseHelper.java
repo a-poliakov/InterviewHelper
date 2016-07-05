@@ -120,6 +120,9 @@ public class DatabaseHelper {
     public List<Candidate> getCandidates() throws SQLException {
         return candidateDao.queryForAll();
     }
+    public List<Interview> getInterview() throws SQLException{
+        return interviewDao.queryForAll();
+    }
     public List<Interviewer> getInterviewers() throws SQLException {
         return interviewerDao.queryForAll();
     }
@@ -172,6 +175,13 @@ public class DatabaseHelper {
     public void delCategoryById(int id)  throws SQLException{
         Category category = getCategoryById(id);
         categoryDao.delete(category);
+    }
+    public void delInterviewById(int id)  throws SQLException{
+        Interview interview = getInterviewById(id);
+        for(Mark mark:interview.getMarks()){
+            markDao.delete(mark);
+        }
+        interviewDao.delete(interview);
     }
     public void delCandidateById(int id)  throws SQLException{
         Candidate candidate = getCandidateById(id);
