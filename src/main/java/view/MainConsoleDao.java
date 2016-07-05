@@ -10,6 +10,9 @@ import java.util.List;
 
 public class MainConsoleDao {
     public static void main(String[] args) throws SQLException {
-        System.out.println(HelperFactory.getHelper().getCategories().size());
+       // System.out.println(HelperFactory.getHelper().getCategories().size());
+        DatabaseHelper db = new DatabaseHelper();
+        for(Object cat:db.getCategories())
+            System.out.println(cat);
     }
 }

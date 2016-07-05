@@ -124,14 +124,14 @@ public class DatabaseHelper {
         return interviewerDao.queryForAll();
     }
     //Добавить
-    public void addInterview()  throws SQLException{
-      Interview interview = new Interview();
-      interview.setDate(new Date(123123));
-      interview.setPost("director");
-      interview.setResult("yes");
-      interview.setIdInterviewer(getInterviewerById(1));
-      interview.setIdCandidate(getCandidateById(1));
-      interviewDao.create(interview);
+    public void addInterview(int idCandidate, int idInterviewer, Date date, String result, String post)  throws SQLException{
+        Interview interview = new Interview();
+        interview.setIdCandidate(getCandidateById(idCandidate));
+        interview.setIdInterviewer(getInterviewerById(idInterviewer));
+        interview.setDate(date);
+        interview.setResult(result);
+        interview.setPost(post);
+        interviewDao.create(interview);
     }
     public void addInterviewer(String fio)  throws SQLException{
         Interviewer interviewer = new Interviewer();
