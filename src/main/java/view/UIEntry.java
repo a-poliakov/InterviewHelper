@@ -11,7 +11,7 @@ import java.net.URL;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
 public class UIEntry  extends Application {
-    private static final String FXML_MAIN = "views/addInterviewDlg.fxml";
+    private static final String FXML_MAIN = "views/sample.fxml";
 
     private Stage primaryStage;
     private MainController mainController; // пока не нужен
@@ -23,15 +23,14 @@ public class UIEntry  extends Application {
         this.primaryStage = primaryStage;
         createGUI();
     }
-
     public static void main(String[] args) {
         launch(args);
     }
 
     // загружает дерево компонентов и возвращает в виде VBox (корневой элемент в FXML)
-    private VBox loadFXML() {
+    private VBox loadFXML() throws Exception {
         fxmlLoader = new FXMLLoader();
-        URL url = getClass().getResource(FXML_MAIN);
+        URL url = getClass().getClassLoader().getResource(FXML_MAIN);
         fxmlLoader.setLocation(url);
         VBox node = null;
 
@@ -45,11 +44,12 @@ public class UIEntry  extends Application {
             System.out.println("  * url: " + url);
             System.out.println("  * " + e);
             System.out.println("    ----------------------------------------\n");
+            throw e;
         }
         return node;
     }
 
-    private void createGUI() {
+    private void createGUI() throws Exception {
         currentRoot = loadFXML();
         Scene scene = new Scene(currentRoot, 600, 400);
         primaryStage.setScene(scene);
