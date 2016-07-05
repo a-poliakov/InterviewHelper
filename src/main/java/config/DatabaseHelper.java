@@ -125,11 +125,15 @@ public class DatabaseHelper {
     public void addInterviewer(String fio)  throws SQLException{
         Interviewer interviewer = new Interviewer();
         interviewer.setFio(fio);
-        // TODO: 05.07.2016
-        //Что делать при неудачной вставке? Исключение или возвращать false?
+        // TODO: 05.07.2016 Что делать при неудачной вставке? Исключение или возвращать false?
         interviewerDao.create(interviewer);
     }
     public void addCategory(String name)  throws SQLException{
+        Category category = new Category();
+        category.setName(name);
+        categoryDao.create(category);
+    }
+    public void editCategorybyId(int id, String name)  throws SQLException{
         Category category = new Category();
         category.setName(name);
         categoryDao.create(category);
