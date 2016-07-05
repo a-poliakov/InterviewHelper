@@ -144,6 +144,14 @@ public class DatabaseHelper {
         category.setName(name);
         categoryDao.create(category);
     }
+    public void addMark(int idCategory, int idInterview, double value)  throws SQLException{
+        //Перед добавлением оценки, убедись, что создано интервью!
+        Mark mark = new Mark();
+        mark.setIdCategory(getCategoryById(idCategory));
+        mark.setIdInterview(getInterviewById(idInterview));
+        mark.setValue(value);
+        markDao.create(mark);
+    }
     //Удалить
     public void delCategoryById(int id)  throws SQLException{
         Category category = getCategoryById(id);
