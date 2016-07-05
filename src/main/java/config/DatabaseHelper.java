@@ -122,12 +122,16 @@ public class DatabaseHelper {
       interview.setIdCandidate(getCandidateById(1));
       interviewDao.create(interview);
     }
-    public boolean addInterviewer(String fio)  throws SQLException{
+    public void addInterviewer(String fio)  throws SQLException{
         Interviewer interviewer = new Interviewer();
-        interviewer.setFIO(fio);
+        interviewer.setFio(fio);
         // TODO: 05.07.2016
+        //Что делать при неудачной вставке? Исключение или возвращать false?
         interviewerDao.create(interviewer);
-        return true;
     }
-
+    public void addCategory(String name)  throws SQLException{
+        Category category = new Category();
+        category.setName(name);
+        categoryDao.create(category);
+    }
 }
