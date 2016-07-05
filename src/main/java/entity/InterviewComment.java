@@ -7,9 +7,9 @@ import com.j256.ormlite.table.DatabaseTable;
 public class InterviewComment {
     @DatabaseField(generatedId = true)
     private int idIC;
-    
-    @DatabaseField(foreignColumnName = "idInterview", canBeNull = false, foreign = true)
-    private Interview interviewId;
+
+    @DatabaseField (columnName = "idInterview", foreignColumnName = "idInterview", canBeNull = false, foreign = true)
+    private Interview idInterview;
 
     @DatabaseField
     private String experience;
@@ -23,9 +23,6 @@ public class InterviewComment {
     @DatabaseField
     private String comment;
 
-    public InterviewComment() {
-    }
-
     public int getIdIC() {
         return idIC;
     }
@@ -34,12 +31,12 @@ public class InterviewComment {
         this.idIC = idIC;
     }
 
-    public Interview getInterviewId() {
-        return interviewId;
+    public Interview getIdInterview() {
+        return idInterview;
     }
 
-    public void setInterviewId(Interview interviewId) {
-        this.interviewId = interviewId;
+    public void setIdInterview(Interview idInterview) {
+        this.idInterview = idInterview;
     }
 
     public String getExperience() {
@@ -73,4 +70,9 @@ public class InterviewComment {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+
+    public InterviewComment() {
+    }
+
 }

@@ -19,6 +19,14 @@ public class Interviewer {
     @ForeignCollectionField(foreignFieldName = "idInterviewer", eager = true)
     private Collection<Interview> interviews;
 
+    @Override
+    public String toString() {
+        return "Interviewer{" +
+                "FIO='" + FIO + '\'' +
+                ", idInterviewer=" + idInterviewer +
+                '}';
+    }
+
     public Interviewer() {
     }
 

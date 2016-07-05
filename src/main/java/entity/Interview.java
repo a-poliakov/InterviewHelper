@@ -27,7 +27,7 @@ public class Interview {
     @DatabaseField (canBeNull = false)
     private String post;
 
-    @ForeignCollectionField
+    @ForeignCollectionField(foreignFieldName = "idInterview", eager = true)
     private ForeignCollection<Mark> marks;
 
     public Interview() {
@@ -70,7 +70,7 @@ public class Interview {
     }
 
     public void setResult(String result) {
-        result = result;
+        this.result = result;
     }
 
     public String getPost() {
@@ -78,7 +78,7 @@ public class Interview {
     }
 
     public void setPost(String post) {
-        post = post;
+        this.post = post;
     }
 
     public ForeignCollection<Mark> getMarks() {

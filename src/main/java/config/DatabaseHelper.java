@@ -82,6 +82,8 @@ public class DatabaseHelper {
         interviewQueryBuilder.where().eq("idInterview", id);
         PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
         List<Interview> interviews = interviewDao.query(preparedQuery);
+        if(interviews.size() == 0)
+            return null;
         return interviews.get(0);
     }
     public List<Category> getCategories() throws SQLException {
@@ -90,27 +92,42 @@ public class DatabaseHelper {
     public List<Candidate> getCandidates() throws SQLException {
         return candidateDao.queryForAll();
     }
+    public List<Interviewer> getInterviewers() throws SQLException {
+        return interviewerDao.queryForAll();
+    }
     public Candidate getCandidateById(int id) throws SQLException {
         QueryBuilder<Candidate, Integer> candidateQueryBuilder = candidateDao.queryBuilder();
         candidateQueryBuilder.where().eq("idCandidate", id);
         PreparedQuery<Candidate> preparedQuery = candidateQueryBuilder.prepare();
         List<Candidate> candidates = candidateDao.query(preparedQuery);
+        if(candidates.size() == 0)
+            return null;
         return candidates.get(0);
     }
-  /*  public Interview createInterview(Date Dat)  throws SQLException{
-        Interview interview = new Interview();
-        interview.setDate(Dat);
-        Candidate candidate = new Candidate();
-        Interviewer interviewer  = new Interviewer();
-        candidate.setIdCandidate(4);
-        interviewer.setIdInterviewer(5);
-        interview.setIdCandidate(candidate);
-        interview.setIdInterviewer(interviewer);
-        interview.setResult("Да");
-        interview.setPost("Директор 1");
-        interviewDao.create(interview);
-        return interview;
+    public Interviewer getInterviewerById(int id) throws SQLException {
+        QueryBuilder<Interviewer, Integer> interviewerQueryBuilder = interviewerDao.queryBuilder();
+        interviewerQueryBuilder.where().eq("idInterviewer", id);
+        PreparedQuery<Interviewer> preparedQuery = interviewerQueryBuilder.prepare();
+        List<Interviewer> interviewers = interviewerDao.query(preparedQuery);
+        if(interviewers.size() == 0)
+            return null;
+        return interviewers.get(0);
     }
-*/
+  public void addInterview()  throws SQLException{
+      Interview interview = new Interview();
+      interview.setDate(new Date(123123));
+      interview.setPost("director");
+      interview.setResult("yes");
+      interview.setIdInterviewer(getInterviewerById(1));
+      interview.setIdCandidate(getCandidateById(1));
+      interviewDao.create(interview);
+    }
+    public boolean addInterviewer(String fio)  throws SQLException{
+        Interviewer interviewer = new Interviewer();
+        interviewer.setFIO(fio);
+        // TODO: 05.07.2016
+        interviewerDao.create(interviewer);
+        return true;
+    }
 
 }

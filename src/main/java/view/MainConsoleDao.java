@@ -10,11 +10,6 @@ import java.util.List;
 
 public class MainConsoleDao {
     public static void main(String[] args) throws SQLException {
-     /*   Date Dat = new Date(100000000);
-        HelperFactory.getHelper().createInterview(Dat);
-        Interview interview = HelperFactory.getHelper().getInterviewById(3);
-        System.out.println(interview);
-        System.out.println(Dat);*/
-
+        System.out.println(HelperFactory.getHelper().getCategories().size());
     }
 }
