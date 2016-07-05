@@ -50,8 +50,5 @@ public class Category {
         this.marks = marks;
     }
 
-    public int getIdCategory() {
-
-        return idCategory;
-    }
+    public int getIdCategory() { return idCategory;}
 }

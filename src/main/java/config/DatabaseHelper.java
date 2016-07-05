@@ -76,7 +76,7 @@ public class DatabaseHelper {
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
     }
-    //Получить интервью по Id
+    //Получить по Id
     public Interview getInterviewById(int id) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
         interviewQueryBuilder.where().eq("idInterview", id);
@@ -86,6 +86,34 @@ public class DatabaseHelper {
             return null;
         return interviews.get(0);
     }
+    public Candidate getCandidateById(int id) throws SQLException {
+        QueryBuilder<Candidate, Integer> candidateQueryBuilder = candidateDao.queryBuilder();
+        candidateQueryBuilder.where().idEq(id);
+        PreparedQuery<Candidate> preparedQuery = candidateQueryBuilder.prepare();
+        List<Candidate> candidates = candidateDao.query(preparedQuery);
+        if(candidates.size() == 0)
+            return null;
+        return candidates.get(0);
+    }
+    public Category getCategoryById(int id) throws SQLException {
+        QueryBuilder<Category, Integer> query = categoryDao.queryBuilder();
+        query.where().idEq(id);
+        PreparedQuery<Category> preparedQuery = query.prepare();
+        List<Category> categories = categoryDao.query(preparedQuery);
+        if(categories.size() == 0)
+            return null;
+        return categories.get(0);
+    }
+    public Interviewer getInterviewerById(int id) throws SQLException {
+        QueryBuilder<Interviewer, Integer> interviewerQueryBuilder = interviewerDao.queryBuilder();
+        interviewerQueryBuilder.where().idEq(id);
+        PreparedQuery<Interviewer> preparedQuery = interviewerQueryBuilder.prepare();
+        List<Interviewer> interviewers = interviewerDao.query(preparedQuery);
+        if(interviewers.size() == 0)
+            return null;
+        return interviewers.get(0);
+    }
+    //Получить всех
     public List<Category> getCategories() throws SQLException {
         return categoryDao.queryForAll();
     }
@@ -95,25 +123,8 @@ public class DatabaseHelper {
     public List<Interviewer> getInterviewers() throws SQLException {
         return interviewerDao.queryForAll();
     }
-    public Candidate getCandidateById(int id) throws SQLException {
-        QueryBuilder<Candidate, Integer> candidateQueryBuilder = candidateDao.queryBuilder();
-        candidateQueryBuilder.where().eq("idCandidate", id);
-        PreparedQuery<Candidate> preparedQuery = candidateQueryBuilder.prepare();
-        List<Candidate> candidates = candidateDao.query(preparedQuery);
-        if(candidates.size() == 0)
-            return null;
-        return candidates.get(0);
-    }
-    public Interviewer getInterviewerById(int id) throws SQLException {
-        QueryBuilder<Interviewer, Integer> interviewerQueryBuilder = interviewerDao.queryBuilder();
-        interviewerQueryBuilder.where().eq("idInterviewer", id);
-        PreparedQuery<Interviewer> preparedQuery = interviewerQueryBuilder.prepare();
-        List<Interviewer> interviewers = interviewerDao.query(preparedQuery);
-        if(interviewers.size() == 0)
-            return null;
-        return interviewers.get(0);
-    }
-  public void addInterview()  throws SQLException{
+    //Добавить
+    public void addInterview()  throws SQLException{
       Interview interview = new Interview();
       interview.setDate(new Date(123123));
       interview.setPost("director");
@@ -133,9 +144,13 @@ public class DatabaseHelper {
         category.setName(name);
         categoryDao.create(category);
     }
-    public void editCategorybyId(int id, String name)  throws SQLException{
-        Category category = new Category();
-        category.setName(name);
-        categoryDao.create(category);
+    //Удалить
+    public void delCategoryById(int id)  throws SQLException{
+        Category category = getCategoryById(id);
+        categoryDao.delete(category);
+    }
+    public void delCandidateById(int id)  throws SQLException{
+        Candidate candidate = getCandidateById(id);
+        candidateDao.delete(candidate);
     }
 }
