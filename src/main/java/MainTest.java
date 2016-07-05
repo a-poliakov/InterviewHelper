@@ -9,8 +9,8 @@ import java.sql.SQLException;
 public class MainTest {
     public static void main(String[] args) throws SQLException {
         DatabaseHelper db = new DatabaseHelper();
-        db.addCategory("Тестирование");
-        for(Candidate cat:db.getCandidates())
+        db.addCategory("Проверка ИД");
+        for(Category cat:db.getCategories())
             System.out.println(cat);
     }
 

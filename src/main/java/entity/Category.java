@@ -22,6 +22,14 @@ public class Category {
     public Category() {
     }
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id='" + idCategory + '\'' +
+                "name='" + name + '\'' +
+                '}';
+    }
+
     public void setIdCategory(int idCategory) {
         this.idCategory = idCategory;
     }
