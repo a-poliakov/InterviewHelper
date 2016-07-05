@@ -1,0 +1,193 @@
+@startuml
+namespace main.java {
+namespace main.java.config {
+class DatabaseHelper{
+ -String URL
+ -ConnectionSource connectionSource
+ -Dao<Candidate, Integer> candidateDao
+ -Dao<Category, Integer> categoryDao
+ -Dao<Interview, Integer> interviewDao
+ -Dao<InterviewComment, Integer> interviewCommentDao
+ -Dao<Interviewer, Integer> interviewerDao
+ -Dao<Mark, Integer> markDao
+ +List<Interview> getInterviewsByCandidateFio(String fio)
+ +List<Interview> getInterviewsByDate(Date date)
+ +List<Interview> getInterviewsByPost(String post)
+ +Interview getInterviewById(int id)
+ +Candidate getCandidateById(int id)
+ +Category getCategoryById(int id)
+ +Interviewer getInterviewerById(int id)
+ +List<Category> getCategories()
+ +List<Candidate> getCandidates()
+ +List<Interviewer> getInterviewers()
+ +void addInterview()
+ +void addInterviewer(String fio)
+ +void addCategory(String name)
+ +void addMark(int idCategory, int idInterview, double value)
+ +void addInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)
+ +void addCandidate(String fio, Date date, String banned)
+ +void delCategoryById(int id)
+ +void delCandidateById(int id)
+}
+class HelperFactory{
+ -{static}DatabaseHelper databaseHelper
+ +{static}DatabaseHelper getHelper()
+}
+}
+namespace main.java.controller {
+class AddInterviewController <<Initializable>> {
+ +void initialize(URL location, ResourceBundle resources)
+}
+class MainController <<Initializable>> {
+ +void initialize(URL location, ResourceBundle resources)
+}
+}
+namespace main.java.dao {
+interface CandidateDao
+namespace main.java.dao.impl {
+class CandidateDaoImpl{
+}
+}
+}
+namespace main.java.entity {
+class Candidate{
+ -int idCandidate
+ -String fio
+ -Date bornDate
+ -String banned
+ -Collection<Interview> interviews
+ +int getIdCandidate()
+ +void setIdCandidate(int idCandidate)
+ +String getFio()
+ +void setFio(String fio)
+ +Date getBornDate()
+ +void setBornDate(Date bornDate)
+ +String getBanned()
+ +void setBanned(String banned)
+ +Collection<Interview> getInterviews()
+ +void setInterviews(Collection<Interview> interviews)
+ +String toString()
+}
+class Category{
+ -int idCategory
+ -String name
+ -Collection<Mark> marks
+ +String toString()
+ +void setIdCategory(int idCategory)
+ +String getName()
+ +void setName(String name)
+ +Collection<Mark> getMarks()
+ +void setMarks(Collection<Mark> marks)
+ +int getIdCategory()
+}
+class Interview{
+ -int idInterview
+ -Candidate idCandidate
+ -Interviewer idInterviewer
+ -Date date
+ -String result
+ -String post
+ -ForeignCollection<Mark> marks
+ +int getIdInterview()
+ +void setIdInterview(int idInterview)
+ +Candidate getIdCandidate()
+ +void setIdCandidate(Candidate idCandidate)
+ +Interviewer getIdInterviewer()
+ +void setIdInterviewer(Interviewer idInterviewer)
+ +java.util.Date getDate()
+ +void setDate(java.util.Date date)
+ +String getResult()
+ +void setResult(String result)
+ +String getPost()
+ +void setPost(String post)
+ +ForeignCollection<Mark> getMarks()
+ +void setMarks(ForeignCollection<Mark> marks)
+ +String toString()
+}
+class InterviewComment{
+ -int idIC
+ -Interview idInterview
+ -String experience
+ -String recommendations
+ -String lastWork
+ -String comment
+ +int getIdIC()
+ +void setIdIC(int idIC)
+ +Interview getIdInterview()
+ +void setIdInterview(Interview idInterview)
+ +String getExperience()
+ +void setExperience(String experience)
+ +String getRecommendations()
+ +void setRecommendations(String recommendations)
+ +String getLastWork()
+ +void setLastWork(String lastWork)
+ +String getComment()
+ +void setComment(String comment)
+}
+class Interviewer{
+ -int idInterviewer
+ -String fio
+ -Collection<Interview> interviews
+ +String toString()
+ +int getIdInterviewer()
+ +void setIdInterviewer(int idInterviewer)
+ +String getFio()
+ +void setFio(String fio)
+ +Collection<Interview> getInterviews()
+ +void setInterviews(Collection<Interview> interviews)
+}
+class Mark{
+ -int idMark
+ -double value
+ -Category idCategory
+ -Interview idInterview
+ +int getIdMark()
+ +double getValue()
+ +Category getIdCategory()
+ +Interview getIdInterview()
+ +void setIdMark(int idMark)
+ +void setValue(double value)
+ +void setIdCategory(Category idCategory)
+ +void setIdInterview(Interview idInterview)
+}
+}
+class MainTest << (C,yellow) start >> {
+ +{static}void main(String[] args)
+}
+namespace main.java.util {
+class ConstantManager{
+ +{static}String MAIN_VIEW_TITLE
+}
+}
+namespace main.java.view {
+class MainConsoleDao << (C,yellow) start >> {
+ +{static}void main(String[] args)
+}
+class UIEntry << (C,yellow) start >> {
+ -{static}String FXML_MAIN
+ -Stage primaryStage
+ -MainController mainController
+ -FXMLLoader fxmlLoader
+ -VBox currentRoot
+ +void start(Stage primaryStage)
+ +{static}void main(String[] args)
+ -VBox loadFXML()
+ -void createGUI()
+}
+}
+}
+Dao ()- dao.impl.CandidateDao
+dao.impl.CandidateDao <|.. dao.impl.CandidateDaoImpl
+BaseDaoImpl ()- dao.impl.CandidateDaoImpl
+Application ()- view.UIEntry
+entity.Candidate " 1"  o--  "0..*" entity.Interview
+entity.Category " 1"  o--  "0..*" entity.Mark
+entity.Interview " 1"  o--  "0..1" entity.Candidate
+entity.Interview " 1"  o--  "0..1" entity.Interviewer
+entity.Interview " 1"  o--  "0..*" entity.Mark
+entity.InterviewComment " 1"  o--  "0..1" entity.Interview
+entity.Interviewer " 1"  o--  "0..*" entity.Interview
+entity.Mark " 1"  o--  "0..1" entity.Category
+entity.Mark " 1"  o--  "0..1" entity.Interview
+view.UIEntry " 1"  o--  "0..1" controller.MainController
+@enduml
