@@ -20,7 +20,7 @@ public class DatabaseHelper {
     //----------------------------------------------------------------------------
     // DAO для работы с сущностями
     private Dao<Candidate, Integer> candidateDao = null;
-    private Dao<Category, Integer> categoryeDao = null;
+    private Dao<Category, Integer> categoryDao = null;
     private Dao<Interview, Integer> interviewDao = null;
     private Dao<InterviewComment, Integer> interviewCommentDao = null;
     private Dao<Interviewer, Integer> interviewerDao = null;
@@ -29,7 +29,7 @@ public class DatabaseHelper {
     public DatabaseHelper() throws SQLException {
         connectionSource = new JdbcConnectionSource(URL);
         candidateDao = DaoManager.createDao(connectionSource,Candidate.class);
-        categoryeDao = DaoManager.createDao(connectionSource,Category.class);
+        categoryDao = DaoManager.createDao(connectionSource,Category.class);
         interviewDao = DaoManager.createDao(connectionSource,Interview.class);
         interviewCommentDao = DaoManager.createDao(connectionSource,InterviewComment.class);
         interviewerDao = DaoManager.createDao(connectionSource,Interviewer.class);
@@ -76,4 +76,41 @@ public class DatabaseHelper {
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
     }
+    //Получить интервью по Id
+    public Interview getInterviewById(int id) throws SQLException {
+        QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
+        interviewQueryBuilder.where().eq("idInterview", id);
+        PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
+        List<Interview> interviews = interviewDao.query(preparedQuery);
+        return interviews.get(0);
+    }
+    public List<Category> getCategories() throws SQLException {
+        return categoryDao.queryForAll();
+    }
+    public List<Candidate> getCandidates() throws SQLException {
+        return candidateDao.queryForAll();
+    }
+    public Candidate getCandidateById(int id) throws SQLException {
+        QueryBuilder<Candidate, Integer> candidateQueryBuilder = candidateDao.queryBuilder();
+        candidateQueryBuilder.where().eq("idCandidate", id);
+        PreparedQuery<Candidate> preparedQuery = candidateQueryBuilder.prepare();
+        List<Candidate> candidates = candidateDao.query(preparedQuery);
+        return candidates.get(0);
+    }
+  /*  public Interview createInterview(Date Dat)  throws SQLException{
+        Interview interview = new Interview();
+        interview.setDate(Dat);
+        Candidate candidate = new Candidate();
+        Interviewer interviewer  = new Interviewer();
+        candidate.setIdCandidate(4);
+        interviewer.setIdInterviewer(5);
+        interview.setIdCandidate(candidate);
+        interview.setIdInterviewer(interviewer);
+        interview.setResult("Да");
+        interview.setPost("Директор 1");
+        interviewDao.create(interview);
+        return interview;
+    }
+*/
+
 }

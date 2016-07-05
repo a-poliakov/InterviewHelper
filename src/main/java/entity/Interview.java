@@ -19,13 +19,13 @@ public class Interview {
     private Interviewer idInterviewer;
 
     @DatabaseField (canBeNull = false)
-    private Date Date;
+    private Date date;
 
     @DatabaseField (canBeNull = false)
-    private String Result;
+    private String result;
 
     @DatabaseField (canBeNull = false)
-    private String Post;
+    private String post;
 
     @ForeignCollectionField
     private ForeignCollection<Mark> marks;
@@ -58,27 +58,27 @@ public class Interview {
     }
 
     public java.util.Date getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(java.util.Date date) {
-        Date = date;
+        this.date = date;
     }
 
     public String getResult() {
-        return Result;
+        return result;
     }
 
     public void setResult(String result) {
-        Result = result;
+        result = result;
     }
 
     public String getPost() {
-        return Post;
+        return post;
     }
 
     public void setPost(String post) {
-        Post = post;
+        post = post;
     }
 
     public ForeignCollection<Mark> getMarks() {
@@ -87,5 +87,17 @@ public class Interview {
 
     public void setMarks(ForeignCollection<Mark> marks) {
         this.marks = marks;
+    }
+
+    @Override
+    public String toString() {
+        return "Interview{" +
+                "idInterview=" + idInterview +
+                ", idCandidate=" + idCandidate +
+                ", idInterviewer=" + idInterviewer +
+                ", Date=" + date +
+                ", Result='" + result + '\'' +
+                ", Post='" + post +
+        '}';
     }
 }
