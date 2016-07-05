@@ -152,6 +152,22 @@ public class DatabaseHelper {
         mark.setValue(value);
         markDao.create(mark);
     }
+    public void addInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)throws SQLException{
+        InterviewComment iCom = new InterviewComment();
+        iCom.setIdInterview(getInterviewById(idInterview));
+        iCom.setExperience(experience);
+        iCom.setRecommendations(recommendations);
+        iCom.setLastWork(lastWork);
+        iCom.setComment(comment);
+        interviewCommentDao.create(iCom);
+    }
+    public void addCandidate(String fio, Date date, String banned)  throws SQLException{
+        Candidate candidate = new Candidate();
+        candidate.setFio(fio);
+        candidate.setBornDate(date);
+        candidate.setBanned(banned);
+        candidateDao.create(candidate);
+    }
     //Удалить
     public void delCategoryById(int id)  throws SQLException{
         Category category = getCategoryById(id);
