@@ -61,7 +61,7 @@ public class DatabaseHelper {
         return interviews;
     }
 
-    public List<Interview> getInterviewsByDate(Date date) throws SQLException {
+    public List<Interview> getInterviewsByDate(String date) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
         interviewQueryBuilder.where().eq("Date", date);
         PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
@@ -134,7 +134,7 @@ public class DatabaseHelper {
         return interviewerDao.queryForAll();
     }
     //Добавить
-    public void addInterview(int idCandidate, int idInterviewer, Date date, String result, String post)  throws SQLException{
+    public void addInterview(int idCandidate, int idInterviewer, String date, String result, String post)  throws SQLException{
         Interview interview = new Interview();
         interview.setIdCandidate(getCandidateById(idCandidate));
         interview.setIdInterviewer(getInterviewerById(idInterviewer));
@@ -171,7 +171,7 @@ public class DatabaseHelper {
         iCom.setComment(comment);
         interviewCommentDao.create(iCom);
     }
-    public void addCandidate(String fio, Date date, String banned)  throws SQLException{
+    public void addCandidate(String fio, String date, String banned)  throws SQLException{
         Candidate candidate = new Candidate();
         candidate.setFio(fio);
         candidate.setBornDate(date);
