@@ -2,7 +2,6 @@ package entity;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.sun.java.swing.plaf.windows.WindowsTreeUI;
 
 import java.util.Collection;
 
@@ -14,7 +13,7 @@ public class Interviewer {
     @DatabaseField(generatedId = true)
     private int idInterviewer;
     @DatabaseField(canBeNull = false)
-    private String FIO;
+    private String fio;
 
     @ForeignCollectionField(foreignFieldName = "idInterviewer", eager = true)
     private Collection<Interview> interviews;
@@ -22,7 +21,7 @@ public class Interviewer {
     @Override
     public String toString() {
         return "Interviewer{" +
-                "FIO='" + FIO + '\'' +
+                "fio='" + fio + '\'' +
                 ", idInterviewer=" + idInterviewer +
                 '}';
     }
@@ -38,12 +37,12 @@ public class Interviewer {
         this.idInterviewer = idInterviewer;
     }
 
-    public String getFIO() {
-        return FIO;
+    public String getFio() {
+        return fio;
     }
 
-    public void setFIO(String FIO) {
-        this.FIO = FIO;
+    public void setFio(String fio) {
+        this.fio = fio;
     }
 
     public Collection<Interview> getInterviews() {

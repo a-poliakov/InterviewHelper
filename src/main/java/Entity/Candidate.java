@@ -18,16 +18,6 @@ public class Candidate {
     @DatabaseField(canBeNull = false)
     private String fio;
 
-    @Override
-    public String toString() {
-        return "Candidate{" +
-                "idCandidate=" + idCandidate +
-                ", fio='" + fio + '\'' +
-                ", bornDate=" + bornDate +
-                ", banned='" + banned + '\'' +
-                '}';
-    }
-
     @DatabaseField(canBeNull = false)
     private Date bornDate;
 
@@ -79,4 +69,14 @@ public class Candidate {
     public void setInterviews(Collection<Interview> interviews) {
         this.interviews = interviews;
     }
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "idCandidate=" + idCandidate +
+                ", fio='" + fio + '\'' +
+                ", bornDate=" + bornDate +
+                ", banned='" + banned + '\'' +
+                '}';
+    }
+
 }
