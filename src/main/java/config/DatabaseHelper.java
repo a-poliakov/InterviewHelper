@@ -113,6 +113,13 @@ public class DatabaseHelper {
             return null;
         return interviewers.get(0);
     }
+    public List <Mark> getInterviewMarks(int id)throws SQLException{
+        QueryBuilder<Mark, Integer> markIntegerQueryBuilder = markDao.queryBuilder();
+        markIntegerQueryBuilder.where().eq("idInterview", id);
+        PreparedQuery<Mark> preparedQuery = markIntegerQueryBuilder.prepare();
+        List<Mark> marks = markDao.query(preparedQuery);
+        return marks;
+    }
     //Получить всех
     public List<Category> getCategories() throws SQLException {
         return categoryDao.queryForAll();

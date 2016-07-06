@@ -8,11 +8,10 @@ import java.util.List;
 
 public class MainConsoleDao {
     public static void main(String[] args) throws SQLException {
-       // System.out.println(HelperFactory.getHelper().getCategories().size());
+        System.out.println(HelperFactory.getHelper().getCategories().size());
         //HelperFactory.getHelper().addInterview(1, 2, new Date((new Date()).getTime()), "Принят", "Генерал");
-//        for(Object cat:HelperFactory.getHelper().getInterview())
-//            System.out.println(cat);
-
-        HelperFactory.getHelper().delInterviewById(11);
+        for(Object cat:HelperFactory.getHelper().getInterview())
+            System.out.println(cat);
+        //HelperFactory.getHelper().delInterviewById(11);
     }
 }
