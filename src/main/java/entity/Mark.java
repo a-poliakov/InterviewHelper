@@ -2,6 +2,9 @@ package entity;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import config.HelperFactory;
+
+import java.sql.SQLException;
 
 /**
  * Created by momelnikov on 04.07.2016.
@@ -21,6 +24,16 @@ public class Mark {
     private Interview idInterview;
 
     public Mark() {
+    }
+
+    @Override
+    public String toString(){
+        return "Mark{" +
+                "idMark=" + idMark +
+                ", value=" + value +
+                ", idCategory=" + idCategory.getName() +
+                ", idInterview=" + idInterview +
+                '}';
     }
 
     public int getIdMark() {

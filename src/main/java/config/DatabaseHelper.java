@@ -113,9 +113,9 @@ public class DatabaseHelper {
             return null;
         return interviewers.get(0);
     }
-    public List <Mark> getInterviewMarks(int id)throws SQLException{
+    public List <Mark> getInterviewMarks(int idInterview)throws SQLException{
         QueryBuilder<Mark, Integer> markIntegerQueryBuilder = markDao.queryBuilder();
-        markIntegerQueryBuilder.where().eq("idInterview", id);
+        markIntegerQueryBuilder.where().eq("idInterview", idInterview);
         PreparedQuery<Mark> preparedQuery = markIntegerQueryBuilder.prepare();
         List<Mark> marks = markDao.query(preparedQuery);
         return marks;

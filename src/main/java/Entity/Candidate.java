@@ -72,7 +72,6 @@ public class Candidate {
     @Override
     public String toString() {
         return "Candidate{" +
-                "idCandidate=" + idCandidate +
                 ", fio='" + fio + '\'' +
                 ", bornDate=" + bornDate +
                 ", banned='" + banned + '\'' +
