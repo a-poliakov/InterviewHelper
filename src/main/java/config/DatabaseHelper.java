@@ -7,8 +7,9 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import entity.*;
-
+import model.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +78,24 @@ public class DatabaseHelper {
         return interviews;
     }
     //Получить по Id
+    List<CategoryRow> getInterviewMarksAll(int idInterview)throws SQLException  {
+        List<Category> categories = getCategories();
+        List<Mark> marks = getInterviewMarks(idInterview);
+        List<CategoryRow> categoryRows = new ArrayList<CategoryRow>();
+        for(Category cat:categories) {
+            CategoryRow categoryRow = new CategoryRow(cat, 0.0);
+            for(Mark mark:marks)
+            {
+                if(mark.getIdCategory() == cat)
+                {
+                    categoryRow.setValue(mark.getValue());
+                }
+            }
+            categoryRows.add(categoryRow);
+        }
+        return categoryRows;
+        // TODO: 06.07.2016 отсортировать лексикографически
+    }
     public Interview getInterviewById(int id) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
         interviewQueryBuilder.where().eq("idInterview", id);

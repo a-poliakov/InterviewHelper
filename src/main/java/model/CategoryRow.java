@@ -6,25 +6,27 @@ import entity.Category;
  * Created by avpolyakov on 06.07.2016.
  */
 public class CategoryRow {
-    private Category categoryName;
-    private Double mark;
+    private Category category;
+    private Double value;
 
-    public CategoryRow() {
+    public CategoryRow(Category category, Double value) {
+        this.category = category;
+        this.value = value;
     }
 
-    public Category getCategoryName() {
-        return categoryName;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryName(Category categoryName) {
-        this.categoryName = categoryName;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public Double getMark() {
-        return mark;
+    public Double getValue() {
+        return value;
     }
 
-    public void setMark(Double mark) {
-        this.mark = mark;
+    public void setValue(Double value) {
+        this.value = value;
     }
 }
