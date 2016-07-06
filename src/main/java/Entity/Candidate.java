@@ -19,7 +19,7 @@ public class Candidate {
     private String fio;
 
     @DatabaseField(canBeNull = false)
-    private Date bornDate;
+    private String bornDate;
 
     @DatabaseField(canBeNull = false)
     private String banned;
@@ -46,11 +46,11 @@ public class Candidate {
         this.fio = fio;
     }
 
-    public Date getBornDate() {
+    public String getBornDate() {
         return bornDate;
     }
 
-    public void setBornDate(Date bornDate) {
+    public void setBornDate(String bornDate) {
         this.bornDate = bornDate;
     }
 

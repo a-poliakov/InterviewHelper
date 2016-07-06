@@ -19,7 +19,7 @@ public class Interview {
     private Interviewer idInterviewer;
 
     @DatabaseField (canBeNull = false)
-    private Date date;
+    private String date;
 
     @DatabaseField (canBeNull = false)
     private String result;
@@ -57,11 +57,11 @@ public class Interview {
         this.idInterviewer = idInterviewer;
     }
 
-    public java.util.Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(java.util.Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
