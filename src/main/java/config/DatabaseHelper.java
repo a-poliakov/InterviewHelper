@@ -113,15 +113,15 @@ public class DatabaseHelper {
             return null;
         return interviewers.get(0);
     }
-  public void addInterview()  throws SQLException{
-      Interview interview = new Interview();
-      interview.setDate(new Date(123123));
-      interview.setPost("director");
-      interview.setResult("yes");
-      interview.setIdInterviewer(getInterviewerById(1));
-      interview.setIdCandidate(getCandidateById(1));
-      interviewDao.create(interview);
-    }
+//  public void addInterview()  throws SQLException{
+//      Interview interview = new Interview();
+//      interview.setDate(new Date(123123));
+//      interview.setPost("director");
+//      interview.setResult("yes");
+//      interview.setIdInterviewer(getInterviewerById(1));
+//      interview.setIdCandidate(getCandidateById(1));
+//      interviewDao.create(interview);
+//    }
     public boolean addInterviewer(String fio)  throws SQLException{
         Interviewer interviewer = new Interviewer();
         interviewer.setFIO(fio);
