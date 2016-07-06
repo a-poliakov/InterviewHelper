@@ -14,6 +14,14 @@ public class CategoryRow {
         this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return "CategoryRow{" +
+                "category=" + category +
+                ", value=" + value +
+                '}';
+    }
+
     public Category getCategory() {
         return category;
     }

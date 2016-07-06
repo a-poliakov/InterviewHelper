@@ -78,7 +78,7 @@ public class DatabaseHelper {
         return interviews;
     }
     //Получить по Id
-    List<CategoryRow> getInterviewMarksAll(int idInterview)throws SQLException  {
+    public List<CategoryRow> getInterviewMarksAll(int idInterview)throws SQLException  {
         List<Category> categories = getCategories();
         List<Mark> marks = getInterviewMarks(idInterview);
         List<CategoryRow> categoryRows = new ArrayList<CategoryRow>();
@@ -86,7 +86,7 @@ public class DatabaseHelper {
             CategoryRow categoryRow = new CategoryRow(cat, 0.0);
             for(Mark mark:marks)
             {
-                if(mark.getIdCategory() == cat)
+                if(mark.getIdCategory().getIdCategory() == cat.getIdCategory())
                 {
                     categoryRow.setValue(mark.getValue());
                 }
@@ -132,7 +132,7 @@ public class DatabaseHelper {
             return null;
         return interviewers.get(0);
     }
-    public List <Mark> getInterviewMarks(int idInterview)throws SQLException{
+    private List <Mark> getInterviewMarks(int idInterview)throws SQLException{
         QueryBuilder<Mark, Integer> markIntegerQueryBuilder = markDao.queryBuilder();
         markIntegerQueryBuilder.where().eq("idInterview", idInterview);
         PreparedQuery<Mark> preparedQuery = markIntegerQueryBuilder.prepare();
