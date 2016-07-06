@@ -91,6 +91,7 @@ public class DatabaseHelper {
                     categoryRow.setValue(mark.getValue());
                 }
             }
+
             categoryRows.add(categoryRow);
         }
         return categoryRows;
@@ -204,6 +205,13 @@ public class DatabaseHelper {
     }
     public void delInterviewById(int id)  throws SQLException{
         Interview interview = getInterviewById(id);
+        QueryBuilder<InterviewComment, Integer> query = interviewCommentDao.queryBuilder();
+        query.where().eq("idInterview", id);
+        PreparedQuery<InterviewComment> preparedQuery = query.prepare();
+        List<InterviewComment> interviewComment = interviewCommentDao.query(preparedQuery);
+        if(interviewComment.size() != 0){
+            interviewCommentDao.delete(interviewComment.get(0));
+        }
         for(Mark mark:interview.getMarks()){
             markDao.delete(mark);
         }
