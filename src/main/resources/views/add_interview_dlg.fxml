@@ -51,7 +51,7 @@
                                           <Insets left="30.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="resultEdit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <DatePicker prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <Label text="Результат" GridPane.rowIndex="2">
                                        <GridPane.margin>
@@ -63,7 +63,7 @@
                                           <Insets left="30.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="postEdit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Label text="Кандидат:">
                                        <GridPane.margin>
                                           <Insets left="30.0" />
@@ -71,8 +71,8 @@
                                     </Label>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <children>
-                                          <ChoiceBox accessibleRole="TEXT_FIELD" layoutY="2.0" prefHeight="25.0" prefWidth="254.0" />
-                                          <Button layoutX="262.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="37.0" text="+" AnchorPane.rightAnchor="2.0">
+                                          <ChoiceBox fx:id="interviewerChBox" accessibleRole="TEXT_FIELD" layoutY="2.0" prefHeight="25.0" prefWidth="254.0" />
+                                          <Button fx:id="addInterviewerBtn" layoutX="262.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="37.0" text="+" AnchorPane.rightAnchor="2.0">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -81,8 +81,8 @@
                                     </AnchorPane>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                        <children>
-                                          <ChoiceBox accessibleRole="TEXT_FIELD" layoutY="2.0" prefHeight="25.0" prefWidth="254.0" />
-                                          <Button layoutX="264.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="+" AnchorPane.rightAnchor="6.0">
+                                          <ChoiceBox fx:id="candidateChBox" accessibleRole="TEXT_FIELD" layoutY="2.0" prefHeight="25.0" prefWidth="254.0" />
+                                          <Button fx:id="addCandidateBtn" layoutX="264.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="+" AnchorPane.rightAnchor="6.0">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -95,11 +95,11 @@
                         </AnchorPane>
                     </content>
                   </TitledPane>
-                  <TableView editable="true" prefHeight="285.0" prefWidth="601.0" AnchorPane.topAnchor="225.0">
+                  <TableView fx:id="categoriesTable" editable="true" prefHeight="285.0" prefWidth="601.0" AnchorPane.topAnchor="225.0">
                     <columns>
-                      <TableColumn prefWidth="169.0" text="ID" visible="false" />
-                        <TableColumn prefWidth="236.0" text="Критерий" />
-                      <TableColumn minWidth="0.0" prefWidth="284.0" text="Оценка" />
+                      <TableColumn fx:id="idCol" prefWidth="169.0" text="ID" visible="false" />
+                        <TableColumn fx:id="categoryCol" prefWidth="236.0" text="Критерий" />
+                      <TableColumn fx:id="valueCol" minWidth="0.0" prefWidth="284.0" text="Оценка" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
