@@ -221,4 +221,11 @@ public class DatabaseHelper {
         Candidate candidate = getCandidateById(id);
         candidateDao.delete(candidate);
     }
+    //Редактировать
+    public void editCategory(int id, String name)throws SQLException{
+        Category cat = getCategoryById(id);
+        cat.setName(name);
+        categoryDao.createOrUpdate(cat);
+    }
+
 }
