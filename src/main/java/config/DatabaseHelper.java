@@ -149,7 +149,6 @@ public class DatabaseHelper {
         interviewDao.create(interview);
     }
     public void addInterviewer(String fio)  throws SQLException{
->>>>>>> f4541c814b61c67b5b05272e682e97fde8b43831
         Interviewer interviewer = new Interviewer();
         interviewer.setFio(fio);
         // TODO: 05.07.2016 Что делать при неудачной вставке? Исключение или возвращать false?
