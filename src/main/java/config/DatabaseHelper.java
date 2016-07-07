@@ -284,16 +284,12 @@ public class DatabaseHelper {
         candidateDao.delete(candidate);
     }
     //Редактировать
-//    public Interview editInterview(String candidate, String interviewer, String date, String result, String post)  throws SQLException{
-//        Interview interview = new Interview();
-//        interview.setIdCandidate(getCandidateByFio(candidate));
-//        interview.setIdInterviewer(getInterviewerByFio(interviewer));
-//        interview.setDate(date);
-//        interview.setResult(result);
-//        interview.setPost(post);
-//        interviewDao.create(interview);
-//        return interview;
-//    }
+    public void editInterview(int idInterview, String date, String result, String post)  throws SQLException{
+        editInterviewDate(idInterview, date);
+        editInterviewResult(idInterview, result);
+        editInterviewPost(idInterview, post);
+    }
+
     public void editInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{
         for(CategoryRow cat:marks)
         {
@@ -313,6 +309,7 @@ public class DatabaseHelper {
         cat.setName(name);
         categoryDao.createOrUpdate(cat);
     }
+
     public void editInterviewDate(int idInterview, String date)throws SQLException{
         Interview interview = getInterviewById(idInterview);
         interview.setDate(date);
