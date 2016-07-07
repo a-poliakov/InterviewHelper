@@ -63,6 +63,7 @@ public class AddInterviewController {
         fioEdit.setText(interview.getIdCandidate().getFio());
         postEdit.setText(interview.getPost());
         resultEdit.setText(interview.getResult());
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate date = LocalDate.parse(interview.getDate(), formatter);
         datePicker.setValue(date);

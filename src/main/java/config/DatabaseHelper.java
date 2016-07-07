@@ -64,7 +64,7 @@ public class DatabaseHelper {
 
     public List<Interview> getInterviewsByDate(String date) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
-        interviewQueryBuilder.where().eq("Date", date);
+        interviewQueryBuilder.where().like("Date", date + "%");
         PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
@@ -72,12 +72,22 @@ public class DatabaseHelper {
 
     public List<Interview> getInterviewsByPost(String post) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
-        interviewQueryBuilder.where().eq("Post", post);
+        interviewQueryBuilder.where().like("Post", post + "%");
         PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
     }
     //Получить по Id
+//    public InterviewComment getInterviewCommentByIdInterview(int id)
+//    {
+//        QueryBuilder<InterviewComment, Integer> query = interviewCommentDao.queryBuilder();
+//        query.where().eq(getInterviewById((id));
+//        PreparedQuery<InterviewComment> preparedQuery = candidateQueryBuilder.prepare();
+//        List<Candidate> candidates = candidateDao.query(preparedQuery);
+//        if(candidates.size() == 0)
+//            return null;
+//        return candidates.get(0);
+//    }
     public List<CategoryRow> getInterviewMarksAll(int idInterview)throws SQLException  {
         List<Category> categories = getCategories();
         List<Mark> marks = getInterviewMarks(idInterview);
@@ -115,6 +125,7 @@ public class DatabaseHelper {
             return null;
         return candidates.get(0);
     }
+//    public Candidate getCandidateById(int id) throws SQLException
     public Category getCategoryById(int id) throws SQLException {
         QueryBuilder<Category, Integer> query = categoryDao.queryBuilder();
         query.where().idEq(id);
@@ -154,14 +165,21 @@ public class DatabaseHelper {
         return interviewerDao.queryForAll();
     }
     //Добавить
-    public void addInterview(int idCandidate, int idInterviewer, String date, String result, String post)  throws SQLException{
-        Interview interview = new Interview();
-        interview.setIdCandidate(getCandidateById(idCandidate));
-        interview.setIdInterviewer(getInterviewerById(idInterviewer));
-        interview.setDate(date);
-        interview.setResult(result);
-        interview.setPost(post);
-        interviewDao.create(interview);
+   public void addInterview(String candidate, String interviewer, String date, String result, String post)  throws SQLException{
+//        Interview interview = new Interview();
+//        QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
+//        interviewQueryBuilder.where().eq("FIO", candidate);
+//        PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
+//        List<Interview> interviews = interviewDao.query(preparedQuery);
+//        return interviews;
+//
+//
+//        interview.setIdCandidate(getCandidateById(idCandidate));
+//        interview.setIdInterviewer(getInterviewerById(idInterviewer));
+//        interview.setDate(date);
+//        interview.setResult(result);
+//        interview.setPost(post);
+//        interviewDao.create(interview);
     }
     public void addInterviewer(String fio)  throws SQLException{
         Interviewer interviewer = new Interviewer();
@@ -227,5 +245,24 @@ public class DatabaseHelper {
         cat.setName(name);
         categoryDao.createOrUpdate(cat);
     }
-
+    public void editInterviewDate(int idInterview, String date)throws SQLException{
+        Interview interview = getInterviewById(idInterview);
+        interview.setDate(date);
+        interviewDao.createOrUpdate(interview);
+    }
+    public void editInterviewResult(int idInterview, String result)throws SQLException{
+        Interview interview = getInterviewById(idInterview);
+        interview.setResult(result);
+        interviewDao.createOrUpdate(interview);
+    }
+    public void editInterviewPost(int idInterview, String post)throws SQLException{
+        Interview interview = getInterviewById(idInterview);
+        interview.setResult(post);
+        interviewDao.createOrUpdate(interview);
+    }
+    public void editInterviewInterviewer(int idInterview, int idInterviewer)throws SQLException{
+        Interview interview = getInterviewById(idInterview);
+        interview.setIdInterviewer(getInterviewerById(idInterviewer));
+        interviewDao.createOrUpdate(interview);
+    }
 }
