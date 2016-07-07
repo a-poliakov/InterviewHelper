@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.CategoryRow;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -64,6 +65,11 @@ public class AddInterviewController {
 
     }
 
+    @FXML
+    private void onDialogResult() throws IOException, SQLException {
+        saveInterview();
+    }
+
     public void addInterview() throws SQLException {
         interviewId = 0;
         // устанавливаем тип и значение которое должно хранится в колонке
@@ -105,14 +111,13 @@ public class AddInterviewController {
         if(interviewId == 0){
             Interview interview = HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
             HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
-            //HelperFactory.getHelper().addInterviewCategories(interview.getIdInterview(), marks);
+            HelperFactory.getHelper().addInterviewMarks(interview.getIdInterview(), marks);
         } else{
-
             HelperFactory.getHelper().editInterviewDate(interviewId, df.format(datePicker.getValue()));
             //HelperFactory.getHelper().editInterviewInterviewer(interviewId, interviewerEdit.getText());
             HelperFactory.getHelper().editInterviewPost(interviewId, postEdit.getText());
             HelperFactory.getHelper().editInterviewResult(interviewId, resultEdit.getText());
-             // HelperFactory.getHelper().editInterviewCategories(interview.getIdInterview(), marks);
+            HelperFactory.getHelper().editInterviewMarks(interview.getIdInterview(), marks);
         }
     }
 }

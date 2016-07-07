@@ -162,6 +162,7 @@ public class MainController {
         dlgStage.initModality(Modality.WINDOW_MODAL);
         dlgStage.initOwner(primaryStage);
         addInterviewController.addInterview();
+        addInterviewController.init();
         dlgStage.show();
     }
 
@@ -181,6 +182,7 @@ public class MainController {
         dlgStage.initModality(Modality.WINDOW_MODAL);
         dlgStage.initOwner(primaryStage);
         addInterviewController.editInterview(selectedInterviewId);
+        addInterviewController.init();
         dlgStage.show();
     }
 

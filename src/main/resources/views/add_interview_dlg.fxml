@@ -151,7 +151,7 @@
       </ScrollPane>
       <AnchorPane prefHeight="42.0" prefWidth="600.0">
          <children>
-            <Button layoutX="532.0" layoutY="9.0" mnemonicParsing="false" text="Добавить" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="29.0" />
+            <Button fx:id="okBtn" layoutX="532.0" layoutY="9.0" mnemonicParsing="false" onAction="#onDialogResult" text="ОК" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="29.0" />
          </children>
       </AnchorPane>
    </children>
