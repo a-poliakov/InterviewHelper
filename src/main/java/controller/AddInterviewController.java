@@ -53,12 +53,15 @@ public class AddInterviewController {
     private TextField lastWorkEdit;
     @FXML
     private TextArea commentsEdit;
+    @FXML
+    private Button okBtn;
 
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();;
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
 
 
     public void init() throws SQLException {
+
     }
 
     public void addInterview() throws SQLException {
@@ -102,15 +105,14 @@ public class AddInterviewController {
         if(interviewId == 0){
             Interview interview = HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
             HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
-            HelperFactory.getHelper().addInterviewCategories(interview.getIdInterview(), marks);
+            //HelperFactory.getHelper().addInterviewCategories(interview.getIdInterview(), marks);
         } else{
 
-//            HelperFactory.getHelper().editInterviewDate();
-//            HelperFactory.getHelper().editCategory();
-//            HelperFactory.getHelper().editInterviewInterviewer();
-//            HelperFactory.getHelper().editInterviewPost();
-//            HelperFactory.getHelper().editInterviewResult();
-              HelperFactory.getHelper().editInterviewCategories(interview.getIdInterview(), marks);
+            HelperFactory.getHelper().editInterviewDate(interviewId, df.format(datePicker.getValue()));
+            //HelperFactory.getHelper().editInterviewInterviewer(interviewId, interviewerEdit.getText());
+            HelperFactory.getHelper().editInterviewPost(interviewId, postEdit.getText());
+            HelperFactory.getHelper().editInterviewResult(interviewId, resultEdit.getText());
+             // HelperFactory.getHelper().editInterviewCategories(interview.getIdInterview(), marks);
         }
     }
 }
