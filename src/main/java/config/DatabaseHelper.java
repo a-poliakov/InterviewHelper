@@ -301,7 +301,14 @@ public class DatabaseHelper {
         editInterviewPost(idInterview, post);
         editInterviewMarks(idInterview, marks);
     }
-
+    public void editInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)throws SQLException{
+        InterviewComment iCom = getInterviewCommentByIdInterview(idInterview);
+        iCom.setExperience(experience);
+        iCom.setRecommendations(recommendations);
+        iCom.setLastWork(lastWork);
+        iCom.setComment(comment);
+        interviewCommentDao.createOrUpdate(iCom);
+    }
     public void editInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{
         for(CategoryRow cat:marks)
         {
@@ -321,7 +328,6 @@ public class DatabaseHelper {
         cat.setName(name);
         categoryDao.createOrUpdate(cat);
     }
-
     public void editInterviewDate(int idInterview, String date)throws SQLException{
         Interview interview = getInterviewById(idInterview);
         interview.setDate(date);
