@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.CategoryRow;
 
 import java.net.URL;
@@ -32,8 +33,6 @@ public class AddInterviewController {
     @FXML
     TableColumn<CategoryRow, Double> valueCol;
     @FXML
-    TableColumn<CategoryRow, Integer> idCol;
-    @FXML
     TableColumn<CategoryRow, Category> categoryCol;
 
     @FXML
@@ -58,6 +57,15 @@ public class AddInterviewController {
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();;
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
 
+    public void init() throws SQLException {
+        // устанавливаем тип и значение которое должно хранится в колонке
+        valueCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Double>("value"));
+        categoryCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Category>("category"));
+        // заполняем таблицу данными
+        marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(0));
+        categoriesTable.setItems(marks);
+    }
+
     public void addInterview(){
         interviewId = -1;
     }
@@ -75,8 +83,11 @@ public class AddInterviewController {
         interviewerEdit.setText(interview.getIdInterviewer().getFio());
         marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(id));
 
-        InterviewComment interviewComment = HelperFactory.getHelper().get
-        expEdit.setText();
+        InterviewComment interviewComment = HelperFactory.getHelper().getInterviewCommentByIdInterview(interviewId);
+        expEdit.setText(interviewComment.getExperience());
+        recommendationEdit.setText(interviewComment.getRecommendations());
+        lastWorkEdit.setText(interviewComment.getLastWork());
+        commentsEdit.setText(interviewComment.getComment());
     }
 
     private void saveInterview() throws SQLException {
@@ -84,11 +95,11 @@ public class AddInterviewController {
         if(interviewId == -1){
             HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
         } else{
-            HelperFactory.getHelper().editInterviewDate();
-            HelperFactory.getHelper().editCategory();
-            HelperFactory.getHelper().editInterviewInterviewer();
-            HelperFactory.getHelper().editInterviewPost();
-            HelperFactory.getHelper().editInterviewResult();
+//            HelperFactory.getHelper().editInterviewDate();
+//            HelperFactory.getHelper().editCategory();
+//            HelperFactory.getHelper().editInterviewInterviewer();
+//            HelperFactory.getHelper().editInterviewPost();
+//            HelperFactory.getHelper().editInterviewResult();
         }
     }
 }
