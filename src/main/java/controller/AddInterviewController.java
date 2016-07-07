@@ -100,6 +100,11 @@ public class AddInterviewController {
         categoriesTable.setItems(marks);
 
         InterviewComment interviewComment = HelperFactory.getHelper().getInterviewCommentByIdInterview(interviewId);
+        // TODO: 07.07.2016 Нарушена целостность базы данных. Поэтому если у интервью нет interviewComment то создадим пустой
+        if(interviewComment == null)
+        {
+            interviewComment = HelperFactory.getHelper().addInterviewComment(interviewId, "", "", "", "");
+        }
         expEdit.setText(interviewComment.getExperience());
         recommendationEdit.setText(interviewComment.getRecommendations());
         lastWorkEdit.setText(interviewComment.getLastWork());
