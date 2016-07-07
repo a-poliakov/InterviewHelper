@@ -78,16 +78,18 @@ public class DatabaseHelper {
         return interviews;
     }
     //Получить по Id
-//    public InterviewComment getInterviewCommentByIdInterview(int id)
-//    {
-//        QueryBuilder<InterviewComment, Integer> query = interviewCommentDao.queryBuilder();
-//        query.where().eq(getInterviewById((id));
-//        PreparedQuery<InterviewComment> preparedQuery = candidateQueryBuilder.prepare();
-//        List<Candidate> candidates = candidateDao.query(preparedQuery);
-//        if(candidates.size() == 0)
-//            return null;
-//        return candidates.get(0);
-//    }
+    public InterviewComment getInterviewCommentByIdInterview(int id)throws SQLException
+    {
+        List<InterviewComment> interviewComments = interviewCommentDao.queryForAll();
+        for(InterviewComment ic: interviewComments)
+        {
+            if(ic.getIdInterview().getIdInterview() == id)
+            {
+                return ic;
+            }
+        }
+        return null;
+    }
     public List<CategoryRow> getInterviewMarksAll(int idInterview)throws SQLException  {
         List<Category> categories = getCategories();
         List<Mark> marks = getInterviewMarks(idInterview);
@@ -125,7 +127,6 @@ public class DatabaseHelper {
             return null;
         return candidates.get(0);
     }
-//    public Candidate getCandidateById(int id) throws SQLException
     public Category getCategoryById(int id) throws SQLException {
         QueryBuilder<Category, Integer> query = categoryDao.queryBuilder();
         query.where().idEq(id);
