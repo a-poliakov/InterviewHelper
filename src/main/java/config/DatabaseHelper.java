@@ -78,6 +78,18 @@ public class DatabaseHelper {
         return interviews;
     }
     //Получить по полям
+    public Mark getMarkByInterviewAndCategory(int idInterview,String categoryName)throws SQLException{
+        List<Mark> marks = getInterviewMarks(idInterview);
+        for(Mark mark: marks)
+        {
+            if(mark.getIdCategory().getName().equals(categoryName))
+            {
+                return mark;
+            }
+        }
+        // TODO: 07.07.2016 Костыль
+        return null;
+    }
     public Candidate getCandidateByFio(String fio)throws SQLException{
         List<Candidate> candidates = candidateDao.queryForAll();
         for(Candidate candidate: candidates)
@@ -189,7 +201,15 @@ public class DatabaseHelper {
         return interviewerDao.queryForAll();
     }
     //Добавить
-    public void
+    public void addInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{
+        for(CategoryRow cat:marks)
+        {
+            if(cat.getValue() != 0)
+            {
+                addMark(cat.getCategory().getIdCategory(), idInterview, cat.getValue());
+            }
+        }
+    }
     public Interview addInterview(String candidate, String interviewer, String date, String result, String post)  throws SQLException{
         Interview interview = new Interview();
         interview.setIdCandidate(getCandidateByFio(candidate));
@@ -274,6 +294,20 @@ public class DatabaseHelper {
 //        interviewDao.create(interview);
 //        return interview;
 //    }
+    public void editInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{
+        for(CategoryRow cat:marks)
+        {
+            if(cat.getValue() != 0)
+            {
+                editMark(idInterview, cat.getCategory().getName(),  cat.getValue());
+            }
+        }
+    }
+    public void editMark(int idInterview, String categoryName, double value)throws SQLException {
+        Mark mark = getMarkByInterviewAndCategory(idInterview, categoryName);
+        mark.setValue(value);
+        markDao.createOrUpdate(mark);
+    }
     public void editCategory(int id, String name)throws SQLException{
         Category cat = getCategoryById(id);
         cat.setName(name);
