@@ -6,10 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.CategoryRow;
 
 import java.net.URL;
@@ -49,6 +46,14 @@ public class AddInterviewController {
     private DatePicker datePicker;
     @FXML
     private TextField interviewerEdit;
+    @FXML
+    private TextField expEdit;
+    @FXML
+    private TextField recommendationEdit;
+    @FXML
+    private TextField lastWorkEdit;
+    @FXML
+    private TextArea commentsEdit;
 
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();;
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
@@ -70,14 +75,20 @@ public class AddInterviewController {
         interviewerEdit.setText(interview.getIdInterviewer().getFio());
         marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(id));
 
-
-
+        InterviewComment interviewComment = HelperFactory.getHelper().get
+        expEdit.setText();
     }
 
     private void saveInterview() throws SQLException {
         DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT);
         if(interviewId == -1){
             HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
+        } else{
+            HelperFactory.getHelper().editInterviewDate();
+            HelperFactory.getHelper().editCategory();
+            HelperFactory.getHelper().editInterviewInterviewer();
+            HelperFactory.getHelper().editInterviewPost();
+            HelperFactory.getHelper().editInterviewResult();
         }
     }
 }

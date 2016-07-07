@@ -125,7 +125,7 @@
                                           <Insets left="30.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <TextField GridPane.columnIndex="1" />
+                                    <TextField fx:id="expEdit" GridPane.columnIndex="1" />
                                     <Label text="Последнее место работы:" GridPane.rowIndex="2">
                                        <GridPane.margin>
                                           <Insets left="30.0" />
@@ -136,14 +136,14 @@
                                           <Insets left="30.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="recommendationEdit" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Label text="Опыт работы:">
                                        <padding>
                                           <Insets left="30.0" />
                                        </padding>
                                     </Label>
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <TextField fx:id="lastWorkEdit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextArea fx:id="commentsEdit" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                  </children>
                               </GridPane>
                            </children>
