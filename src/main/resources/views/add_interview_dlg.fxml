@@ -96,8 +96,8 @@
                   </TitledPane>
                   <TableView fx:id="categoriesTable" editable="true" prefHeight="285.0" prefWidth="601.0" AnchorPane.topAnchor="225.0">
                     <columns>
-                        <TableColumn fx:id="valueCol" prefWidth="236.0" text="Критерий" />
-                      <TableColumn fx:id="categoryCol" minWidth="0.0" prefWidth="284.0" text="Оценка" />
+                        <TableColumn fx:id="categoryCol" prefWidth="236.0" text="Критерий" />
+                      <TableColumn fx:id="valueCol" minWidth="0.0" prefWidth="284.0" text="Оценка" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
