@@ -35,11 +35,11 @@ public class AddInterviewController {
     TableColumn<CategoryRow, Category> categoryCol;
 
     @FXML
-    TextField postEdit;
+    private TextField postEdit;
     @FXML
-    TextField resultEdit;
+    private TextField resultEdit;
     @FXML
-    DatePicker datePicker;
+    private DatePicker datePicker;
 
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();;
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
