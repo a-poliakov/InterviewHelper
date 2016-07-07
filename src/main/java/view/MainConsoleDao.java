@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MainConsoleDao {
     public static void main(String[] args) throws SQLException {
-        HelperFactory.getHelper().editCategory(3, "Fyne");
+        System.out.println(HelperFactory.getHelper().getInterviewMarksAll(0));
     }
 //    public static void ()
 //    {
