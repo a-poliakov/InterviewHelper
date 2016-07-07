@@ -14,6 +14,7 @@ import model.CategoryRow;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -23,10 +24,14 @@ import static config.HelperFactory.getHelper;
 
 public class AddInterviewController {
     private int interviewId;
+    private int candidateId;
+    private int interviwerId;
+
     ObservableList<CategoryRow> marks = FXCollections.observableArrayList();
 
     @FXML
     TableView<CategoryRow> categoriesTable;
+    // Задел на будущее
     @FXML
     TableColumn<CategoryRow, Double> valueCol;
     @FXML
@@ -35,11 +40,15 @@ public class AddInterviewController {
     TableColumn<CategoryRow, Category> categoryCol;
 
     @FXML
+    private TextField fioEdit;
+    @FXML
     private TextField postEdit;
     @FXML
     private TextField resultEdit;
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private TextField interviewerEdit;
 
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();;
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
@@ -49,19 +58,25 @@ public class AddInterviewController {
     }
 
     public void editInterview(int id) throws SQLException {
-        //заполнение
-        //System.out.print(id);
-
         interviewId = id;
         Interview interview = HelperFactory.getHelper().getInterviewById(id);
-        postEdit.setText(interview.getIdCandidate().getFio());
+        fioEdit.setText(interview.getIdCandidate().getFio());
+        postEdit.setText(interview.getPost());
         resultEdit.setText(interview.getResult());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate date = LocalDate.parse("12.11.2015", formatter);
+        LocalDate date = LocalDate.parse(interview.getDate(), formatter);
         datePicker.setValue(date);
+        interviewerEdit.setText(interview.getIdInterviewer().getFio());
         marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(id));
 
 
 
+    }
+
+    private void saveInterview() throws SQLException {
+        DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT);
+        if(interviewId == -1){
+            HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
+        }
     }
 }
