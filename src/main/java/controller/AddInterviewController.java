@@ -14,6 +14,7 @@ import model.CategoryRow;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -56,6 +57,7 @@ public class AddInterviewController {
         Interview interview = HelperFactory.getHelper().getInterviewById(id);
         postEdit.setText(interview.getIdCandidate().getFio());
         resultEdit.setText(interview.getResult());
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate date = LocalDate.parse("12.11.2015", formatter);
         datePicker.setValue(date);
