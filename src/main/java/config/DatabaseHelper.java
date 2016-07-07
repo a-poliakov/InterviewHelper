@@ -77,9 +77,33 @@ public class DatabaseHelper {
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
     }
+    //Получить по полям
+    public Candidate getCandidateByFio(String fio)throws SQLException{
+        List<Candidate> candidates = candidateDao.queryForAll();
+        for(Candidate candidate: candidates)
+        {
+            if(candidate.getFio().equals(fio))
+            {
+                return candidate;
+            }
+        }
+        // TODO: 07.07.2016 Костыль создания новых пользователей
+        return addCandidate(fio, null, "-");
+    }
+    public Interviewer getInterviewerByFio(String fio) throws SQLException{
+        //если не нашел, то создаст нового
+        List<Interviewer> interviewers = interviewerDao.queryForAll();
+        for(Interviewer interviewer: interviewers)
+        {
+            if(interviewer.getFio().equals(fio))
+            {
+                return interviewer;
+            }
+        }
+        return addInterviewer(fio);
+    }
     //Получить по Id
-    public InterviewComment getInterviewCommentByIdInterview(int id)throws SQLException
-    {
+    public InterviewComment getInterviewCommentByIdInterview(int id)throws SQLException{
         List<InterviewComment> interviewComments = interviewCommentDao.queryForAll();
         for(InterviewComment ic: interviewComments)
         {
@@ -166,32 +190,28 @@ public class DatabaseHelper {
         return interviewerDao.queryForAll();
     }
     //Добавить
-   public void addInterview(String candidate, String interviewer, String date, String result, String post)  throws SQLException{
-//        Interview interview = new Interview();
-//        QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
-//        interviewQueryBuilder.where().eq("FIO", candidate);
-//        PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
-//        List<Interview> interviews = interviewDao.query(preparedQuery);
-//        return interviews;
-//
-//
-//        interview.setIdCandidate(getCandidateById(idCandidate));
-//        interview.setIdInterviewer(getInterviewerById(idInterviewer));
-//        interview.setDate(date);
-//        interview.setResult(result);
-//        interview.setPost(post);
-//        interviewDao.create(interview);
+    public Interview addInterview(String candidate, String interviewer, String date, String result, String post)  throws SQLException{
+        Interview interview = new Interview();
+        interview.setIdCandidate(getCandidateByFio(candidate));
+        interview.setIdInterviewer(getInterviewerByFio(interviewer));
+        interview.setDate(date);
+        interview.setResult(result);
+        interview.setPost(post);
+        interviewDao.create(interview);
+       return interview;
     }
-    public void addInterviewer(String fio)  throws SQLException{
+    public Interviewer addInterviewer(String fio)  throws SQLException{
         Interviewer interviewer = new Interviewer();
         interviewer.setFio(fio);
         // TODO: 05.07.2016 Что делать при неудачной вставке? Исключение или возвращать false?
         interviewerDao.create(interviewer);
+        return interviewer;
     }
-    public void addCategory(String name)  throws SQLException{
+    public Category addCategory(String name)  throws SQLException{
         Category category = new Category();
         category.setName(name);
         categoryDao.create(category);
+        return category;
     }
     public void addMark(int idCategory, int idInterview, double value)  throws SQLException{
         //Перед добавлением оценки, убедись, что создано интервью!
@@ -210,12 +230,13 @@ public class DatabaseHelper {
         iCom.setComment(comment);
         interviewCommentDao.create(iCom);
     }
-    public void addCandidate(String fio, String date, String banned)  throws SQLException{
+    public Candidate addCandidate(String fio, String date, String banned)  throws SQLException{
         Candidate candidate = new Candidate();
         candidate.setFio(fio);
         candidate.setBornDate(date);
         candidate.setBanned(banned);
         candidateDao.create(candidate);
+        return candidate;
     }
     //Удалить
     public void delCategoryById(int id)  throws SQLException{
