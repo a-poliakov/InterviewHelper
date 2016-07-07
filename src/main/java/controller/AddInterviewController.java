@@ -58,16 +58,10 @@ public class AddInterviewController {
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
 
     public void init() throws SQLException {
-        // устанавливаем тип и значение которое должно хранится в колонке
-        valueCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Double>("value"));
-        categoryCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Category>("category"));
-        // заполняем таблицу данными
-        marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(0));
-        categoriesTable.setItems(marks);
     }
 
     public void addInterview(){
-        interviewId = -1;
+        interviewId = 0;
     }
 
     public void editInterview(int id) throws SQLException {
@@ -83,6 +77,13 @@ public class AddInterviewController {
         interviewerEdit.setText(interview.getIdInterviewer().getFio());
         marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(id));
 
+        // устанавливаем тип и значение которое должно хранится в колонке
+        valueCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Double>("value"));
+        categoryCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Category>("category"));
+        // заполняем таблицу данными
+        marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(interviewId));
+        categoriesTable.setItems(marks);
+
         InterviewComment interviewComment = HelperFactory.getHelper().getInterviewCommentByIdInterview(interviewId);
         expEdit.setText(interviewComment.getExperience());
         recommendationEdit.setText(interviewComment.getRecommendations());
@@ -92,7 +93,7 @@ public class AddInterviewController {
 
     private void saveInterview() throws SQLException {
         DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT);
-        if(interviewId == -1){
+        if(interviewId == 0){
             HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
         } else{
 //            HelperFactory.getHelper().editInterviewDate();
