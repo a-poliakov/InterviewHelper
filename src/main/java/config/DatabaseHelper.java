@@ -43,13 +43,24 @@ public class DatabaseHelper {
      * @param fio ФамилияИмяОтчество необходимого кандидата
      * @return List<Interview> все подходящие интервью
      */
+    public List<Interview> getInterviewsByCandidateFioAndDateAndPost(String fio, String post, String date) throws SQLException {
+        QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
+        QueryBuilder<Candidate, Integer> candidateQueryBuilder = candidateDao.queryBuilder();
+        candidateQueryBuilder.where().like("fio","%" + fio + "%");
+        interviewQueryBuilder.leftJoin(candidateQueryBuilder);
+        interviewQueryBuilder.where().like("Date", "%" + date + "%").and().like("Post","%" + post + "%");
+        PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
+        List<Interview> interviews = interviewDao.query(preparedQuery);
+        return interviews;
+
+    }
     public List<Interview> getInterviewsByCandidateFio(String fio) throws SQLException {
         // первая таблица в запросе
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
         // присоединяемая таблица
         QueryBuilder<Candidate, Integer> candidateQueryBuilder = candidateDao.queryBuilder();
         // делаем выборку по полям присоединяемой таблицы
-        candidateQueryBuilder.where().like("fio", fio + "%");
+        candidateQueryBuilder.where().like("fio","%" + fio + "%");
         // делаем left join
         interviewQueryBuilder.leftJoin(candidateQueryBuilder);
         // готово!
@@ -64,7 +75,7 @@ public class DatabaseHelper {
 
     public List<Interview> getInterviewsByDate(String date) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
-        interviewQueryBuilder.where().like("Date", date + "%");
+        interviewQueryBuilder.where().like("Date", "%" + date + "%");
         PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
@@ -72,7 +83,7 @@ public class DatabaseHelper {
 
     public List<Interview> getInterviewsByPost(String post) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
-        interviewQueryBuilder.where().like("Post", post + "%");
+        interviewQueryBuilder.where().like("Post","%" + post + "%");
         PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
@@ -284,10 +295,11 @@ public class DatabaseHelper {
         candidateDao.delete(candidate);
     }
     //Редактировать
-    public void editInterview(int idInterview, String date, String result, String post)  throws SQLException{
+    public void editInterview(int idInterview, String date, String result, String post, List<CategoryRow> marks)  throws SQLException{
         editInterviewDate(idInterview, date);
         editInterviewResult(idInterview, result);
         editInterviewPost(idInterview, post);
+        editInterviewMarks(idInterview, marks);
     }
 
     public void editInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{

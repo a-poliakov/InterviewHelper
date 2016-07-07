@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MainConsoleDao {
     public static void main(String[] args) throws SQLException {
-        System.out.println(HelperFactory.getHelper().getInterviewMarksAll(0));
+        System.out.println(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost("Макс", "01", "стар"));
     }
 //    public static void ()
 //    {

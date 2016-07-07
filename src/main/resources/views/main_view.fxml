@@ -43,9 +43,9 @@
       </SplitPane>
       <AnchorPane prefHeight="30.0" prefWidth="600.0">
          <children>
-            <TextField fx:id="fioFilter" layoutX="3.0" layoutY="2.0" onAction="#onFioFilter" prefHeight="25.0" prefWidth="196.0" AnchorPane.leftAnchor="3.0" />
-            <TextField fx:id="postFilter" layoutX="202.0" layoutY="2.0" onAction="#onPostFilter" prefHeight="25.0" prefWidth="196.0" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="202.0" />
-            <TextField fx:id="dateFilter" layoutX="401.0" layoutY="2.0" onAction="#onDateFilter" prefHeight="25.0" prefWidth="196.0" AnchorPane.rightAnchor="3.0" />
+            <TextField fx:id="fioFilter" layoutX="3.0" layoutY="2.0" onAction="#onFilter" prefHeight="25.0" prefWidth="196.0" AnchorPane.leftAnchor="3.0" />
+            <TextField fx:id="postFilter" layoutX="202.0" layoutY="2.0" onAction="#onFilter" prefHeight="25.0" prefWidth="196.0" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="202.0" />
+            <TextField fx:id="dateFilter" layoutX="401.0" layoutY="2.0" onAction="#onFilter" prefHeight="25.0" prefWidth="196.0" AnchorPane.rightAnchor="3.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="294.0" prefWidth="600.0">

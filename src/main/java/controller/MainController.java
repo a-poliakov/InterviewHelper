@@ -116,36 +116,16 @@ public class MainController {
     }
 
     @FXML
-    private void onFioFilter() throws SQLException {
-        String filter = fioFilter.getText();
-        //System.out.print(filter);
+    private void onFilter() throws SQLException {
+
+        String fio = fioFilter.getText();
+        String post = postFilter.getText();
+        String date = dateFilter.getText();
         interviews.clear();
-        interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFio(filter));
+        interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
         mainTable.getItems().removeAll();
         mainTable.setItems(interviews);
     }
-
-    @FXML
-    private void onPostFilter() throws SQLException {
-        String filter = postFilter.getText();
-        //System.out.print(filter);
-        interviews.clear();
-        interviews.addAll(HelperFactory.getHelper().getInterviewsByPost(filter));
-        mainTable.getItems().removeAll();
-        mainTable.setItems(interviews);
-    }
-
-    @FXML
-    private void onDateFilter() throws SQLException {
-
-        String filter = dateFilter.getText();
-        //System.out.print(filter);
-        interviews.clear();
-        interviews.addAll(HelperFactory.getHelper().getInterviewsByDate(filter));
-        mainTable.getItems().removeAll();
-        mainTable.setItems(interviews);
-    }
-
     private void showAddInterviewDlg() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL url = getClass().getClassLoader().getResource(FXML_ADD_INTERVIEW_DLG);
