@@ -107,17 +107,17 @@ public class AddInterviewController {
     }
 
     private void saveInterview() throws SQLException {
-        DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT);
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         if(interviewId == 0){
             Interview interview = HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
             HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
             HelperFactory.getHelper().addInterviewMarks(interview.getIdInterview(), marks);
         } else{
-            HelperFactory.getHelper().editInterviewDate(interviewId, df.format(datePicker.getValue()));
+            //HelperFactory.getHelper().editInterviewDate(interviewId, df.format(datePicker.getValue()));
             //HelperFactory.getHelper().editInterviewInterviewer(interviewId, interviewerEdit.getText());
             HelperFactory.getHelper().editInterviewPost(interviewId, postEdit.getText());
             HelperFactory.getHelper().editInterviewResult(interviewId, resultEdit.getText());
-            HelperFactory.getHelper().editInterviewMarks(interview.getIdInterview(), marks);
+            HelperFactory.getHelper().editInterviewMarks(interviewId, marks);
         }
     }
 }

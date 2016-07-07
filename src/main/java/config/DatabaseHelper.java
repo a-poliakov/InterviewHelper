@@ -100,7 +100,7 @@ public class DatabaseHelper {
             }
         }
         // TODO: 07.07.2016 Костыль создания новых пользователей
-        return addCandidate(fio, null, "-");
+        return addCandidate(fio, "01.02.1975", "-");
     }
     public Interviewer getInterviewerByFio(String fio) throws SQLException{
         //если не нашел, то создаст нового
@@ -325,7 +325,7 @@ public class DatabaseHelper {
     }
     public void editInterviewPost(int idInterview, String post)throws SQLException{
         Interview interview = getInterviewById(idInterview);
-        interview.setResult(post);
+        interview.setPost(post);
         interviewDao.createOrUpdate(interview);
     }
     public void editInterviewInterviewer(int idInterview, int idInterviewer)throws SQLException{
