@@ -11,7 +11,7 @@ import java.net.URL;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
 public class UIEntry  extends Application {
-    private static final String FXML_MAIN = "views/add_interview.fxml";
+    private static final String FXML_MAIN = "views/main_view.fxml";
 
     private Stage primaryStage;
     private MainController mainController; // пока не нужен

@@ -64,7 +64,5 @@ public class AddInterviewController {
         datePicker.setValue(date);
         marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(id));
 
-
-
     }
 }
