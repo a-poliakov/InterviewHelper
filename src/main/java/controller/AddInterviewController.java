@@ -4,22 +4,19 @@ import config.HelperFactory;
 import entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 import model.CategoryRow;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.ResourceBundle;
-
-import static config.HelperFactory.getHelper;
 
 public class AddInterviewController {
     private int interviewId;
@@ -72,43 +69,97 @@ public class AddInterviewController {
 
     public void addInterview() throws SQLException {
         interviewId = 0;
-        // устанавливаем тип и значение которое должно хранится в колонке
-        valueCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Double>("value"));
-        categoryCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Category>("category"));
-        // заполняем таблицу данными
-        marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(interviewId));
-        categoriesTable.setItems(marks);
+        try {
+            // устанавливаем тип и значение которое должно хранится в колонке
+            valueCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Double>("value"));
+            categoryCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Category>("category"));
+            // заполняем таблицу данными
+            marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(interviewId));
+            categoriesTable.setItems(marks);
+            categoriesTable.setEditable(true);
+            StringConverter<Double> converter = new StringConverter<Double>() {
+                @Override
+                public String toString(Double object) {
+                    return object.toString();
+                }
+
+                @Override
+                public Double fromString(String string) {
+                    return Double.parseDouble(string);
+                }
+            };
+            valueCol.setCellFactory(
+                    TextFieldTableCell.<CategoryRow,Double>forTableColumn(converter));
+            valueCol.setOnEditCommit(
+                    (TableColumn.CellEditEvent<CategoryRow, Double> t) -> {
+                        ((CategoryRow) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setValue(t.getNewValue());
+                    });
+        }catch (Exception e){
+
+        }
     }
 
     public void editInterview(int id) throws SQLException {
         interviewId = id;
         Interview interview = HelperFactory.getHelper().getInterviewById(id);
-        fioEdit.setText(interview.getIdCandidate().getFio());
-        postEdit.setText(interview.getPost());
-        resultEdit.setText(interview.getResult());
+        try {
+            fioEdit.setText(interview.getIdCandidate().getFio());
+        } catch (Exception e){}
+        try {
+            postEdit.setText(interview.getPost());
+        } catch (Exception e){}
+        try {
+            resultEdit.setText(interview.getResult());
+        } catch (Exception e){}
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            LocalDate date = LocalDate.parse(interview.getDate(), formatter);
+            datePicker.setValue(date);
+        } catch (Exception e){}
+        try {
+            interviewerEdit.setText(interview.getIdInterviewer().getFio());
+        } catch (Exception e){}
+        try {
+            // устанавливаем тип и значение которое должно хранится в колонке
+            valueCol.setCellValueFactory(new PropertyValueFactory("value"));
+            categoryCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Category>("category"));
+            // заполняем таблицу данными
+            marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(interviewId));
+            categoriesTable.setItems(marks);
+            categoriesTable.setEditable(true);
+            StringConverter<Double> converter = new StringConverter<Double>() {
+                @Override
+                public String toString(Double object) {
+                    return object.toString();
+                }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate date = LocalDate.parse(interview.getDate(), formatter);
-        datePicker.setValue(date);
-        interviewerEdit.setText(interview.getIdInterviewer().getFio());
-
-        // устанавливаем тип и значение которое должно хранится в колонке
-        valueCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Double>("value"));
-        categoryCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Category>("category"));
-        // заполняем таблицу данными
-        marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(interviewId));
-        categoriesTable.setItems(marks);
-
-        InterviewComment interviewComment = HelperFactory.getHelper().getInterviewCommentByIdInterview(interviewId);
-        // TODO: 07.07.2016 Нарушена целостность базы данных. Поэтому если у интервью нет interviewComment то создадим пустой
-        if(interviewComment == null)
-        {
-            interviewComment = HelperFactory.getHelper().addInterviewComment(interviewId, "", "", "", "");
-        }
-        expEdit.setText(interviewComment.getExperience());
-        recommendationEdit.setText(interviewComment.getRecommendations());
-        lastWorkEdit.setText(interviewComment.getLastWork());
-        commentsEdit.setText(interviewComment.getComment());
+                @Override
+                public Double fromString(String string) {
+                    return Double.parseDouble(string);
+                }
+            };
+            valueCol.setCellFactory(
+                    TextFieldTableCell.<CategoryRow, Double>forTableColumn(converter));
+            valueCol.setOnEditCommit(
+                    (TableColumn.CellEditEvent<CategoryRow, Double> t) -> {
+                        ((CategoryRow) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setValue(t.getNewValue());
+                    });
+        } catch (Exception e){}
+        try {
+            InterviewComment interviewComment = HelperFactory.getHelper().getInterviewCommentByIdInterview(interviewId);
+            // TODO: 07.07.2016 Нарушена целостность базы данных. Поэтому если у интервью нет interviewComment то создадим пустой
+            if (interviewComment == null) {
+                interviewComment = HelperFactory.getHelper().addInterviewComment(interviewId, "", "", "", "");
+            }
+            expEdit.setText(interviewComment.getExperience());
+            recommendationEdit.setText(interviewComment.getRecommendations());
+            lastWorkEdit.setText(interviewComment.getLastWork());
+            commentsEdit.setText(interviewComment.getComment());
+        } catch (Exception e){}
     }
 
     private void saveInterview() throws SQLException {
