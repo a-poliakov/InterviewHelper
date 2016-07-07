@@ -1,5 +1,6 @@
 package view;
 
+import controller.AddInterviewController;
 import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -53,8 +54,8 @@ public class UIEntry  extends Application {
         currentRoot = loadFXML();
         Scene scene = new Scene(currentRoot, 600, 400);
         primaryStage.setScene(scene);
-        primaryStage.setMinHeight(600);
-        primaryStage.setMinWidth(400);
+        primaryStage.setMinHeight(400);
+        primaryStage.setMinWidth(600);
         primaryStage.setResizable(false);
         primaryStage.show();
     }

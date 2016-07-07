@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <SplitPane dividerPositions="0.7558528428093646" prefHeight="80.0" prefWidth="600.0">
         <items>
@@ -27,11 +26,11 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="115.0">
                <children>
-                  <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="⚙" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
+                  <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddInterviewerAction" prefHeight="50.0" prefWidth="50.0" text="⚙" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
                      <font>
                         <Font size="22.0" />
                      </font></Button>
-                  <Button layoutX="38.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="+" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="14.0">
+                  <Button layoutX="38.0" layoutY="14.0" mnemonicParsing="false" onAction="#onNewInterviewAction" prefHeight="50.0" prefWidth="50.0" text="+" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="14.0">
                      <font>
                         <Font name="Britannic Bold" size="24.0" />
                      </font></Button>
@@ -44,18 +43,18 @@
       </SplitPane>
       <AnchorPane prefHeight="30.0" prefWidth="600.0">
          <children>
-            <TextField layoutX="3.0" layoutY="2.0" prefHeight="25.0" prefWidth="196.0" AnchorPane.leftAnchor="3.0" />
-            <TextField layoutX="202.0" layoutY="2.0" prefHeight="25.0" prefWidth="196.0" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="202.0" />
-            <TextField layoutX="401.0" layoutY="2.0" prefHeight="25.0" prefWidth="196.0" AnchorPane.rightAnchor="3.0" />
+            <TextField fx:id="fioFilter" layoutX="3.0" layoutY="2.0" onAction="#onFioFilter" prefHeight="25.0" prefWidth="196.0" AnchorPane.leftAnchor="3.0" />
+            <TextField fx:id="postFilter" layoutX="202.0" layoutY="2.0" onAction="#onPostFilter" prefHeight="25.0" prefWidth="196.0" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="202.0" />
+            <TextField fx:id="dateFilter" layoutX="401.0" layoutY="2.0" onAction="#onDateFilter" prefHeight="25.0" prefWidth="196.0" AnchorPane.rightAnchor="3.0" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="288.0" prefWidth="600.0">
+      <AnchorPane prefHeight="294.0" prefWidth="600.0">
          <children>
-            <TableView prefHeight="288.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="mainTable" layoutY="7.0" prefHeight="289.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="198.0" text="ФИО" />
-                <TableColumn prefWidth="201.0" text="Должность" />
-                  <TableColumn prefWidth="75.0" text="Дата" />
+                <TableColumn fx:id="fioColumn" prefWidth="198.0" text="ФИО" />
+                <TableColumn fx:id="postColumn" prefWidth="201.0" text="Должность" />
+                  <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Дата" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

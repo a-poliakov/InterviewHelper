@@ -64,7 +64,7 @@ public class DatabaseHelper {
 
     public List<Interview> getInterviewsByDate(String date) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
-        interviewQueryBuilder.where().eq("Date", date);
+        interviewQueryBuilder.where().like("Date", date + "%");
         PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
@@ -72,12 +72,60 @@ public class DatabaseHelper {
 
     public List<Interview> getInterviewsByPost(String post) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
-        interviewQueryBuilder.where().eq("Post", post);
+        interviewQueryBuilder.where().like("Post", post + "%");
         PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
     }
+    //Получить по полям
+    public Mark getMarkByInterviewAndCategory(int idInterview,String categoryName)throws SQLException{
+        List<Mark> marks = getInterviewMarks(idInterview);
+        for(Mark mark: marks)
+        {
+            if(mark.getIdCategory().getName().equals(categoryName))
+            {
+                return mark;
+            }
+        }
+        // TODO: 07.07.2016 Костыль
+        return null;
+    }
+    public Candidate getCandidateByFio(String fio)throws SQLException{
+        List<Candidate> candidates = candidateDao.queryForAll();
+        for(Candidate candidate: candidates)
+        {
+            if(candidate.getFio().equals(fio))
+            {
+                return candidate;
+            }
+        }
+        // TODO: 07.07.2016 Костыль создания новых пользователей
+        return addCandidate(fio, "01.02.1975", "-");
+    }
+    public Interviewer getInterviewerByFio(String fio) throws SQLException{
+        //если не нашел, то создаст нового
+        List<Interviewer> interviewers = interviewerDao.queryForAll();
+        for(Interviewer interviewer: interviewers)
+        {
+            if(interviewer.getFio().equals(fio))
+            {
+                return interviewer;
+            }
+        }
+        return addInterviewer(fio);
+    }
     //Получить по Id
+    public InterviewComment getInterviewCommentByIdInterview(int id)throws SQLException{
+        List<InterviewComment> interviewComments = interviewCommentDao.queryForAll();
+        for(InterviewComment ic: interviewComments)
+        {
+            if(ic.getIdInterview().getIdInterview() == id)
+            {
+                return ic;
+            }
+        }
+        return null;
+    }
     public List<CategoryRow> getInterviewMarksAll(int idInterview)throws SQLException  {
         List<Category> categories = getCategories();
         List<Mark> marks = getInterviewMarks(idInterview);
@@ -91,7 +139,6 @@ public class DatabaseHelper {
                     categoryRow.setValue(mark.getValue());
                 }
             }
-
             categoryRows.add(categoryRow);
         }
         return categoryRows;
@@ -154,35 +201,48 @@ public class DatabaseHelper {
         return interviewerDao.queryForAll();
     }
     //Добавить
-    public void addInterview(int idCandidate, int idInterviewer, String date, String result, String post)  throws SQLException{
+    public void addInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{
+        for(CategoryRow cat:marks)
+        {
+            if(cat.getValue() != 0)
+            {
+                addMark(cat.getCategory().getIdCategory(), idInterview, cat.getValue());
+            }
+        }
+    }
+    public Interview addInterview(String candidate, String interviewer, String date, String result, String post)  throws SQLException{
         Interview interview = new Interview();
-        interview.setIdCandidate(getCandidateById(idCandidate));
-        interview.setIdInterviewer(getInterviewerById(idInterviewer));
+        interview.setIdCandidate(getCandidateByFio(candidate));
+        interview.setIdInterviewer(getInterviewerByFio(interviewer));
         interview.setDate(date);
         interview.setResult(result);
         interview.setPost(post);
         interviewDao.create(interview);
+       return interview;
     }
-    public void addInterviewer(String fio)  throws SQLException{
+    public Interviewer addInterviewer(String fio)  throws SQLException{
         Interviewer interviewer = new Interviewer();
         interviewer.setFio(fio);
         // TODO: 05.07.2016 Что делать при неудачной вставке? Исключение или возвращать false?
         interviewerDao.create(interviewer);
+        return interviewer;
     }
-    public void addCategory(String name)  throws SQLException{
+    public Category addCategory(String name)  throws SQLException{
         Category category = new Category();
         category.setName(name);
         categoryDao.create(category);
+        return category;
     }
-    public void addMark(int idCategory, int idInterview, double value)  throws SQLException{
+    public Mark addMark(int idCategory, int idInterview, double value)  throws SQLException{
         //Перед добавлением оценки, убедись, что создано интервью!
         Mark mark = new Mark();
         mark.setIdCategory(getCategoryById(idCategory));
         mark.setIdInterview(getInterviewById(idInterview));
         mark.setValue(value);
         markDao.create(mark);
+        return mark;
     }
-    public void addInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)throws SQLException{
+    public InterviewComment addInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)throws SQLException{
         InterviewComment iCom = new InterviewComment();
         iCom.setIdInterview(getInterviewById(idInterview));
         iCom.setExperience(experience);
@@ -190,13 +250,15 @@ public class DatabaseHelper {
         iCom.setLastWork(lastWork);
         iCom.setComment(comment);
         interviewCommentDao.create(iCom);
+        return iCom;
     }
-    public void addCandidate(String fio, String date, String banned)  throws SQLException{
+    public Candidate addCandidate(String fio, String date, String banned)  throws SQLException{
         Candidate candidate = new Candidate();
         candidate.setFio(fio);
         candidate.setBornDate(date);
         candidate.setBanned(banned);
         candidateDao.create(candidate);
+        return candidate;
     }
     //Удалить
     public void delCategoryById(int id)  throws SQLException{
@@ -222,10 +284,50 @@ public class DatabaseHelper {
         candidateDao.delete(candidate);
     }
     //Редактировать
+    public void editInterview(int idInterview, String date, String result, String post)  throws SQLException{
+        editInterviewDate(idInterview, date);
+        editInterviewResult(idInterview, result);
+        editInterviewPost(idInterview, post);
+    }
+
+    public void editInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{
+        for(CategoryRow cat:marks)
+        {
+            if(cat.getValue() != 0)
+            {
+                editMark(idInterview, cat.getCategory().getName(),  cat.getValue());
+            }
+        }
+    }
+    public void editMark(int idInterview, String categoryName, double value)throws SQLException {
+        Mark mark = getMarkByInterviewAndCategory(idInterview, categoryName);
+        mark.setValue(value);
+        markDao.createOrUpdate(mark);
+    }
     public void editCategory(int id, String name)throws SQLException{
         Category cat = getCategoryById(id);
         cat.setName(name);
         categoryDao.createOrUpdate(cat);
     }
 
+    public void editInterviewDate(int idInterview, String date)throws SQLException{
+        Interview interview = getInterviewById(idInterview);
+        interview.setDate(date);
+        interviewDao.createOrUpdate(interview);
+    }
+    public void editInterviewResult(int idInterview, String result)throws SQLException{
+        Interview interview = getInterviewById(idInterview);
+        interview.setResult(result);
+        interviewDao.createOrUpdate(interview);
+    }
+    public void editInterviewPost(int idInterview, String post)throws SQLException{
+        Interview interview = getInterviewById(idInterview);
+        interview.setPost(post);
+        interviewDao.createOrUpdate(interview);
+    }
+    public void editInterviewInterviewer(int idInterview, int idInterviewer)throws SQLException{
+        Interview interview = getInterviewById(idInterview);
+        interview.setIdInterviewer(getInterviewerById(idInterviewer));
+        interviewDao.createOrUpdate(interview);
+    }
 }
