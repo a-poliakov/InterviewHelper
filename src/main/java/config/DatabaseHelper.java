@@ -127,7 +127,6 @@ public class DatabaseHelper {
                     categoryRow.setValue(mark.getValue());
                 }
             }
-
             categoryRows.add(categoryRow);
         }
         return categoryRows;
@@ -190,6 +189,7 @@ public class DatabaseHelper {
         return interviewerDao.queryForAll();
     }
     //Добавить
+    public void
     public Interview addInterview(String candidate, String interviewer, String date, String result, String post)  throws SQLException{
         Interview interview = new Interview();
         interview.setIdCandidate(getCandidateByFio(candidate));
@@ -213,15 +213,16 @@ public class DatabaseHelper {
         categoryDao.create(category);
         return category;
     }
-    public void addMark(int idCategory, int idInterview, double value)  throws SQLException{
+    public Mark addMark(int idCategory, int idInterview, double value)  throws SQLException{
         //Перед добавлением оценки, убедись, что создано интервью!
         Mark mark = new Mark();
         mark.setIdCategory(getCategoryById(idCategory));
         mark.setIdInterview(getInterviewById(idInterview));
         mark.setValue(value);
         markDao.create(mark);
+        return mark;
     }
-    public void addInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)throws SQLException{
+    public InterviewComment addInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)throws SQLException{
         InterviewComment iCom = new InterviewComment();
         iCom.setIdInterview(getInterviewById(idInterview));
         iCom.setExperience(experience);
@@ -229,6 +230,7 @@ public class DatabaseHelper {
         iCom.setLastWork(lastWork);
         iCom.setComment(comment);
         interviewCommentDao.create(iCom);
+        return iCom;
     }
     public Candidate addCandidate(String fio, String date, String banned)  throws SQLException{
         Candidate candidate = new Candidate();
@@ -262,6 +264,16 @@ public class DatabaseHelper {
         candidateDao.delete(candidate);
     }
     //Редактировать
+//    public Interview editInterview(String candidate, String interviewer, String date, String result, String post)  throws SQLException{
+//        Interview interview = new Interview();
+//        interview.setIdCandidate(getCandidateByFio(candidate));
+//        interview.setIdInterviewer(getInterviewerByFio(interviewer));
+//        interview.setDate(date);
+//        interview.setResult(result);
+//        interview.setPost(post);
+//        interviewDao.create(interview);
+//        return interview;
+//    }
     public void editCategory(int id, String name)throws SQLException{
         Category cat = getCategoryById(id);
         cat.setName(name);
