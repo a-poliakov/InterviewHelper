@@ -44,23 +44,20 @@ public class AddInterviewController {
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();;
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
 
-    @FXML
-    public void initialize() {
-
-    }
-
     public void addInterview(){
         interviewId = -1;
     }
 
     public void editInterview(int id) throws SQLException {
         //заполнение
+        //System.out.print(id);
+
         interviewId = id;
         Interview interview = HelperFactory.getHelper().getInterviewById(id);
         postEdit.setText(interview.getIdCandidate().getFio());
         resultEdit.setText(interview.getResult());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate date = LocalDate.parse("2005-nov-12", formatter);
+        LocalDate date = LocalDate.parse("12.11.2015", formatter);
         datePicker.setValue(date);
         marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(id));
 

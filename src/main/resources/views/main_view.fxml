@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <SplitPane dividerPositions="0.7558528428093646" prefHeight="80.0" prefWidth="600.0">
         <items>
@@ -31,7 +31,7 @@
                      <font>
                         <Font size="22.0" />
                      </font></Button>
-                  <Button layoutX="38.0" layoutY="14.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" text="+" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="14.0">
+                  <Button layoutX="38.0" layoutY="14.0" mnemonicParsing="false" onAction="#onNewInterviewAction" prefHeight="50.0" prefWidth="50.0" text="+" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="14.0">
                      <font>
                         <Font name="Britannic Bold" size="24.0" />
                      </font></Button>
@@ -51,11 +51,11 @@
       </AnchorPane>
       <AnchorPane prefHeight="288.0" prefWidth="600.0">
          <children>
-            <TableView prefHeight="288.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="mainTable" prefHeight="288.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
-                <TableColumn prefWidth="198.0" text="ФИО" />
-                <TableColumn prefWidth="201.0" text="Должность" />
-                  <TableColumn prefWidth="75.0" text="Дата" />
+                <TableColumn fx:id="fioColumn" prefWidth="198.0" text="ФИО" />
+                <TableColumn fx:id="postColumn" prefWidth="201.0" text="Должность" />
+                  <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Дата" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
