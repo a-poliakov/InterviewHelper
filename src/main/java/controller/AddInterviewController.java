@@ -6,10 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.CategoryRow;
 
 import java.net.URL;
@@ -24,46 +22,84 @@ import static config.HelperFactory.getHelper;
 
 public class AddInterviewController {
     private int interviewId;
+    private int candidateId;
+    private int interviwerId;
+
     ObservableList<CategoryRow> marks = FXCollections.observableArrayList();
 
     @FXML
     TableView<CategoryRow> categoriesTable;
+    // Задел на будущее
     @FXML
     TableColumn<CategoryRow, Double> valueCol;
     @FXML
-    TableColumn<CategoryRow, Integer> idCol;
-    @FXML
     TableColumn<CategoryRow, Category> categoryCol;
 
+    @FXML
+    private TextField fioEdit;
     @FXML
     private TextField postEdit;
     @FXML
     private TextField resultEdit;
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private TextField interviewerEdit;
+    @FXML
+    private TextField expEdit;
+    @FXML
+    private TextField recommendationEdit;
+    @FXML
+    private TextField lastWorkEdit;
+    @FXML
+    private TextArea commentsEdit;
 
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();;
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
+
+    public void init() throws SQLException {
+        // устанавливаем тип и значение которое должно хранится в колонке
+        valueCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Double>("value"));
+        categoryCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Category>("category"));
+        // заполняем таблицу данными
+        marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(0));
+        categoriesTable.setItems(marks);
+    }
 
     public void addInterview(){
         interviewId = -1;
     }
 
     public void editInterview(int id) throws SQLException {
-        //заполнение
-        //System.out.print(id);
-
         interviewId = id;
         Interview interview = HelperFactory.getHelper().getInterviewById(id);
-        postEdit.setText(interview.getIdCandidate().getFio());
+        fioEdit.setText(interview.getIdCandidate().getFio());
+        postEdit.setText(interview.getPost());
         resultEdit.setText(interview.getResult());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate date = LocalDate.parse("12.11.2015", formatter);
+        LocalDate date = LocalDate.parse(interview.getDate(), formatter);
         datePicker.setValue(date);
+        interviewerEdit.setText(interview.getIdInterviewer().getFio());
         marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(id));
 
+        InterviewComment interviewComment = HelperFactory.getHelper().getInterviewCommentByIdInterview(interviewId);
+        expEdit.setText(interviewComment.getExperience());
+        recommendationEdit.setText(interviewComment.getRecommendations());
+        lastWorkEdit.setText(interviewComment.getLastWork());
+        commentsEdit.setText(interviewComment.getComment());
+    }
 
-
+    private void saveInterview() throws SQLException {
+        DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT);
+        if(interviewId == -1){
+            HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
+        } else{
+//            HelperFactory.getHelper().editInterviewDate();
+//            HelperFactory.getHelper().editCategory();
+//            HelperFactory.getHelper().editInterviewInterviewer();
+//            HelperFactory.getHelper().editInterviewPost();
+//            HelperFactory.getHelper().editInterviewResult();
+        }
     }
 }
