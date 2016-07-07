@@ -57,11 +57,18 @@ public class AddInterviewController {
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();;
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
 
+
     public void init() throws SQLException {
     }
 
-    public void addInterview(){
+    public void addInterview() throws SQLException {
         interviewId = 0;
+        // устанавливаем тип и значение которое должно хранится в колонке
+        valueCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Double>("value"));
+        categoryCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Category>("category"));
+        // заполняем таблицу данными
+        marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(interviewId));
+        categoriesTable.setItems(marks);
     }
 
     public void editInterview(int id) throws SQLException {
@@ -70,12 +77,11 @@ public class AddInterviewController {
         fioEdit.setText(interview.getIdCandidate().getFio());
         postEdit.setText(interview.getPost());
         resultEdit.setText(interview.getResult());
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate date = LocalDate.parse(interview.getDate(), formatter);
         datePicker.setValue(date);
         interviewerEdit.setText(interview.getIdInterviewer().getFio());
-        marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(id));
 
         // устанавливаем тип и значение которое должно хранится в колонке
         valueCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Double>("value"));
@@ -94,13 +100,17 @@ public class AddInterviewController {
     private void saveInterview() throws SQLException {
         DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT);
         if(interviewId == 0){
-            HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
+            Interview interview = HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
+            HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
+            HelperFactory.getHelper().addInterviewCategories(interview.getIdInterview(), marks);
         } else{
+
 //            HelperFactory.getHelper().editInterviewDate();
 //            HelperFactory.getHelper().editCategory();
 //            HelperFactory.getHelper().editInterviewInterviewer();
 //            HelperFactory.getHelper().editInterviewPost();
 //            HelperFactory.getHelper().editInterviewResult();
+              HelperFactory.getHelper().editInterviewCategories(interview.getIdInterview(), marks);
         }
     }
 }
