@@ -314,12 +314,17 @@ public class DatabaseHelper {
         {
             if(cat.getValue() != 0)
             {
-                editMark(idInterview, cat.getCategory().getName(),  cat.getValue());
+                editMark(idInterview, cat.getCategory().getIdCategory(),  cat.getValue());
             }
         }
     }
-    public void editMark(int idInterview, String categoryName, double value)throws SQLException {
-        Mark mark = getMarkByInterviewAndCategory(idInterview, categoryName);
+    public void editMark(int idInterview, int idCategory, double value)throws SQLException {
+        Mark mark = getMarkByInterviewAndCategory(idInterview, getCategoryById(idCategory).getName());
+        if(mark == null)
+        {
+            addMark(idCategory,idInterview, value);
+            return ;
+        }
         mark.setValue(value);
         markDao.createOrUpdate(mark);
     }
