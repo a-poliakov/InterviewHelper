@@ -52,7 +52,6 @@ public class DatabaseHelper {
         PreparedQuery<Interview> preparedQuery = interviewQueryBuilder.prepare();
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
-
     }
     public List<Interview> getInterviewsByCandidateFio(String fio) throws SQLException {
         // первая таблица в запросе
