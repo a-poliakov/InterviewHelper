@@ -6,15 +6,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import model.CategoryRow;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +31,8 @@ public class AddInterviewController {
     private Stage dlgStage;
 
     ObservableList<CategoryRow> marks = FXCollections.observableArrayList();
+    private static final String FXML_ADD_CANDIDATE_DLG = "views/add_candidate_dlg.fxml";
+    private static final String FXML_ADD_INTERVIEWER_DLG = "views/add_interviewer_dlg.fxml";
 
     @FXML
     TableView<CategoryRow> categoriesTable;
@@ -34,6 +41,15 @@ public class AddInterviewController {
     TableColumn<CategoryRow, Double> valueCol;
     @FXML
     TableColumn<CategoryRow, Category> categoryCol;
+
+
+    private VBox addInterviewerDlg;
+
+    private VBox addCandidateDlg;
+
+    private AddCandidateController addCandidateController;
+
+    private Stage primaryStage;
 
     @FXML
     private TextField fioEdit;
@@ -55,9 +71,15 @@ public class AddInterviewController {
     private TextArea commentsEdit;
     @FXML
     private Button okBtn;
+    @FXML
+    private Button addCan;
+    @FXML
+    private Button addInter;
 
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();;
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
+    private Stage dlg1Stage;
+    private Stage dlgStageNew;
 
 
     public void init(Stage stage) throws SQLException {
@@ -67,6 +89,31 @@ public class AddInterviewController {
     @FXML
     private void onDialogResult() throws IOException, SQLException {
         saveInterview();
+    }
+
+    @FXML
+    private  void addCanClick() throws IOException,SQLException{
+        ShowAddCandidateDialog();
+    }
+
+
+    public void ShowAddCandidateDialog() throws  IOException,SQLException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        URL url = getClass().getClassLoader().getResource(FXML_ADD_CANDIDATE_DLG);
+        fxmlLoader.setLocation(url);
+        VBox node = null;
+        node = (VBox) fxmlLoader.load();
+        addCandidateController = fxmlLoader.getController();
+        addCandidateDlg = node;
+        Scene scene = new Scene(addCandidateDlg, 419.0, 180);
+        dlgStageNew = new Stage();
+        dlgStageNew.setScene(scene);
+        dlgStageNew.setMinHeight(180);
+        dlgStageNew.setMinWidth(419.0);
+        dlgStageNew.initModality(Modality.WINDOW_MODAL);
+        dlgStageNew.initOwner(dlgStage);
+        addCandidateController.init(dlgStageNew);
+        dlgStageNew.showAndWait();
     }
 
     public void addInterview() throws SQLException {
@@ -176,5 +223,8 @@ public class AddInterviewController {
             HelperFactory.getHelper().editInterviewComment(interviewId, expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
         }
         dlgStage.close();
+    }
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 }
