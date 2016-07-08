@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import model.CategoryRow;
@@ -22,6 +23,7 @@ public class AddInterviewController {
     private int interviewId;
     private int candidateId;
     private int interviwerId;
+    private Stage dlgStage;
 
     ObservableList<CategoryRow> marks = FXCollections.observableArrayList();
 
@@ -58,8 +60,8 @@ public class AddInterviewController {
     ObservableList<Candidate> candidates = FXCollections.observableArrayList();
 
 
-    public void init() throws SQLException {
-
+    public void init(Stage stage) throws SQLException {
+        dlgStage = stage;
     }
 
     @FXML
@@ -173,5 +175,6 @@ public class AddInterviewController {
             HelperFactory.getHelper().editInterview(interviewId, df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText(), marks);
             HelperFactory.getHelper().editInterviewComment(interviewId, expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
         }
+        dlgStage.close();
     }
 }
