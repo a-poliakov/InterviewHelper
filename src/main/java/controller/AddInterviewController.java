@@ -113,6 +113,7 @@ public class AddInterviewController {
         dlgStageNew.initModality(Modality.WINDOW_MODAL);
         dlgStageNew.initOwner(dlgStage);
         addCandidateController.init(dlgStageNew);
+        addCandidateController.editCandidate(fioEdit.getText());
         dlgStageNew.showAndWait();
     }
 

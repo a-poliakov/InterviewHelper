@@ -6,6 +6,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
+import dao.impl.CandidateDao;
 import entity.*;
 import model.*;
 import java.sql.SQLException;
@@ -352,4 +353,12 @@ public class DatabaseHelper {
         interview.setIdInterviewer(getInterviewerById(idInterviewer));
         interviewDao.createOrUpdate(interview);
     }
+    public void editCandidate(String fio,String date,String ban) throws SQLException {
+        Candidate candidate = getCandidateByFio(fio);
+        candidate.setFio(fio);
+        candidate.setBornDate(date);
+        candidate.setBanned(ban);
+        candidateDao.createOrUpdate(candidate);
+    }
+
 }

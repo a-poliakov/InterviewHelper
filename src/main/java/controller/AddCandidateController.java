@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -47,9 +48,23 @@ public class AddCandidateController {
     public void addCandidateQ()throws SQLException{
         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         try {
-            HelperFactory.getHelper().addCandidate(fioEdit.getText(),df.format(dateEdit.getValue()).toString(),banEdit.getText());
+            HelperFactory.getHelper().editCandidate(fioEdit.getText(),df.format(dateEdit.getValue()),banEdit.getText());
         }
         catch (Exception e) {};
 
+    }
+    public void editCandidate(String fioCandidate) throws SQLException{
+        Candidate candidate = HelperFactory.getHelper().getCandidateByFio(fioCandidate);
+        try {
+            fioEdit.setText(candidate.getFio());
+        } catch (Exception e) {}
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            LocalDate date = LocalDate.parse(candidate.getBornDate(), formatter);
+            dateEdit.setValue(date);
+        } catch (Exception e) {}
+        try {
+            banEdit.setText(candidate.getBanned());
+        } catch (Exception e) {}
     }
 }
