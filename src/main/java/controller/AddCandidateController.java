@@ -45,10 +45,16 @@ public class AddCandidateController {
         dlgStage.close();
     }
 
+    public String retName (){
+        return fioEdit.getText();
+    }
+
+
+
     public void addCandidateQ()throws SQLException{
         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         try {
-            HelperFactory.getHelper().editCandidate(fioEdit.getText(),df.format(dateEdit.getValue()),banEdit.getText());
+            HelperFactory.getHelper().addCandidate(fioEdit.getText(),df.format(dateEdit.getValue()),banEdit.getText());
         }
         catch (Exception e) {};
 

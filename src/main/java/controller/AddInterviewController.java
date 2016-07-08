@@ -115,6 +115,7 @@ public class AddInterviewController {
         addCandidateController.init(dlgStageNew);
         addCandidateController.editCandidate(fioEdit.getText());
         dlgStageNew.showAndWait();
+        fioEdit.setText(addCandidateController.retName());
     }
 
     public void addInterview() throws SQLException {
