@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -120,6 +121,15 @@ public class MainController {
     @FXML
     private void onNewInterviewAction() throws IOException, SQLException {
         showAddInterviewDlg();
+
+        String fio = fioFilter.getText();
+        String post = postFilter.getText();
+        String date = dateFilter.getText();
+
+        interviews.clear();
+        interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
+        mainTable.getItems().removeAll();
+        mainTable.setItems(interviews);
     }
 
     @FXML
@@ -151,8 +161,9 @@ public class MainController {
         dlgStage.setScene(scene);
         dlgStage.setMinHeight(500);
         dlgStage.setMinWidth(630);
-        dlgStage.initModality(Modality.WINDOW_MODAL);
+        dlgStage.initModality(Modality.APPLICATION_MODAL);
         dlgStage.initOwner(primaryStage);
+        dlgStage.setTitle("Добавление собеседования");
         addInterviewController.addInterview();
         addInterviewController.init(dlgStage);
         dlgStage.showAndWait();
@@ -171,8 +182,9 @@ public class MainController {
         dlgStage.setScene(scene);
         dlgStage.setMinHeight(500);
         dlgStage.setMinWidth(630);
-        dlgStage.initModality(Modality.WINDOW_MODAL);
+        dlgStage.initModality(Modality.APPLICATION_MODAL);
         dlgStage.initOwner(primaryStage);
+        dlgStage.setTitle("Редактирование собеседования");
         addInterviewController.editInterview(selectedInterviewId);
         addInterviewController.init(dlgStage);
         dlgStage.showAndWait();
@@ -191,7 +203,7 @@ public class MainController {
         dlgStage.setScene(scene);
         dlgStage.setMinHeight(120);
         dlgStage.setMinWidth(480);
-        dlgStage.initModality(Modality.WINDOW_MODAL);
+        dlgStage.initModality(Modality.APPLICATION_MODAL);
         dlgStage.initOwner(primaryStage);
         dlgStage.setTitle("Добавление собеседователя");
         addInterviewerController.init(dlgStage);
