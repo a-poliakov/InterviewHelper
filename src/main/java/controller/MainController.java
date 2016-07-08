@@ -41,6 +41,8 @@ public class MainController {
 
     private VBox addInterviewerDlg;
 
+    private VBox addCandidateDlg;
+
     private Stage primaryStage;
 
     private Stage dlgStage;
