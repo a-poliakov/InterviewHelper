@@ -16,7 +16,7 @@ import java.util.List;
 
 public class DatabaseHelper {
     // URL для подключения к БД
-    private final String URL = "jdbc:sqlite:src\\main\\resources\\InterviewBD.db";
+    private final String URL = "jdbc:sqlite:InterviewBD.db";
     // Подключение к БД
     private ConnectionSource connectionSource;
     //----------------------------------------------------------------------------

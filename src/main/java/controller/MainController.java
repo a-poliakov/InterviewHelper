@@ -28,8 +28,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import static com.sun.deploy.util.UpdateCheck.showDialog;
-
 public class MainController {
 
     private static final String FXML_ADD_INTERVIEW_DLG = "views/add_interview_dlg.fxml";
