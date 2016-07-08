@@ -5,6 +5,7 @@ import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.ConstantManager;
@@ -57,6 +58,7 @@ public class UIEntry  extends Application {
         primaryStage.setMinHeight(400);
         primaryStage.setMinWidth(600);
         primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image("file:src/main/resources/icon/mainIcon.png"));
         primaryStage.show();
     }
 }
