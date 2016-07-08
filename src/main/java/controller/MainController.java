@@ -191,6 +191,8 @@ public class MainController {
         dlgStage.setMinWidth(480);
         dlgStage.initModality(Modality.WINDOW_MODAL);
         dlgStage.initOwner(primaryStage);
+        dlgStage.setTitle("Добавление собеседователя");
+        addInterviewerController.init(dlgStage);
         dlgStage.showAndWait();
     }
 
