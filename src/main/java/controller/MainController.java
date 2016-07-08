@@ -24,6 +24,7 @@ import view.UIEntry;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import static com.sun.deploy.util.UpdateCheck.showDialog;
@@ -103,6 +104,15 @@ public class MainController {
         //System.out.print("hello!");
         int selectedInterviewId = mainTable.getSelectionModel().getSelectedItem().getIdInterview();
         showEditInterviewDlg(selectedInterviewId);
+
+        String fio = fioFilter.getText();
+        String post = postFilter.getText();
+        String date = dateFilter.getText();
+
+        interviews.clear();
+        interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
+        mainTable.getItems().removeAll();
+        mainTable.setItems(interviews);
     }
 
     @FXML
@@ -117,7 +127,6 @@ public class MainController {
 
     @FXML
     private void onFilter() throws SQLException {
-
         String fio = fioFilter.getText();
         String post = postFilter.getText();
         String date = dateFilter.getText();
@@ -126,6 +135,7 @@ public class MainController {
         mainTable.getItems().removeAll();
         mainTable.setItems(interviews);
     }
+
     private void showAddInterviewDlg() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL url = getClass().getClassLoader().getResource(FXML_ADD_INTERVIEW_DLG);
@@ -143,7 +153,7 @@ public class MainController {
         dlgStage.initOwner(primaryStage);
         addInterviewController.addInterview();
         addInterviewController.init(dlgStage);
-        dlgStage.show();
+        dlgStage.showAndWait();
     }
 
     private void showEditInterviewDlg(int selectedInterviewId) throws IOException, SQLException {
@@ -163,7 +173,7 @@ public class MainController {
         dlgStage.initOwner(primaryStage);
         addInterviewController.editInterview(selectedInterviewId);
         addInterviewController.init(dlgStage);
-        dlgStage.show();
+        dlgStage.showAndWait();
     }
 
     private void showAddInterviewerDlg() throws IOException, SQLException {
@@ -181,7 +191,7 @@ public class MainController {
         dlgStage.setMinWidth(480);
         dlgStage.initModality(Modality.WINDOW_MODAL);
         dlgStage.initOwner(primaryStage);
-        dlgStage.show();
+        dlgStage.showAndWait();
     }
 
     public void setPrimaryStage(Stage primaryStage) {
