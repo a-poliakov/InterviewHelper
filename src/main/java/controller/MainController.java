@@ -22,8 +22,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import view.UIEntry;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -74,7 +76,14 @@ public class MainController {
     // инициализируем форму данными
     @FXML
     private void initialize() throws IOException, SQLException {
+        File dataBase = new File("InterviewBD.db");
+        if(!dataBase.exists())
+        {
+            ClassLoader classLoader = getClass().getClassLoader();
+            File emptyDataBase = new File(classLoader.getResource("InterviewBD.db").getFile());
+            Files.copy(emptyDataBase.toPath(), dataBase.toPath());
 
+        }
         mainTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2) {
