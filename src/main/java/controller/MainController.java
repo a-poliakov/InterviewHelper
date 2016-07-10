@@ -1,34 +1,27 @@
 package controller;
 
 import config.HelperFactory;
-import entity.Candidate;
 import entity.Interview;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import view.UIEntry;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
-import java.nio.file.Files;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.ResourceBundle;
+
+import static util.DBUtil.*;
 
 public class MainController {
 
@@ -75,15 +68,16 @@ public class MainController {
 
     // инициализируем форму данными
     @FXML
-    private void initialize() throws IOException, SQLException {
-        File dataBase = new File("InterviewBD.db");
-        if(!dataBase.exists())
+    private void initialize() throws SQLException {
+        //Проверка файла базы данных
+        try{
+            initDB();
+        }
+        catch (IOException ex)
         {
-            ClassLoader classLoader = getClass().getClassLoader();
-            File emptyDataBase = new File(classLoader.getResource("InterviewBD.db").getFile());
-            Files.copy(emptyDataBase.toPath(), dataBase.toPath());
 
         }
+
         mainTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2) {
