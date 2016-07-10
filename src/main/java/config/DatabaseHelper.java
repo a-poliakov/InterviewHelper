@@ -3,9 +3,11 @@ package config;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.spring.DaoFactory;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 import dao.impl.CandidateDao;
 import entity.*;
 import model.*;
@@ -27,8 +29,8 @@ public class DatabaseHelper {
     private Dao<InterviewComment, Integer> interviewCommentDao = null;
     private Dao<Interviewer, Integer> interviewerDao = null;
     private Dao<Mark, Integer> markDao = null;
-
     public DatabaseHelper() throws SQLException {
+
         connectionSource = new JdbcConnectionSource(URL);
         candidateDao = DaoManager.createDao(connectionSource,Candidate.class);
         categoryDao = DaoManager.createDao(connectionSource,Category.class);
@@ -36,6 +38,13 @@ public class DatabaseHelper {
         interviewCommentDao = DaoManager.createDao(connectionSource,InterviewComment.class);
         interviewerDao = DaoManager.createDao(connectionSource,Interviewer.class);
         markDao = DaoManager.createDao(connectionSource,Mark.class);
+
+        TableUtils.createTableIfNotExists(connectionSource, Candidate.class);
+        TableUtils.createTableIfNotExists(connectionSource, Category.class);
+        TableUtils.createTableIfNotExists(connectionSource, Interview.class);
+        TableUtils.createTableIfNotExists(connectionSource, InterviewComment.class);
+        TableUtils.createTableIfNotExists(connectionSource, Interviewer.class);
+        TableUtils.createTableIfNotExists(connectionSource, Mark.class);
     }
 
     /*

@@ -69,15 +69,6 @@ public class MainController {
     // инициализируем форму данными
     @FXML
     private void initialize() throws SQLException {
-        //Проверка файла базы данных
-        try{
-            initDB();
-        }
-        catch (IOException ex)
-        {
-
-        }
-
         mainTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2) {
@@ -99,7 +90,6 @@ public class MainController {
         dateColumn.setCellValueFactory(new PropertyValueFactory<Interview, String>("date"));
         // заполняем таблицу данными
         interviews.addAll(HelperFactory.getHelper().getInterview());
-
         mainTable.setItems(interviews);
     }
 
