@@ -86,16 +86,25 @@ public class AddInterviewController {
     private AutoCompletionBinding<Interviewer> autoCompletionInterviewerBinding;
     private ObservableSet<Interviewer> possibleInterviewerSuggestions = FXCollections.observableSet();
 
+    static Candidate candidate;
+
     public void init(Stage stage) throws SQLException {
         dlgAddInterviewStage = stage;
         possibleCandidateSuggestions.addAll(HelperFactory.getHelper().getCandidates());
-        TextFields.bindAutoCompletion(
+        autoCompletionCandidateBinding = TextFields.bindAutoCompletion(
                 fioEdit, possibleCandidateSuggestions);
         possibleInterviewerSuggestions.addAll(HelperFactory.getHelper().getInterviewers());
-        TextFields.bindAutoCompletion(
+        autoCompletionInterviewerBinding = TextFields.bindAutoCompletion(
                 fioEdit, possibleInterviewerSuggestions);
-        
+        autoCompletionCandidateBinding.setOnAutoCompleted(event -> {
+            candidate = event.getCompletion();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            LocalDate date = LocalDate.parse(candidate.getBornDate(), formatter);
+            datePicker.setValue(date);
+        });
     }
+
+
 
     @FXML
     private void onDialogResult() throws IOException, SQLException {
