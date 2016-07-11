@@ -4,6 +4,8 @@ import config.HelperFactory;
 import entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +17,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.CategoryRow;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
+import util.ConstantManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,9 +32,6 @@ public class AddInterviewController {
     private int interviewId;
     private int candidateId;
     private int interviwerId;
-
-    private static final String FXML_ADD_CANDIDATE_DLG = "views/add_candidate_dlg.fxml";
-    private static final String FXML_ADD_INTERVIEWER_DLG = "views/add_interviewer_dlg.fxml";
 
     // Таблица оценок
     @FXML
@@ -78,8 +80,21 @@ public class AddInterviewController {
     private Stage dlgAddInterviewerStage; // сцена для добавления интервьювера
     private Stage dlgCandidateStage; // сцена для добавления кандидата
 
+    // binding для "живого" поиска
+    private AutoCompletionBinding<Candidate> autoCompletionCandidateBinding;
+    private ObservableSet<Candidate> possibleCandidateSuggestions = FXCollections.observableSet();
+    private AutoCompletionBinding<Interviewer> autoCompletionInterviewerBinding;
+    private ObservableSet<Interviewer> possibleInterviewerSuggestions = FXCollections.observableSet();
+
     public void init(Stage stage) throws SQLException {
         dlgAddInterviewStage = stage;
+        possibleCandidateSuggestions.addAll(HelperFactory.getHelper().getCandidates());
+        TextFields.bindAutoCompletion(
+                fioEdit, possibleCandidateSuggestions);
+        possibleInterviewerSuggestions.addAll(HelperFactory.getHelper().getInterviewers());
+        TextFields.bindAutoCompletion(
+                fioEdit, possibleInterviewerSuggestions);
+        
     }
 
     @FXML
@@ -88,14 +103,14 @@ public class AddInterviewController {
     }
 
     @FXML
-    private  void addCandidateClick() throws IOException,SQLException{
+    private void onAddCandidateAction() throws IOException, SQLException {
         ShowAddCandidateDialog();
     }
 
 
     public void ShowAddCandidateDialog() throws  IOException,SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(FXML_ADD_CANDIDATE_DLG);
+        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_ADD_CANDIDATE_DLG);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();

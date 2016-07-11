@@ -84,7 +84,7 @@
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                  <children>
                                     <TextField fx:id="fioEdit" layoutY="7.0" prefHeight="25.0" prefWidth="277.0" />
-                                    <Button fx:id="addCandidateBtn" layoutX="274.0" layoutY="7.0" mnemonicParsing="false" onAction="#addCanClick" prefHeight="25.0" prefWidth="25.0" text="+" AnchorPane.rightAnchor="1.0">
+                                    <Button fx:id="addCandidateBtn" layoutX="274.0" layoutY="7.0" mnemonicParsing="false" onAction="#onAddCandidateAction" prefHeight="25.0" prefWidth="25.0" text="+" AnchorPane.rightAnchor="1.0">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
