@@ -151,6 +151,7 @@ public class MainController {
         dlgStage.setMinWidth(630);
         dlgStage.initModality(Modality.APPLICATION_MODAL);
         dlgStage.initOwner(primaryStage);
+        dlgStage.setResizable(false);
         dlgStage.setTitle("Добавление собеседования");
         addInterviewController.addInterview();
         addInterviewController.init(dlgStage);
@@ -172,6 +173,7 @@ public class MainController {
         dlgStage.setMinWidth(630);
         dlgStage.initModality(Modality.APPLICATION_MODAL);
         dlgStage.initOwner(primaryStage);
+        dlgStage.setResizable(false);
         dlgStage.setTitle("Редактирование собеседования");
         addInterviewController.editInterview(selectedInterviewId);
         addInterviewController.init(dlgStage);
@@ -193,6 +195,7 @@ public class MainController {
         dlgStage.setMinWidth(480);
         dlgStage.initModality(Modality.APPLICATION_MODAL);
         dlgStage.initOwner(primaryStage);
+        dlgStage.setResizable(false);
         dlgStage.setTitle("Добавление собеседователя");
         addInterviewerController.init(dlgStage);
         dlgStage.showAndWait();
