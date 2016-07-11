@@ -95,7 +95,7 @@ public class AddInterviewController {
                 fioEdit, possibleCandidateSuggestions);
         possibleInterviewerSuggestions.addAll(HelperFactory.getHelper().getInterviewers());
         autoCompletionInterviewerBinding = TextFields.bindAutoCompletion(
-                fioEdit, possibleInterviewerSuggestions);
+                interviewerEdit, possibleInterviewerSuggestions);
         autoCompletionCandidateBinding.setOnAutoCompleted(event -> {
             candidate = event.getCompletion();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
