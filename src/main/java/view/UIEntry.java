@@ -13,7 +13,6 @@ import java.net.URL;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
 public class UIEntry  extends Application {
-    private static final String FXML_MAIN = "views/main_view.fxml";
 
     private Stage primaryStage;
     private MainController mainController; // пока не нужен
@@ -32,13 +31,13 @@ public class UIEntry  extends Application {
     // загружает дерево компонентов и возвращает в виде VBox (корневой элемент в FXML)
     private VBox loadFXML() throws Exception {
         fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(FXML_MAIN);
+        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_MAIN);
         fxmlLoader.setLocation(url);
         VBox node = null;
 
         try {
             node = (VBox) fxmlLoader.load();
-            System.out.println("fxmlResource = " + FXML_MAIN);
+            System.out.println("fxmlResource = " + ConstantManager.FXML_MAIN);
             mainController = fxmlLoader.getController();
             primaryStage.setTitle(ConstantManager.MAIN_VIEW_TITLE);
         } catch (Exception e) {
@@ -53,10 +52,10 @@ public class UIEntry  extends Application {
 
     private void createGUI() throws Exception {
         currentRoot = loadFXML();
-        Scene scene = new Scene(currentRoot, 600, 400);
+        Scene scene = new Scene(currentRoot, 590, 390);
         primaryStage.setScene(scene);
-        primaryStage.setMinHeight(400);
-        primaryStage.setMinWidth(600);
+        primaryStage.setMinHeight(390);
+        primaryStage.setMinWidth(590);
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("file:src/main/resources/icon/mainIcon.png"));
         primaryStage.show();

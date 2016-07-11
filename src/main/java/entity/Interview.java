@@ -21,7 +21,7 @@ public class Interview {
     @DatabaseField (canBeNull = false)
     private String date;
 
-    @DatabaseField (canBeNull = false)
+    @DatabaseField
     private String result;
 
     @DatabaseField (canBeNull = false)

@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import util.ConstantManager;
 
 import java.io.*;
 import java.net.URL;
@@ -24,10 +25,6 @@ import java.sql.SQLException;
 import static util.DBUtil.*;
 
 public class MainController {
-
-    private static final String FXML_ADD_INTERVIEW_DLG = "views/add_interview_dlg.fxml";
-
-    private static final String FXML_ADD_INTERVIEWER_DLG = "views/add_interviewer_dlg.fxml";
 
     private ObservableList<Interview> interviews = FXCollections.observableArrayList();
 
@@ -141,7 +138,7 @@ public class MainController {
 
     private void showAddInterviewDlg() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(FXML_ADD_INTERVIEW_DLG);
+        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_ADD_INTERVIEW_DLG);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
@@ -162,7 +159,7 @@ public class MainController {
 
     private void showEditInterviewDlg(int selectedInterviewId) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(FXML_ADD_INTERVIEW_DLG);
+        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_ADD_INTERVIEW_DLG);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
@@ -183,7 +180,7 @@ public class MainController {
 
     private void showAddInterviewerDlg() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(FXML_ADD_INTERVIEWER_DLG);
+        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_ADD_INTERVIEWER_DLG);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
