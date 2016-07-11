@@ -47,12 +47,6 @@ public class DatabaseHelper {
         TableUtils.createTableIfNotExists(connectionSource, Mark.class);
     }
 
-    /*
-     * Метод для получения всех интервью, в которых собеседовали нужного кандидата
-     * @author Андрей Поляков
-     * @param fio ФамилияИмяОтчество необходимого кандидата
-     * @return List<Interview> все подходящие интервью
-     */
     public List<Interview> getInterviewsByCandidateFioAndDateAndPost(String fio, String post, String date) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
         QueryBuilder<Candidate, Integer> candidateQueryBuilder = candidateDao.queryBuilder();

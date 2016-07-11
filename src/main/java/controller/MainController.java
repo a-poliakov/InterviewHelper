@@ -73,7 +73,6 @@ public class MainController {
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2) {
                     try {
-
                         onMouseClicked();
                     } catch (IOException e) {
                         e.printStackTrace();
