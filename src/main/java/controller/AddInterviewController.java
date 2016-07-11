@@ -1,5 +1,6 @@
 package controller;
 
+import config.AppConfig;
 import config.HelperFactory;
 import entity.*;
 import javafx.collections.FXCollections;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
@@ -125,7 +127,7 @@ public class AddInterviewController {
 
     public void ShowAddCandidateDialog() throws  IOException,SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_ADD_CANDIDATE_DLG);
+        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_ADD_CANDIDATE_DLG_URL);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();

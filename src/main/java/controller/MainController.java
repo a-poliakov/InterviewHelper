@@ -1,5 +1,6 @@
 package controller;
 
+import config.AppConfig;
 import config.HelperFactory;
 import entity.Interview;
 import javafx.collections.FXCollections;
@@ -25,41 +26,30 @@ import java.sql.SQLException;
 import static util.DBUtil.*;
 
 public class MainController {
-
-    private ObservableList<Interview> interviews = FXCollections.observableArrayList();
-
+    // Связывание данных
+    private ObservableList<Interview> interviews = FXCollections.observableArrayList(); // источник данных для интервью
+    // Сцены
     private VBox addInterviewDlg;
-
     private VBox addInterviewerDlg;
-
     private VBox addCandidateDlg;
-
     private Stage primaryStage;
-
-    private Stage dlgStage;
+    private Stage dlgStage; // ?
 
     private AddInterviewController addInterviewController;
-
     private AddInterviewerController addInterviewerController;
 
     @FXML
     TableView<Interview> mainTable;
-
     @FXML
     TableColumn<Interview, String> fioColumn;
-
     @FXML
     TableColumn<Interview, String> postColumn;
-
     @FXML
     TableColumn<Interview, String> dateColumn;
-
     @FXML
     TextField fioFilter;
-
     @FXML
     TextField postFilter;
-
     @FXML
     TextField dateFilter;
 
@@ -138,7 +128,7 @@ public class MainController {
 
     private void showAddInterviewDlg() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_ADD_INTERVIEW_DLG);
+        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_ADD_INTERVIEW_DLG_URL);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
@@ -152,7 +142,7 @@ public class MainController {
         dlgStage.initModality(Modality.APPLICATION_MODAL);
         dlgStage.initOwner(primaryStage);
         dlgStage.setResizable(false);
-        dlgStage.setTitle("Добавление собеседования");
+        dlgStage.setTitle(ConstantManager.ADD_INTERVIEW_TITLE);
         addInterviewController.addInterview();
         addInterviewController.init(dlgStage);
         dlgStage.showAndWait();
@@ -160,7 +150,7 @@ public class MainController {
 
     private void showEditInterviewDlg(int selectedInterviewId) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_ADD_INTERVIEW_DLG);
+        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_ADD_INTERVIEW_DLG_URL);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
@@ -174,7 +164,7 @@ public class MainController {
         dlgStage.initModality(Modality.APPLICATION_MODAL);
         dlgStage.initOwner(primaryStage);
         dlgStage.setResizable(false);
-        dlgStage.setTitle("Редактирование собеседования");
+        dlgStage.setTitle(ConstantManager.EDIT_INTERVIEW_TITLE);
         addInterviewController.editInterview(selectedInterviewId);
         addInterviewController.init(dlgStage);
         dlgStage.showAndWait();
@@ -182,7 +172,7 @@ public class MainController {
 
     private void showAddInterviewerDlg() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_ADD_INTERVIEWER_DLG);
+        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_ADD_INTERVIEWER_DLG_URL);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
@@ -196,7 +186,7 @@ public class MainController {
         dlgStage.initModality(Modality.APPLICATION_MODAL);
         dlgStage.initOwner(primaryStage);
         dlgStage.setResizable(false);
-        dlgStage.setTitle("Добавление собеседователя");
+        dlgStage.setTitle(ConstantManager.ADD_INTERVIEWER_TITLE);
         addInterviewerController.init(dlgStage);
         dlgStage.showAndWait();
     }
