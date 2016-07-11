@@ -210,6 +210,14 @@ public class DatabaseHelper {
         return marks;
     }
     //Получить всех
+    public long getCountOfInterview()throws SQLException {
+        long countOfInterview = interviewDao.countOf();
+        return countOfInterview;
+    }
+    public long getCountOfCandidate()throws SQLException {
+        long countOfCandidate = candidateDao.countOf();
+        return countOfCandidate;
+    }
     public List<Category> getCategories() throws SQLException {
         return categoryDao.queryForAll();
     }
