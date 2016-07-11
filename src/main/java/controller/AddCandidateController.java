@@ -41,7 +41,7 @@ public class AddCandidateController {
 
     @FXML
     private void onOkBtn() throws  SQLException {
-        addCandidateQ();
+        addCandidate();
         dlgStage.close();
     }
 
@@ -51,14 +51,14 @@ public class AddCandidateController {
 
 
 
-    public void addCandidateQ()throws SQLException{
+    public void addCandidate()throws SQLException{
         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         try {
             HelperFactory.getHelper().addCandidate(fioEdit.getText(),df.format(dateEdit.getValue()),banEdit.getText());
         }
         catch (Exception e) {};
-
     }
+
     public void editCandidate(String fioCandidate) throws SQLException{
         Candidate candidate = HelperFactory.getHelper().getCandidateByFio(fioCandidate);
         try {

@@ -4,6 +4,7 @@ import config.HelperFactory;
 import entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +15,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 import model.CategoryRow;
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
+import util.ConstantManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,18 +28,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class AddInterviewController {
+    // ID используемых данных
     private int interviewId;
     private int candidateId;
     private int interviwerId;
-    private Stage dlgStage;
 
-    ObservableList<CategoryRow> marks = FXCollections.observableArrayList();
-    private static final String FXML_ADD_CANDIDATE_DLG = "views/add_candidate_dlg.fxml";
-    private static final String FXML_ADD_INTERVIEWER_DLG = "views/add_interviewer_dlg.fxml";
-
+    // Таблица оценок
     @FXML
     TableView<CategoryRow> categoriesTable;
-    // Задел на будущее
     @FXML
     TableColumn<CategoryRow, Double> valueCol;
     @FXML
@@ -44,12 +43,8 @@ public class AddInterviewController {
 
 
     private VBox addInterviewerDlg;
-
     private VBox addCandidateDlg;
-
     private AddCandidateController addCandidateController;
-
-    private Stage primaryStage;
 
     @FXML
     private TextField fioEdit;
@@ -72,18 +67,34 @@ public class AddInterviewController {
     @FXML
     private Button okBtn;
     @FXML
-    private Button addCan;
+    private Button addCandidateBtn;
     @FXML
-    private Button addInter;
+    private Button addInterviewerBtn;
 
-    ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();;
-    ObservableList<Candidate> candidates = FXCollections.observableArrayList();
-    private Stage dlg1Stage;
-    private Stage dlgStageNew;
+    // Связывание данных
+    ObservableList<CategoryRow> marks = FXCollections.observableArrayList(); // источник данных для оценок
+    ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();; // источник для интервьюверов
+    ObservableList<Candidate> candidates = FXCollections.observableArrayList(); // источник для кандидатов
+    // Сцены
+    private Stage dlgAddInterviewStage; // сцена для добавления интервью
+    private Stage dlgAddInterviewerStage; // сцена для добавления интервьювера
+    private Stage dlgCandidateStage; // сцена для добавления кандидата
 
+    // binding для "живого" поиска
+    private AutoCompletionBinding<Candidate> autoCompletionCandidateBinding;
+    private ObservableSet<Candidate> possibleCandidateSuggestions = FXCollections.observableSet();
+    private AutoCompletionBinding<Interviewer> autoCompletionInterviewerBinding;
+    private ObservableSet<Interviewer> possibleInterviewerSuggestions = FXCollections.observableSet();
 
     public void init(Stage stage) throws SQLException {
-        dlgStage = stage;
+        dlgAddInterviewStage = stage;
+        possibleCandidateSuggestions.addAll(HelperFactory.getHelper().getCandidates());
+        TextFields.bindAutoCompletion(
+                fioEdit, possibleCandidateSuggestions);
+        possibleInterviewerSuggestions.addAll(HelperFactory.getHelper().getInterviewers());
+        TextFields.bindAutoCompletion(
+                fioEdit, possibleInterviewerSuggestions);
+        
     }
 
     @FXML
@@ -92,29 +103,29 @@ public class AddInterviewController {
     }
 
     @FXML
-    private  void addCanClick() throws IOException,SQLException{
+    private void onAddCandidateAction() throws IOException, SQLException {
         ShowAddCandidateDialog();
     }
 
 
     public void ShowAddCandidateDialog() throws  IOException,SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(FXML_ADD_CANDIDATE_DLG);
+        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_ADD_CANDIDATE_DLG);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
         addCandidateController = fxmlLoader.getController();
         addCandidateDlg = node;
         Scene scene = new Scene(addCandidateDlg, 419.0, 180);
-        dlgStageNew = new Stage();
-        dlgStageNew.setScene(scene);
-        dlgStageNew.setMinHeight(180);
-        dlgStageNew.setMinWidth(419.0);
-        dlgStageNew.initModality(Modality.WINDOW_MODAL);
-        dlgStageNew.initOwner(dlgStage);
-        addCandidateController.init(dlgStageNew);
+        dlgCandidateStage = new Stage();
+        dlgCandidateStage.setScene(scene);
+        dlgCandidateStage.setMinHeight(180);
+        dlgCandidateStage.setMinWidth(419.0);
+        dlgCandidateStage.initModality(Modality.WINDOW_MODAL);
+        dlgCandidateStage.initOwner(dlgAddInterviewStage);
+        addCandidateController.init(dlgCandidateStage);
         addCandidateController.editCandidate(fioEdit.getText());
-        dlgStageNew.showAndWait();
+        dlgCandidateStage.showAndWait();
         fioEdit.setText(addCandidateController.retName());
     }
 
@@ -224,9 +235,6 @@ public class AddInterviewController {
             HelperFactory.getHelper().editInterview(interviewId, df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText(), marks);
             HelperFactory.getHelper().editInterviewComment(interviewId, expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
         }
-        dlgStage.close();
-    }
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        dlgAddInterviewStage.close();
     }
 }

@@ -165,11 +165,11 @@ class MainConsoleDao << (C,yellow) start >> {
 }
 class UIEntry << (C,yellow) start >> {
  -{static}String FXML_MAIN
- -Stage primaryStage
+ -Stage dlgInterviewerStage
  -MainController mainController
  -FXMLLoader fxmlLoader
  -VBox currentRoot
- +void start(Stage primaryStage)
+ +void start(Stage dlgInterviewerStage)
  +{static}void main(String[] args)
  -VBox loadFXML()
  -void createGUI()
