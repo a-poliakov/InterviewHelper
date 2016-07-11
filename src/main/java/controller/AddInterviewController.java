@@ -87,6 +87,7 @@ public class AddInterviewController {
     private ObservableSet<Interviewer> possibleInterviewerSuggestions = FXCollections.observableSet();
 
     static Candidate candidate;
+    static Interviewer interviewer;
 
     public void init(Stage stage) throws SQLException {
         dlgAddInterviewStage = stage;
@@ -101,6 +102,11 @@ public class AddInterviewController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(candidate.getBornDate(), formatter);
             datePicker.setValue(date);
+            candidateId = candidate.getIdCandidate();
+        });
+        autoCompletionInterviewerBinding.setOnAutoCompleted(event -> {
+            interviewer = event.getCompletion();
+            interviewId = interviewer.getIdInterviewer();
         });
     }
 

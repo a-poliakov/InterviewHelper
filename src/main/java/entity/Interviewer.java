@@ -20,10 +20,7 @@ public class Interviewer {
 
     @Override
     public String toString() {
-        return "Interviewer{" +
-                "fio='" + fio + '\'' +
-                ", idInterviewer=" + idInterviewer +
-                '}';
+        return fio;
     }
 
     public Interviewer() {
