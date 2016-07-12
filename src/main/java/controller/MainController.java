@@ -1,6 +1,7 @@
 package controller;
 
 import config.AppConfig;
+import config.DatabaseHelper;
 import config.HelperFactory;
 import entity.Interview;
 import javafx.collections.FXCollections;
@@ -13,6 +14,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -56,6 +59,19 @@ public class MainController {
     // инициализируем форму данными
     @FXML
     private void initialize() throws SQLException {
+        mainTable.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.DELETE) {
+                    try {
+                        onDelete();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        });
+
         mainTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2) {
@@ -118,6 +134,28 @@ public class MainController {
         String fio = fioFilter.getText();
         String post = postFilter.getText();
         String date = dateFilter.getText();
+        interviews.clear();
+        interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
+        mainTable.getItems().removeAll();
+        mainTable.setItems(interviews);
+    }
+
+    @FXML
+    private void onDelete() throws SQLException {
+        Interview interview = mainTable.getSelectionModel().getSelectedItem();
+        if (interview == null) {
+            return;
+        }
+        int selectedInterviewId = interview.getIdInterview();
+        HelperFactory.getHelper().delInterviewById(selectedInterviewId);
+        refreshTable();
+    }
+
+    private void refreshTable() throws SQLException {
+        String fio = fioFilter.getText();
+        String post = postFilter.getText();
+        String date = dateFilter.getText();
+
         interviews.clear();
         interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
         mainTable.getItems().removeAll();
@@ -192,4 +230,6 @@ public class MainController {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
+
+
 }

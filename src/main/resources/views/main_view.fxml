@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,23 +7,25 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
-      <SplitPane dividerPositions="0.7558528428093646" prefHeight="80.0" prefWidth="600.0">
+      <SplitPane dividerPositions="0.68561872909699" prefHeight="80.0" prefWidth="600.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="125.0" prefWidth="416.0">
                <children>
-                  <Label layoutX="146.0" layoutY="13.0" text="InterviewHelper" AnchorPane.rightAnchor="115.0">
+                  <Label layoutX="146.0" layoutY="13.0" text="InterviewHelper" AnchorPane.leftAnchor="110.0">
                      <font>
                         <Font name="Times New Roman" size="30.0" />
                      </font>
                   </Label>
-                  <Label layoutX="151.0" layoutY="47.0" text="ООО &quot;РУСОФТ&quot;, version 1.0" textFill="#bfb7b7" AnchorPane.rightAnchor="160.0" />
-                  <ImageView fitHeight="49.0" fitWidth="67.0" layoutX="82.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="80.0">
+                  <Label layoutX="151.0" layoutY="47.0" text="ООО &quot;РУСОФТ&quot;, version 1.0" textFill="#bfb7b7" AnchorPane.leftAnchor="110.0" />
+                  <ImageView fitHeight="49.0" fitWidth="67.0" layoutX="82.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="50.0">
                      <image>
                         <Image url="@../icon/mainIcon.png" />
                      </image>
@@ -38,14 +34,19 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="115.0">
                <children>
-                  <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddInterviewerAction" prefHeight="50.0" prefWidth="50.0" text="⚙" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
+                  <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddInterviewerAction" prefHeight="79.0" prefWidth="50.0" text="i" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
                      <font>
-                        <Font size="22.0" />
+                        <Font name="Arial Bold" size="22.0" />
                      </font></Button>
                   <Button layoutX="38.0" layoutY="14.0" mnemonicParsing="false" onAction="#onNewInterviewAction" prefHeight="50.0" prefWidth="50.0" text="+" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="14.0">
                      <font>
                         <Font name="Britannic Bold" size="24.0" />
                      </font></Button>
+                  <Button layoutX="68.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddInterviewerAction" prefHeight="50.0" prefWidth="50.0" text="⚙" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="68.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="14.0">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
         </items>
@@ -62,7 +63,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="294.0" prefWidth="600.0">
          <children>
-            <TableView fx:id="mainTable" layoutY="7.0" prefHeight="289.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="mainTable" layoutY="7.0" onKeyPressed="#onDelete" prefHeight="289.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn fx:id="fioColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="ФИО" />
                 <TableColumn fx:id="postColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Должность" />
