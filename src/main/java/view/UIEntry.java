@@ -13,7 +13,11 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.ConstantManager;
 
+<<<<<<< HEAD
 import javax.imageio.ImageIO;
+=======
+
+>>>>>>> 339bfbdc0dedf9135c56f84354d5989122a5ca92
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -68,7 +72,13 @@ public class UIEntry  extends Application {
         primaryStage.setMinHeight(390);
         primaryStage.setMinWidth(590);
         primaryStage.setResizable(false);
+<<<<<<< HEAD
         primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
+=======
+
+        primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
+
+>>>>>>> 339bfbdc0dedf9135c56f84354d5989122a5ca92
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -129,6 +139,10 @@ public class UIEntry  extends Application {
             }
         });
         primaryStage.getIcons().add(new Image("file:src/main/resources/icon/mainIcon.png"));
+<<<<<<< HEAD
+=======
+
+>>>>>>> 339bfbdc0dedf9135c56f84354d5989122a5ca92
         primaryStage.show();
     }
 }
