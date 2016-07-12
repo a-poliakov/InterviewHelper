@@ -240,11 +240,13 @@ public class DatabaseHelper {
             }
         }
     }
-    public Interview addInterview(String candidate, String interviewer, String date, String result, String post)  throws SQLException{
+    public Interview addInterview(String name,String bornDate, String interviewer, String interviewDate, String result, String post)  throws SQLException{
         Interview interview = new Interview();
-        interview.setIdCandidate(getCandidateByFio(candidate));
+        Candidate candidate = getCandidateByFio(name);
+        candidate.setBornDate(bornDate);
+        interview.setIdCandidate(candidate);
         interview.setIdInterviewer(getInterviewerByFio(interviewer));
-        interview.setDate(date);
+        interview.setDate(interviewDate);
         interview.setResult(result);
         interview.setPost(post);
         interviewDao.create(interview);
