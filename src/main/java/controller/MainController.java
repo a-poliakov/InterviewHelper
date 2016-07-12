@@ -60,7 +60,6 @@ public class MainController {
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2) {
                     try {
-
                         onMouseClicked();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -82,7 +81,6 @@ public class MainController {
 
     @FXML
     private void onMouseClicked() throws IOException, SQLException {
-        //System.out.print("hello!");
         int selectedInterviewId = mainTable.getSelectionModel().getSelectedItem().getIdInterview();
         showEditInterviewDlg(selectedInterviewId);
 
