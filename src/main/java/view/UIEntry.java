@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.ConstantManager;
 
+
 import javax.imageio.ImageIO;
 
 import javax.swing.*;
@@ -22,8 +23,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-
-import static javax.swing.text.html.HTML.Tag.HEAD;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
 public class UIEntry  extends Application {

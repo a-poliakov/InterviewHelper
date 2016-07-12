@@ -258,6 +258,7 @@ public class DatabaseHelper {
         Interview interview = new Interview();
         Candidate candidate = getCandidateByFio(name);
         candidate.setBornDate(bornDate);
+        candidateDao.createOrUpdate(candidate);
         interview.setIdCandidate(candidate);
         interview.setIdInterviewer(getInterviewerByFio(interviewer));
         interview.setDate(interviewDate);
@@ -334,6 +335,7 @@ public class DatabaseHelper {
         Interview interview = getInterviewById(idInterview);
         Candidate candidate = interview.getIdCandidate();
         candidate.setBornDate(bornDate);
+        candidateDao.createOrUpdate(candidate);
         editInterviewDate(idInterview, interviewDate);
         editInterviewResult(idInterview, result);
         editInterviewPost(idInterview, post);
