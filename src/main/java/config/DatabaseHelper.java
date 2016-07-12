@@ -310,6 +310,11 @@ public class DatabaseHelper {
     //Удалить
     public void delCategoryById(int id)  throws SQLException{
         Category category = getCategoryById(id);
+        QueryBuilder<Mark, Integer> markIntegerQueryBuilder = markDao.queryBuilder();
+        markIntegerQueryBuilder.where().eq("idCategory", category);
+        PreparedQuery<Mark> preparedQuery = markIntegerQueryBuilder.prepare();
+        List<Mark> marks = markDao.query(preparedQuery);
+        markDao.delete(marks);
         categoryDao.delete(category);
     }
     public void delInterviewById(int id)  throws SQLException{
