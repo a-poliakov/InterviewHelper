@@ -34,12 +34,14 @@ public class MainController {
     // Сцены
     private VBox addInterviewDlg;
     private VBox addInterviewerDlg;
+    private VBox editCategoryDlg;
     private VBox addCandidateDlg;
     private Stage primaryStage;
     private Stage dlgStage; // ?
 
     private AddInterviewController addInterviewController;
     private AddInterviewerController addInterviewerController;
+    private EditCategoriesController editCategoryController;
 
     @FXML
     TableView<Interview> mainTable;
@@ -126,7 +128,7 @@ public class MainController {
 
     @FXML
     private void onAddInterviewerAction() throws IOException, SQLException {
-        showAddInterviewerDlg();
+        showEditCategoryDlg();
     }
 
     @FXML
@@ -206,24 +208,24 @@ public class MainController {
         dlgStage.showAndWait();
     }
 
-    private void showAddInterviewerDlg() throws IOException, SQLException {
+    private void showEditCategoryDlg() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_ADD_INTERVIEWER_DLG_URL);
+        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_EDIT_CATEGORY_DLG_URL);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
-        addInterviewerController = fxmlLoader.getController();
-        addInterviewerDlg = node;
-        Scene scene = new Scene(addInterviewerDlg, 480, 120);
+        editCategoryController = fxmlLoader.getController();
+        editCategoryDlg = node;
+        Scene scene = new Scene(editCategoryDlg, 300, 300);
         dlgStage = new Stage();
         dlgStage.setScene(scene);
-        dlgStage.setMinHeight(120);
-        dlgStage.setMinWidth(480);
+        dlgStage.setMinHeight(300);
+        dlgStage.setMinWidth(300);
         dlgStage.initModality(Modality.APPLICATION_MODAL);
         dlgStage.initOwner(primaryStage);
         dlgStage.setResizable(false);
-        dlgStage.setTitle(ConstantManager.ADD_INTERVIEWER_TITLE);
-        addInterviewerController.init(dlgStage);
+        dlgStage.setTitle(ConstantManager.EDIT_CATEGORY_TITLE);
+        editCategoryController.init(dlgStage);
         dlgStage.showAndWait();
     }
 

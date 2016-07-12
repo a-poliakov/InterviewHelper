@@ -24,7 +24,7 @@
                         <Font name="Times New Roman" size="30.0" />
                      </font>
                   </Label>
-                  <Label layoutX="151.0" layoutY="47.0" text="ООО &quot;РУСОФТ&quot;, version 1.0" textFill="#bfb7b7" AnchorPane.leftAnchor="110.0" />
+                  <Label layoutX="151.0" layoutY="47.0" text="ООО &quot;РУСОФТ&quot;, version 1.2" textFill="#bfb7b7" AnchorPane.leftAnchor="110.0" />
                   <ImageView fitHeight="49.0" fitWidth="67.0" layoutX="82.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="50.0">
                      <image>
                         <Image url="@../icon/mainIcon.png" />
@@ -34,7 +34,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="115.0">
                <children>
-                  <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddInterviewerAction" prefHeight="79.0" prefWidth="50.0" text="i" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
+                  <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="50.0" text="i" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
                      <font>
                         <Font name="Arial Bold" size="22.0" />
                      </font></Button>
@@ -63,7 +63,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="294.0" prefWidth="600.0">
          <children>
-            <TableView fx:id="mainTable" layoutY="7.0" onKeyPressed="#onDelete" prefHeight="289.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="mainTable" layoutY="7.0" prefHeight="289.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columns>
                 <TableColumn fx:id="fioColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="ФИО" />
                 <TableColumn fx:id="postColumn" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Должность" />
