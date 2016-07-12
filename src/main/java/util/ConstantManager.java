@@ -6,4 +6,5 @@ public interface ConstantManager {
     String EDIT_INTERVIEW_TITLE = "Редактирование собеседования";
     String ADD_INTERVIEW_TITLE = "Добавление собеседования";
     String ADD_INTERVIEWER_TITLE = "Добавление собеседователя";
+    String EDIT_CATEGORY_TITLE = "Редактирование критериев";
 }

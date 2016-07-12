@@ -44,17 +44,20 @@ public class EditCategoriesController {
     public void init(Stage stage) throws SQLException {
         dlgStage = stage;
     }
+
     @FXML
     private void initialize() throws SQLException {
-
         nameColumn.setCellValueFactory(new PropertyValueFactory<Category, String>("name"));
-        viewCategoryToTable();
 
+        categories.addAll(HelperFactory.getHelper().getCategories());
+        categoryTable.setItems(categories);
     }
+
 
 
     private void viewCategoryToTable() throws  SQLException{
         categoryTable.getItems().removeAll();
+        categories.clear();
         categories.addAll(HelperFactory.getHelper().getCategories());
         categoryTable.setItems(categories);
     }
