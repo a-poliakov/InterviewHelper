@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.ConstantManager;
 
-
+import javax.imageio.ImageIO;
 import javax.imageio.ImageIO;
 
 import javax.swing.*;
@@ -70,6 +70,7 @@ public class UIEntry  extends Application {
         primaryStage.setMinHeight(390);
         primaryStage.setMinWidth(590);
         primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
 
         primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
 
@@ -133,7 +134,6 @@ public class UIEntry  extends Application {
             }
         });
         primaryStage.getIcons().add(new Image("file:src/main/resources/icon/mainIcon.png"));
-
         primaryStage.show();
     }
 }
