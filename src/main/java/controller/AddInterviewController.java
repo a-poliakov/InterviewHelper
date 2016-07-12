@@ -1,5 +1,6 @@
 package controller;
 
+import config.AppConfig;
 import config.HelperFactory;
 import entity.*;
 import javafx.collections.FXCollections;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
@@ -87,6 +89,7 @@ public class AddInterviewController {
     private ObservableSet<Interviewer> possibleInterviewerSuggestions = FXCollections.observableSet();
 
     static Candidate candidate;
+    static Interviewer interviewer;
 
     public void init(Stage stage) throws SQLException {
         dlgAddInterviewStage = stage;
@@ -95,12 +98,17 @@ public class AddInterviewController {
                 fioEdit, possibleCandidateSuggestions);
         possibleInterviewerSuggestions.addAll(HelperFactory.getHelper().getInterviewers());
         autoCompletionInterviewerBinding = TextFields.bindAutoCompletion(
-                fioEdit, possibleInterviewerSuggestions);
+                interviewerEdit, possibleInterviewerSuggestions);
         autoCompletionCandidateBinding.setOnAutoCompleted(event -> {
             candidate = event.getCompletion();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(candidate.getBornDate(), formatter);
             datePicker.setValue(date);
+            candidateId = candidate.getIdCandidate();
+        });
+        autoCompletionInterviewerBinding.setOnAutoCompleted(event -> {
+            interviewer = event.getCompletion();
+            interviewId = interviewer.getIdInterviewer();
         });
     }
 
@@ -119,7 +127,7 @@ public class AddInterviewController {
 
     public void ShowAddCandidateDialog() throws  IOException,SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(ConstantManager.FXML_ADD_CANDIDATE_DLG);
+        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_ADD_CANDIDATE_DLG_URL);
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
@@ -234,7 +242,6 @@ public class AddInterviewController {
     }
 
     private void saveInterview() throws SQLException {
-
         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         if(interviewId == 0){
             Interview interview = HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());

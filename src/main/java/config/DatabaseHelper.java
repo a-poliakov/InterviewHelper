@@ -29,6 +29,7 @@ public class DatabaseHelper {
     private Dao<InterviewComment, Integer> interviewCommentDao = null;
     private Dao<Interviewer, Integer> interviewerDao = null;
     private Dao<Mark, Integer> markDao = null;
+
     public DatabaseHelper() throws SQLException {
 
         connectionSource = new JdbcConnectionSource(URL);
@@ -47,12 +48,6 @@ public class DatabaseHelper {
         TableUtils.createTableIfNotExists(connectionSource, Mark.class);
     }
 
-    /*
-     * Метод для получения всех интервью, в которых собеседовали нужного кандидата
-     * @author Андрей Поляков
-     * @param fio ФамилияИмяОтчество необходимого кандидата
-     * @return List<Interview> все подходящие интервью
-     */
     public List<Interview> getInterviewsByCandidateFioAndDateAndPost(String fio, String post, String date) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
         QueryBuilder<Candidate, Integer> candidateQueryBuilder = candidateDao.queryBuilder();
@@ -63,6 +58,13 @@ public class DatabaseHelper {
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
     }
+
+    /*
+     * Метод для получения всех интервью, в которых собеседовали нужного кандидата
+     * @author Андрей Поляков
+     * @param fio ФамилияИмяОтчество необходимого кандидата
+     * @return List<Interview> все подходящие интервью
+     */
     public List<Interview> getInterviewsByCandidateFio(String fio) throws SQLException {
         // первая таблица в запросе
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
@@ -208,6 +210,14 @@ public class DatabaseHelper {
         return marks;
     }
     //Получить всех
+    public long getCountOfInterview()throws SQLException {
+        long countOfInterview = interviewDao.countOf();
+        return countOfInterview;
+    }
+    public long getCountOfCandidate()throws SQLException {
+        long countOfCandidate = candidateDao.countOf();
+        return countOfCandidate;
+    }
     public List<Category> getCategories() throws SQLException {
         return categoryDao.queryForAll();
     }
