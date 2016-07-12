@@ -94,7 +94,6 @@ public class MainController {
 
     @FXML
     private void onMouseClicked() throws IOException, SQLException {
-        //System.out.print("hello!");
         int selectedInterviewId = mainTable.getSelectionModel().getSelectedItem().getIdInterview();
         showEditInterviewDlg(selectedInterviewId);
 
