@@ -111,7 +111,8 @@ public class AddInterviewController {
         });
         autoCompletionInterviewerBinding.setOnAutoCompleted(event -> {
             interviewer = event.getCompletion();
-            interviewId = interviewer.getIdInterviewer();
+            // TODO: 12.07.2016 Что за херня? 
+            //interviewId = interviewer.getIdInterviewer();
         });
     }
 
