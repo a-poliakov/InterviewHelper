@@ -9,6 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.ConstantManager;
+
+import javax.imageio.ImageIO;
 import java.net.URL;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
@@ -57,7 +59,7 @@ public class UIEntry  extends Application {
         primaryStage.setMinHeight(390);
         primaryStage.setMinWidth(590);
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image("file:src/main/resources/icon/mainIcon.png"));
+        primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
         primaryStage.show();
     }
 }
