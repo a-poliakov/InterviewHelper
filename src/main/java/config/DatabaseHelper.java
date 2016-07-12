@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DatabaseHelper {
     // URL для подключения к БД
@@ -127,6 +128,19 @@ public class DatabaseHelper {
             }
         }
         return addInterviewer(fio);
+    }
+
+    public Category getCategoryByName(String name) throws SQLException{
+        //если не нашел, то создаст нового
+        List<Category> categoryes = categoryDao.queryForAll();
+        for(Category category: categoryes)
+        {
+            if(category.getName().equals(name))
+            {
+                return category;
+            }
+        }
+        return null;
     }
     //Получить по Id
     public InterviewComment getInterviewCommentByIdInterview(int id)throws SQLException{
