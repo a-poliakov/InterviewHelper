@@ -13,12 +13,16 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.ConstantManager;
 
+<<<<<<< HEAD
+import javax.imageio.ImageIO;
+=======
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+>>>>>>> 653b79b08100893895e4a491d1dfad4a52743195
 import java.net.URL;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
@@ -67,6 +71,9 @@ public class UIEntry  extends Application {
         primaryStage.setMinHeight(390);
         primaryStage.setMinWidth(590);
         primaryStage.setResizable(false);
+<<<<<<< HEAD
+        primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
+=======
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -127,6 +134,7 @@ public class UIEntry  extends Application {
             }
         });
         primaryStage.getIcons().add(new Image("file:src/main/resources/icon/mainIcon.png"));
+>>>>>>> 653b79b08100893895e4a491d1dfad4a52743195
         primaryStage.show();
     }
 }
