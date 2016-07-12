@@ -57,6 +57,8 @@ public class AddInterviewController {
     @FXML
     private DatePicker datePicker;
     @FXML
+    private DatePicker birthDatePicker;
+    @FXML
     private TextField interviewerEdit;
     @FXML
     private TextField expEdit;
@@ -77,6 +79,7 @@ public class AddInterviewController {
     ObservableList<CategoryRow> marks = FXCollections.observableArrayList(); // источник данных для оценок
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();; // источник для интервьюверов
     ObservableList<Candidate> candidates = FXCollections.observableArrayList(); // источник для кандидатов
+
     // Сцены
     private Stage dlgAddInterviewStage; // сцена для добавления интервью
     private Stage dlgAddInterviewerStage; // сцена для добавления интервьювера
@@ -187,6 +190,11 @@ public class AddInterviewController {
             fioEdit.setText(interview.getIdCandidate().getFio());
         } catch (Exception e){}
         try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            LocalDate date = LocalDate.parse(interview.getIdCandidate().getBornDate(), formatter);
+            birthDatePicker.setValue(date);
+        } catch (Exception e){}
+        try {
             postEdit.setText(interview.getPost());
         } catch (Exception e){}
         try {
@@ -244,11 +252,11 @@ public class AddInterviewController {
     private void saveInterview() throws SQLException {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         if(interviewId == 0){
-            Interview interview = HelperFactory.getHelper().addInterview(fioEdit.getText(), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
+            Interview interview = HelperFactory.getHelper().addInterview(fioEdit.getText(), df.format(birthDatePicker.getValue()), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
             HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
             HelperFactory.getHelper().addInterviewMarks(interview.getIdInterview(), marks);
         } else{
-            HelperFactory.getHelper().editInterview(interviewId, df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText(), marks);
+            HelperFactory.getHelper().editInterview(interviewId, df.format(birthDatePicker.getValue()), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText(), marks);
             HelperFactory.getHelper().editInterviewComment(interviewId, expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
         }
         dlgAddInterviewStage.close();
