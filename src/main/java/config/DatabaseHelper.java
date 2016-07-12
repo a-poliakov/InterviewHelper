@@ -316,8 +316,11 @@ public class DatabaseHelper {
         candidateDao.delete(candidate);
     }
     //Редактировать
-    public void editInterview(int idInterview, String date, String result, String post, List<CategoryRow> marks)  throws SQLException{
-        editInterviewDate(idInterview, date);
+    public void editInterview(int idInterview, String bornDate, String interviewDate, String result, String post, List<CategoryRow> marks)  throws SQLException{
+        Interview interview = getInterviewById(idInterview);
+        Candidate candidate = interview.getIdCandidate();
+        candidate.setBornDate(bornDate);
+        editInterviewDate(idInterview, interviewDate);
         editInterviewResult(idInterview, result);
         editInterviewPost(idInterview, post);
         editInterviewMarks(idInterview, marks);
