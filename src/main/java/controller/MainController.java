@@ -123,7 +123,7 @@ public class MainController {
         String fio = fioFilter.getText();
         String post = postFilter.getText();
         String date = dateFilter.getText();
-        
+
         interviews.clear();
         interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
     }

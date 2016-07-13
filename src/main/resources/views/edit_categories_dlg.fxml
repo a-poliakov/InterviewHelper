@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="297.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditCategoriesController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditCategoriesController">
    <children>
       <AnchorPane prefHeight="74.0" prefWidth="353.0">
          <children>
@@ -31,7 +31,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="61.0" prefWidth="299.0">
          <children>
-            <Button fx:id="delBtn" mnemonicParsing="false" onAction="#onMouseClickDelButton" prefHeight="25.0" prefWidth="315.0" text="Удалить" />
+            <Button fx:id="delBtn" mnemonicParsing="false" onAction="#onMouseClickDelButton" prefHeight="33.0" prefWidth="308.0" text="Удалить" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
    </children>
