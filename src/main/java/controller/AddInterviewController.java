@@ -69,12 +69,6 @@ public class AddInterviewController {
     private TextField lastWorkEdit;
     @FXML
     private TextArea commentsEdit;
-    @FXML
-    private Button okBtn;
-    @FXML
-    private Button addCandidateBtn;
-    @FXML
-    private Button addInterviewerBtn;
 
     // Связывание данных
     ObservableList<CategoryRow> marks = FXCollections.observableArrayList(); // источник данных для оценок
@@ -176,9 +170,7 @@ public class AddInterviewController {
                                 t.getTablePosition().getRow())
                         ).setValue(t.getNewValue());
                     });
-        }catch (Exception e){
-
-        }
+        }catch (Exception e){}
     }
 
     public void editInterview(int id) throws SQLException {
@@ -238,7 +230,6 @@ public class AddInterviewController {
         } catch (Exception e){}
         try {
             InterviewComment interviewComment = HelperFactory.getHelper().getInterviewCommentByIdInterview(interviewId);
-            // TODO: 07.07.2016 Нарушена целостность базы данных. Поэтому если у интервью нет interviewComment то создадим пустой
             if (interviewComment == null) {
                 interviewComment = HelperFactory.getHelper().addInterviewComment(interviewId, "", "", "", "");
             }
@@ -256,14 +247,6 @@ public class AddInterviewController {
                 candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
                 interviewerId, interviewerEdit.getText(),
                 resultEdit.getText(), postEdit.getText(), marks);
-//        if(interviewId == 0){
-//            Interview interview = HelperFactory.getHelper().addInterview(fioEdit.getText(), df.format(birthDatePicker.getValue()), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
-//            HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
-//            HelperFactory.getHelper().addInterviewMarks(interview.getIdInterview(), marks);
-//        } else{
-//            HelperFactory.getHelper().editInterview(interviewId, df.format(birthDatePicker.getValue()), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText(), marks);
-//            HelperFactory.getHelper().editInterviewComment(interviewId, expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
-//        }
         dlgAddInterviewStage.close();
     }
 }
