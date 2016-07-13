@@ -54,8 +54,7 @@ public class EditCategoriesController {
     }
 
 
-
-    private void viewCategoryToTable() throws  SQLException{
+    private void viewCategoryToTable() throws SQLException {
         categoryTable.getItems().removeAll();
         categories.clear();
         categories.addAll(HelperFactory.getHelper().getCategories());
@@ -63,20 +62,24 @@ public class EditCategoriesController {
     }
 
     @FXML
-    private void onMouseClickAddButton() throws IOException, SQLException{
+    private void onMouseClickAddButton() throws IOException, SQLException {
         Category category = HelperFactory.getHelper().getCategoryByName(addEdit.getText());
         if (category == null) {
             HelperFactory.getHelper().addCategory(addEdit.getText());
             viewCategoryToTable();
         }
     }
-    @FXML
-    private void onMouseClickDelButton() throws IOException, SQLException{
-        int selectedCategoryId = categoryTable.getSelectionModel().getSelectedItem().getIdCategory();
-        HelperFactory.getHelper().delCategoryById(selectedCategoryId);
-        viewCategoryToTable();
-    }
 
+    @FXML
+    private void onMouseClickDelButton() throws IOException, SQLException {
+        if (categoryTable.getSelectionModel().getSelectedItem() != null) {
+            int selectedCategoryId = categoryTable.getSelectionModel().getSelectedItem().getIdCategory();
+            System.out.println(selectedCategoryId);
+            HelperFactory.getHelper().delCategoryById(selectedCategoryId);
+            viewCategoryToTable();
+        }
+
+    }
 }
 
 
