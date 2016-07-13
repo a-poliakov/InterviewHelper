@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -23,11 +24,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.lang.management.ThreadInfo;
 import java.net.URL;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
-public class UIEntry  extends Application implements Runnable{
+public class UIEntry  extends Application{
 
     private Stage primaryStage;
     private MainController mainController;
@@ -37,6 +39,7 @@ public class UIEntry  extends Application implements Runnable{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Platform.setImplicitExit(false);
         fxThread = Thread.currentThread();
         this.primaryStage = primaryStage;
         this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -59,6 +62,7 @@ public class UIEntry  extends Application implements Runnable{
                     trayIcon = new TrayIcon(image, "Interview Helper");
                     ActionListener actionListener = new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
+                            restoreWindow();
                             trayIcon.displayMessage("Action Event",
                                     "An Action Event Has Been Performed!",
                                     TrayIcon.MessageType.INFO);
@@ -67,11 +71,6 @@ public class UIEntry  extends Application implements Runnable{
                     trayIcon.setImageAutoSize(true);
                     trayIcon.addActionListener(actionListener);
                     trayIcon.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            
-                            fxThread.run();
-                        }
 
                         @Override
                         public void mouseReleased(MouseEvent e) {
@@ -94,6 +93,15 @@ public class UIEntry  extends Application implements Runnable{
                 } else {
                     primaryStage.close();
                 }
+            }
+
+            public void restoreWindow(){
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        primaryStage.show();
+                    }
+                });
             }
         });
         createGUI();
@@ -133,13 +141,5 @@ public class UIEntry  extends Application implements Runnable{
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
         primaryStage.show();
-    }
-
-    @Override
-    public void run() {
-        launch("");
-    }
-
-    public void showStage(){
     }
 }
