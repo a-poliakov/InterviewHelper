@@ -67,6 +67,7 @@ public class EditCategoriesController {
         if (category == null) {
             HelperFactory.getHelper().addCategory(addEdit.getText());
             viewCategoryToTable();
+            addEdit.clear();
         }
     }
 
