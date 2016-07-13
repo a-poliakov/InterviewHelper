@@ -39,10 +39,6 @@ public class MainController {
     private Stage primaryStage;
     private Stage dlgStage; // ?
 
-    private AddInterviewController addInterviewController;
-    private AddInterviewerController addInterviewerController;
-    private EditCategoriesController editCategoryController;
-
     @FXML
     TableView<Interview> mainTable;
     @FXML
@@ -58,14 +54,20 @@ public class MainController {
     @FXML
     TextField dateFilter;
 
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
     // инициализируем форму данными
     @FXML
     private void initialize() throws SQLException {
+        // реакция на нажатие кнопки DELETE
         mainTable.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.DELETE) {
                     try {
-                        onDelete();
+                        onDeleteInterview();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -74,11 +76,12 @@ public class MainController {
 
         });
 
+        // реакция на двойной щелчок по таблице
         mainTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 if (event.getClickCount() == 2) {
                     try {
-                        onMouseClicked();
+                        onEditInterview();
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
@@ -98,22 +101,8 @@ public class MainController {
     }
 
     @FXML
-    private void onMouseClicked() throws IOException, SQLException {
-        int selectedInterviewId = mainTable.getSelectionModel().getSelectedItem().getIdInterview();
-        showEditInterviewDlg(selectedInterviewId);
-
-        String fio = fioFilter.getText();
-        String post = postFilter.getText();
-        String date = dateFilter.getText();
-
-        interviews.clear();
-        interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
-        mainTable.getItems().removeAll();
-        mainTable.setItems(interviews);
-    }
-
-    @FXML
     private void onNewInterviewAction() throws IOException, SQLException {
+
         showAddInterviewDlg();
 
         String fio = fioFilter.getText();
@@ -122,8 +111,6 @@ public class MainController {
 
         interviews.clear();
         interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
-        mainTable.getItems().removeAll();
-        mainTable.setItems(interviews);
     }
 
     @FXML
@@ -136,41 +123,39 @@ public class MainController {
         String fio = fioFilter.getText();
         String post = postFilter.getText();
         String date = dateFilter.getText();
+        
         interviews.clear();
         interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
-        mainTable.getItems().removeAll();
-        mainTable.setItems(interviews);
     }
 
-    @FXML
-    private void onDelete() throws SQLException {
-        Interview interview = mainTable.getSelectionModel().getSelectedItem();
-        if (interview == null) {
-            return;
+    private void onDeleteInterview() throws SQLException {
+        Interview selectedInterview = mainTable.getSelectionModel().getSelectedItem();
+        if (selectedInterview != null) {
+            int selectedInterviewId = selectedInterview.getIdInterview();
+            HelperFactory.getHelper().delInterviewById(selectedInterviewId);
+            interviews.remove(selectedInterview);
         }
-        int selectedInterviewId = interview.getIdInterview();
-        HelperFactory.getHelper().delInterviewById(selectedInterviewId);
-        refreshTable();
     }
 
-    private void refreshTable() throws SQLException {
-        String fio = fioFilter.getText();
-        String post = postFilter.getText();
-        String date = dateFilter.getText();
-
-        interviews.clear();
-        interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
-        mainTable.getItems().removeAll();
-        mainTable.setItems(interviews);
+    private void onEditInterview() throws IOException, SQLException {
+        // получаем информацию о выделенном собеседовании
+        Interview selectedInterview = mainTable.getSelectionModel().getSelectedItem();
+        int selectedInterviewId = selectedInterview.getIdInterview();
+        int interviewPosition = mainTable.getSelectionModel().getSelectedIndex();
+        // вызываем диалог редактирования
+        showEditInterviewDlg(selectedInterviewId);
+        // получаем из БД обновленное собеседование, удаляем старое из таблицы и вставляем новое
+        Interview refreshedInterview = HelperFactory.getHelper().getInterviewById(selectedInterviewId);
+        interviews.remove(selectedInterview);
+        interviews.add(interviewPosition, refreshedInterview);
     }
 
     private void showAddInterviewDlg() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL url = getClass().getClassLoader().getResource(AppConfig.FXML_ADD_INTERVIEW_DLG_URL);
         fxmlLoader.setLocation(url);
-        VBox node = null;
-        node = (VBox) fxmlLoader.load();
-        addInterviewController = fxmlLoader.getController();
+        VBox node = (VBox) fxmlLoader.load();
+        AddInterviewController addInterviewController = fxmlLoader.getController();
         addInterviewDlg = node;
         Scene scene = new Scene(addInterviewDlg, 630, 500);
         dlgStage = new Stage();
@@ -192,7 +177,7 @@ public class MainController {
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
-        addInterviewController = fxmlLoader.getController();
+        AddInterviewController addInterviewController = fxmlLoader.getController();
         addInterviewDlg = node;
         Scene scene = new Scene(addInterviewDlg, 630, 500);
         dlgStage = new Stage();
@@ -214,7 +199,7 @@ public class MainController {
         fxmlLoader.setLocation(url);
         VBox node = null;
         node = (VBox) fxmlLoader.load();
-        editCategoryController = fxmlLoader.getController();
+        EditCategoriesController editCategoryController = fxmlLoader.getController();
         editCategoryDlg = node;
         Scene scene = new Scene(editCategoryDlg, 300, 300);
         dlgStage = new Stage();
@@ -228,10 +213,5 @@ public class MainController {
         editCategoryController.init(dlgStage);
         dlgStage.showAndWait();
     }
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
 
 }
