@@ -22,6 +22,7 @@ import model.CategoryRow;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import util.ConstantManager;
+import util.DateUtil;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,9 +32,9 @@ import java.time.format.DateTimeFormatter;
 
 public class AddInterviewController {
     // ID используемых данных
-    private int interviewId;
-    private int candidateId;
-    private int interviwerId;
+    private int interviewId=0;
+    private int candidateId=0;
+    private int interviewerId=0;
 
     // Таблица оценок
     @FXML
@@ -91,9 +92,6 @@ public class AddInterviewController {
     private AutoCompletionBinding<Interviewer> autoCompletionInterviewerBinding;
     private ObservableSet<Interviewer> possibleInterviewerSuggestions = FXCollections.observableSet();
 
-    static Candidate candidate;
-    static Interviewer interviewer;
-
     public void init(Stage stage) throws SQLException {
         dlgAddInterviewStage = stage;
         possibleCandidateSuggestions.addAll(HelperFactory.getHelper().getCandidates());
@@ -103,16 +101,15 @@ public class AddInterviewController {
         autoCompletionInterviewerBinding = TextFields.bindAutoCompletion(
                 interviewerEdit, possibleInterviewerSuggestions);
         autoCompletionCandidateBinding.setOnAutoCompleted(event -> {
-            candidate = event.getCompletion();
+            Candidate candidate = event.getCompletion();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(candidate.getBornDate(), formatter);
             datePicker.setValue(date);
             candidateId = candidate.getIdCandidate();
         });
         autoCompletionInterviewerBinding.setOnAutoCompleted(event -> {
-            interviewer = event.getCompletion();
-            // TODO: 12.07.2016 Что за херня? 
-            //interviewId = interviewer.getIdInterviewer();
+            Interviewer interviewer = event.getCompletion();
+            interviewerId = interviewer.getIdInterviewer();
         });
     }
 
@@ -187,6 +184,8 @@ public class AddInterviewController {
     public void editInterview(int id) throws SQLException {
         interviewId = id;
         Interview interview = HelperFactory.getHelper().getInterviewById(id);
+        candidateId = interview.getIdCandidate().getIdCandidate();
+        interviewerId = interview.getIdInterviewer().getIdInterviewer();
         try {
             fioEdit.setText(interview.getIdCandidate().getFio());
         } catch (Exception e){}
@@ -252,14 +251,19 @@ public class AddInterviewController {
 
     private void saveInterview() throws SQLException {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        if(interviewId == 0){
-            Interview interview = HelperFactory.getHelper().addInterview(fioEdit.getText(), df.format(birthDatePicker.getValue()), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
-            HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
-            HelperFactory.getHelper().addInterviewMarks(interview.getIdInterview(), marks);
-        } else{
-            HelperFactory.getHelper().editInterview(interviewId, df.format(birthDatePicker.getValue()), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText(), marks);
-            HelperFactory.getHelper().editInterviewComment(interviewId, expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
-        }
+        HelperFactory.getHelper().editOrAddInterview(
+                interviewId, DateUtil.format(datePicker.getValue()),
+                candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
+                interviewerId, interviewerEdit.getText(),
+                resultEdit.getText(), postEdit.getText(), marks);
+//        if(interviewId == 0){
+//            Interview interview = HelperFactory.getHelper().addInterview(fioEdit.getText(), df.format(birthDatePicker.getValue()), interviewerEdit.getText(), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText());
+//            HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
+//            HelperFactory.getHelper().addInterviewMarks(interview.getIdInterview(), marks);
+//        } else{
+//            HelperFactory.getHelper().editInterview(interviewId, df.format(birthDatePicker.getValue()), df.format(datePicker.getValue()), resultEdit.getText(), postEdit.getText(), marks);
+//            HelperFactory.getHelper().editInterviewComment(interviewId, expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
+//        }
         dlgAddInterviewStage.close();
     }
 }
