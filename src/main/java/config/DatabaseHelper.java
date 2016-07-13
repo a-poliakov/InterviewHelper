@@ -195,7 +195,7 @@ public class DatabaseHelper {
         PreparedQuery<Candidate> preparedQuery = candidateQueryBuilder.prepare();
         List<Candidate> candidates = candidateDao.query(preparedQuery);
         if(candidates.size() == 0)
-            return null;
+            return addCandidate("empty", "01.01.2013", "-");
         return candidates.get(0);
     }
     public Category getCategoryById(int id) throws SQLException {
@@ -213,7 +213,7 @@ public class DatabaseHelper {
         PreparedQuery<Interviewer> preparedQuery = interviewerQueryBuilder.prepare();
         List<Interviewer> interviewers = interviewerDao.query(preparedQuery);
         if(interviewers.size() == 0)
-            return null;
+            return addInterviewer("empty");
         return interviewers.get(0);
     }
     private List <Mark> getInterviewMarks(int idInterview)throws SQLException{
@@ -336,7 +336,30 @@ public class DatabaseHelper {
         candidateDao.delete(candidate);
     }
     //Редактировать
+    public void editOrAddInterview(int idInterview,String interviewDate, int idCandidate, String candidateFio, String bornDate, int idInterviewer, String interviewerFio, String result, String post, List<CategoryRow> marks) throws SQLException    {
+        Candidate candidate = getCandidateById(idCandidate);
+        candidate.setFio(candidateFio);
+        candidate.setBornDate(bornDate);
+        candidateDao.createOrUpdate(candidate);
+        Interviewer interviewer = getInterviewerById(idInterviewer);
+        interviewer.setFio(interviewerFio);
+        interviewerDao.createOrUpdate(interviewer);
+        Interview interview = getInterviewById(idInterview);
+        if(interview == null)
+        {
+            interview = new Interview();
+        }
+        interview.setDate(interviewDate);
+        interview.setIdInterviewer(interviewer);
+        interview.setIdCandidate(candidate);
+        interview.setResult(result);
+        interview.setPost(post);
+        editInterviewMarks(idInterview, marks);
+        interviewDao.createOrUpdate(interview);
+    }
     public void editInterview(int idInterview, String bornDate, String interviewDate, String result, String post, List<CategoryRow> marks)  throws SQLException{
+        //if(idInterview == 0) новое
+        //public void editOrAddInterview(idInterview, idCandidate, fio, bornDate, idInterviewer, fio, String result, String post, List<CategoryRow> marks)
         Interview interview = getInterviewById(idInterview);
         Candidate candidate = interview.getIdCandidate();
         candidate.setBornDate(bornDate);
