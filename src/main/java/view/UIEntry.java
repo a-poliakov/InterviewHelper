@@ -35,12 +35,10 @@ public class UIEntry  extends Application{
     private MainController mainController;
     private FXMLLoader fxmlLoader;
     private VBox currentRoot;
-    private Runnable fxThread;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);
-        fxThread = Thread.currentThread();
         this.primaryStage = primaryStage;
         this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -49,24 +47,28 @@ public class UIEntry  extends Application{
                 if (SystemTray.isSupported()) {
                     SystemTray tray = SystemTray.getSystemTray();
                     java.awt.Image image = Toolkit.getDefaultToolkit().getImage("src/main/resources/icon/mainIcon.png");
+                    final JPopupMenu popup = new JPopupMenu();
+                    trayIcon = new TrayIcon(image, "Interview Helper");
+                    ActionListener restoreListener = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            restoreWindow();
+                            tray.remove(trayIcon);
+                        }
+                    };
                     ActionListener exitListener = new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             System.out.println("Exiting...");
                             System.exit(0);
                         }
                     };
-                    final JPopupMenu popup = new JPopupMenu();
-                    JMenuItem defaultItem = new JMenuItem("Exit");
-                    defaultItem.addActionListener(exitListener);
-                    popup.add(defaultItem);
-                    trayIcon = new TrayIcon(image, "Interview Helper");
-                    ActionListener actionListener = new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            // TODO: 14.07.2016
-                        }
-                    };
+                    JMenuItem restoreItem = new JMenuItem("Restore window");
+                    restoreItem.addActionListener(restoreListener);
+                    popup.add(restoreItem);
+                    JMenuItem exitItem = new JMenuItem("Exit");
+                    exitItem.addActionListener(exitListener);
+                    popup.add(exitItem);
                     trayIcon.setImageAutoSize(true);
-                    trayIcon.addActionListener(actionListener);
                     trayIcon.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
