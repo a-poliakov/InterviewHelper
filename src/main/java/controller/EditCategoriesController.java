@@ -19,7 +19,7 @@ import javafx.fxml.FXML;
 
 
 
-public class EditCategoriesController {
+public class EditCategoriesController extends ControllerTemplate{
     private Stage primaryStage;
 
     @FXML
@@ -38,6 +38,10 @@ public class EditCategoriesController {
 
     @FXML
     TableColumn<Category, String> nameColumn;
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     public void init(Stage stage) throws SQLException {
         primaryStage = stage;

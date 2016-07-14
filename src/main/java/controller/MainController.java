@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import util.ConstantManager;
+import controller.ShowDialogClass;
 
 import java.io.*;
 import java.net.URL;
@@ -103,7 +104,10 @@ public class MainController {
     @FXML
     private void onNewInterviewAction() throws IOException, SQLException {
 
-        showAddInterviewDlg();
+        ShowDialogClass<AddInterviewController> showDialogClass = new ShowDialogClass<AddInterviewController>();
+        AddInterviewController addInterviewController = showDialogClass.showDialogWindow(primaryStage,AppConfig.FXML_ADD_INTERVIEW_DLG_URL,500,630,ConstantManager.ADD_INTERVIEW_TITLE);
+        addInterviewController.addInterview();
+        addInterviewController.getDlgAddInterviewStage().showAndWait();
 
         String fio = fioFilter.getText();
         String post = postFilter.getText();
@@ -114,8 +118,17 @@ public class MainController {
     }
 
     @FXML
-    private void onAddInterviewerAction() throws IOException, SQLException {
-        showEditCategoryDlg();
+    private void onEditCategoryAction() throws IOException, SQLException {
+        ShowDialogClass<EditCategoriesController> showDialogClass = new ShowDialogClass<EditCategoriesController>();
+        EditCategoriesController editCategoriesController = showDialogClass.showDialogWindow(primaryStage,AppConfig.FXML_EDIT_CATEGORY_DLG_URL,300,300,ConstantManager.EDIT_CATEGORY_TITLE);
+        editCategoriesController.getPrimaryStage().showAndWait();
+    }
+
+    @FXML
+    private void onAboutAction() throws IOException, SQLException {
+        ShowDialogClass<AboutController> showDialogClass = new ShowDialogClass<AboutController>();
+        AboutController controller = showDialogClass.showDialogWindow(primaryStage, AppConfig.FXML_ABOUT_DLG_URL, 190, 265, ConstantManager.ABOUT_TITLE);
+        controller.getPrimaryStage().showAndWait();
     }
 
     @FXML
@@ -143,75 +156,17 @@ public class MainController {
         int selectedInterviewId = selectedInterview.getIdInterview();
         int interviewPosition = mainTable.getSelectionModel().getSelectedIndex();
         // вызываем диалог редактирования
-        showEditInterviewDlg(selectedInterviewId);
+        ShowDialogClass<AddInterviewController> showDialogClass = new ShowDialogClass<AddInterviewController>();
+        AddInterviewController addInterviewController = showDialogClass.showDialogWindow(primaryStage,AppConfig.FXML_ADD_INTERVIEW_DLG_URL,500,630,ConstantManager.ADD_INTERVIEW_TITLE);
+        addInterviewController.editInterview(selectedInterviewId);
+        addInterviewController.getDlgAddInterviewStage().showAndWait();
         // получаем из БД обновленное собеседование, удаляем старое из таблицы и вставляем новое
         Interview refreshedInterview = HelperFactory.getHelper().getInterviewById(selectedInterviewId);
         interviews.remove(selectedInterview);
         interviews.add(interviewPosition, refreshedInterview);
     }
 
-    private void showAddInterviewDlg() throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_ADD_INTERVIEW_DLG_URL);
-        fxmlLoader.setLocation(url);
-        VBox node = (VBox) fxmlLoader.load();
-        AddInterviewController addInterviewController = fxmlLoader.getController();
-        addInterviewDlg = node;
-        Scene scene = new Scene(addInterviewDlg, 630, 500);
-        dlgStage = new Stage();
-        dlgStage.setScene(scene);
-        dlgStage.setMinHeight(500);
-        dlgStage.setMinWidth(630);
-        dlgStage.initModality(Modality.APPLICATION_MODAL);
-        dlgStage.initOwner(primaryStage);
-        dlgStage.setResizable(false);
-        dlgStage.setTitle(ConstantManager.ADD_INTERVIEW_TITLE);
-        addInterviewController.addInterview();
-        addInterviewController.init(dlgStage);
-        dlgStage.showAndWait();
-    }
 
-    private void showEditInterviewDlg(int selectedInterviewId) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_ADD_INTERVIEW_DLG_URL);
-        fxmlLoader.setLocation(url);
-        VBox node = null;
-        node = (VBox) fxmlLoader.load();
-        AddInterviewController addInterviewController = fxmlLoader.getController();
-        addInterviewDlg = node;
-        Scene scene = new Scene(addInterviewDlg, 630, 500);
-        dlgStage = new Stage();
-        dlgStage.setScene(scene);
-        dlgStage.setMinHeight(500);
-        dlgStage.setMinWidth(630);
-        dlgStage.initModality(Modality.APPLICATION_MODAL);
-        dlgStage.initOwner(primaryStage);
-        dlgStage.setResizable(false);
-        dlgStage.setTitle(ConstantManager.EDIT_INTERVIEW_TITLE);
-        addInterviewController.editInterview(selectedInterviewId);
-        addInterviewController.init(dlgStage);
-        dlgStage.showAndWait();
-    }
 
-    private void showEditCategoryDlg() throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_EDIT_CATEGORY_DLG_URL);
-        fxmlLoader.setLocation(url);
-        VBox node = null;
-        node = (VBox) fxmlLoader.load();
-        EditCategoriesController editCategoryController = fxmlLoader.getController();
-        editCategoryDlg = node;
-        Scene scene = new Scene(editCategoryDlg, 300, 300);
-        dlgStage = new Stage();
-        dlgStage.setScene(scene);
-        dlgStage.setMinHeight(300);
-        dlgStage.setMinWidth(300);
-        dlgStage.initModality(Modality.APPLICATION_MODAL);
-        dlgStage.initOwner(primaryStage);
-        dlgStage.setResizable(false);
-        dlgStage.setTitle(ConstantManager.EDIT_CATEGORY_TITLE);
-        editCategoryController.init(dlgStage);
-        dlgStage.showAndWait();
-    }
 
 }

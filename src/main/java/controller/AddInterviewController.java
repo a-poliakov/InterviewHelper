@@ -30,7 +30,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class AddInterviewController {
+public class AddInterviewController extends ControllerTemplate {
     // ID используемых данных
     private int interviewId=0;
     private int candidateId=0;
@@ -70,6 +70,10 @@ public class AddInterviewController {
     @FXML
     private TextArea commentsEdit;
 
+    public Stage getDlgAddInterviewStage() {
+        return dlgAddInterviewStage;
+    }
+
     // Связывание данных
     ObservableList<CategoryRow> marks = FXCollections.observableArrayList(); // источник данных для оценок
     ObservableList<Interviewer> interviewers = FXCollections.observableArrayList();; // источник для интервьюверов
@@ -98,7 +102,7 @@ public class AddInterviewController {
             Candidate candidate = event.getCompletion();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(candidate.getBornDate(), formatter);
-            datePicker.setValue(date);
+            birthDatePicker.setValue(date);
             candidateId = candidate.getIdCandidate();
         });
         autoCompletionInterviewerBinding.setOnAutoCompleted(event -> {
