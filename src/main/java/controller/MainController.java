@@ -118,10 +118,17 @@ public class MainController {
     }
 
     @FXML
-    private void onAddInterviewerAction() throws IOException, SQLException {
+    private void onEditCategoryAction() throws IOException, SQLException {
         ShowDialogClass<EditCategoriesController> showDialogClass = new ShowDialogClass<EditCategoriesController>();
         EditCategoriesController editCategoriesController = showDialogClass.showDialogWindow(primaryStage,AppConfig.FXML_EDIT_CATEGORY_DLG_URL,300,300,ConstantManager.EDIT_CATEGORY_TITLE);
         editCategoriesController.getPrimaryStage().showAndWait();
+    }
+
+    @FXML
+    private void onAboutAction() throws IOException, SQLException {
+        ShowDialogClass<AboutController> showDialogClass = new ShowDialogClass<AboutController>();
+        AboutController controller = showDialogClass.showDialogWindow(primaryStage, AppConfig.FXML_ABOUT_DLG_URL, 190, 265, ConstantManager.ABOUT_TITLE);
+        controller.getPrimaryStage().showAndWait();
     }
 
     @FXML

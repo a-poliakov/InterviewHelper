@@ -34,7 +34,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="115.0">
                <children>
-                  <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" prefHeight="79.0" prefWidth="50.0" text="i" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
+                  <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAboutAction" prefHeight="79.0" prefWidth="50.0" text="i" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
                      <font>
                         <Font name="Arial Bold" size="22.0" />
                      </font></Button>
@@ -42,7 +42,7 @@
                      <font>
                         <Font name="Britannic Bold" size="24.0" />
                      </font></Button>
-                  <Button layoutX="68.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddInterviewerAction" prefHeight="50.0" prefWidth="50.0" text="⚙" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="68.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="14.0">
+                  <Button layoutX="68.0" layoutY="14.0" mnemonicParsing="false" onAction="#onEditCategoryAction" prefHeight="50.0" prefWidth="50.0" text="⚙" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="68.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="14.0">
                      <font>
                         <Font size="21.0" />
                      </font>
