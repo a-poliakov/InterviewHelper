@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public class ShowDialogClass<T extends ControllerTemplate> {
 
-    public <T extends ControllerTemplate> T showDialogWindow(Stage primaryStage, String fxmlurl, int height, int width, String title) throws IOException, SQLException {
+    public <T extends ControllerTemplate> T showDialogWindow(Stage primaryStage, String fxmlurl,  int width, int height, String title) throws IOException, SQLException {
         Stage dlgStage;
         FXMLLoader fxmlLoader = new FXMLLoader();
         URL url = getClass().getClassLoader().getResource(fxmlurl);

@@ -105,7 +105,7 @@ public class MainController {
     private void onNewInterviewAction() throws IOException, SQLException {
 
         ShowDialogClass<AddInterviewController> showDialogClass = new ShowDialogClass<AddInterviewController>();
-        AddInterviewController addInterviewController = showDialogClass.showDialogWindow(primaryStage,AppConfig.FXML_ADD_INTERVIEW_DLG_URL,500,630,ConstantManager.ADD_INTERVIEW_TITLE);
+        AddInterviewController addInterviewController = showDialogClass.showDialogWindow(primaryStage,AppConfig.FXML_ADD_INTERVIEW_DLG_URL,630,500,ConstantManager.ADD_INTERVIEW_TITLE);
         addInterviewController.addInterview();
         addInterviewController.getDlgAddInterviewStage().showAndWait();
 
@@ -127,7 +127,7 @@ public class MainController {
     @FXML
     private void onAboutAction() throws IOException, SQLException {
         ShowDialogClass<AboutController> showDialogClass = new ShowDialogClass<AboutController>();
-        AboutController controller = showDialogClass.showDialogWindow(primaryStage, AppConfig.FXML_ABOUT_DLG_URL, 190, 265, ConstantManager.ABOUT_TITLE);
+        AboutController controller = showDialogClass.showDialogWindow(primaryStage, AppConfig.FXML_ABOUT_DLG_URL,  265,190, ConstantManager.ABOUT_TITLE);
         controller.getPrimaryStage().showAndWait();
     }
 
@@ -157,7 +157,7 @@ public class MainController {
         int interviewPosition = mainTable.getSelectionModel().getSelectedIndex();
         // вызываем диалог редактирования
         ShowDialogClass<AddInterviewController> showDialogClass = new ShowDialogClass<AddInterviewController>();
-        AddInterviewController addInterviewController = showDialogClass.showDialogWindow(primaryStage,AppConfig.FXML_ADD_INTERVIEW_DLG_URL,500,630,ConstantManager.ADD_INTERVIEW_TITLE);
+        AddInterviewController addInterviewController = showDialogClass.showDialogWindow(primaryStage,AppConfig.FXML_ADD_INTERVIEW_DLG_URL,630,500,ConstantManager.ADD_INTERVIEW_TITLE);
         addInterviewController.editInterview(selectedInterviewId);
         addInterviewController.getDlgAddInterviewStage().showAndWait();
         // получаем из БД обновленное собеседование, удаляем старое из таблицы и вставляем новое
