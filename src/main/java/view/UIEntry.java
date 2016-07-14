@@ -146,6 +146,6 @@ public class UIEntry  extends Application{
         primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
         primaryStage.show();
         AlarmTemplateBuilder templateBuilder = new AlarmTemplateBuilder();
-        templateBuilder.createNotification("Иванов Иван Иванович", "программист", "19.06.16", 1);
+        templateBuilder.createNotification("Иванов Иван Иванович", "программист", 1);
     }
 }

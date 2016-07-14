@@ -28,11 +28,11 @@ public class AlarmTemplateBuilder {
      * @param alarmId ?? подумать
      * @return Node созданный Node для напоминания
      */
-    public void createNotification(String fioTitle, String post, String alarmDate, int alarmId){
+    public void createNotification(String fioTitle, String post, int alarmId){
         Node graphic = null;
-        graphic = createAlarmNode(fioTitle, post, alarmDate, alarmId);
+        graphic = createAlarmNode(fioTitle, post, alarmId);
         Notifications notificationBuilder = Notifications.create()
-                .title("Title Text")
+                .title("Предстоящее собеседование")
                 .text("")
                 .graphic(graphic)
                 .hideAfter(Duration.seconds(30))
@@ -51,7 +51,7 @@ public class AlarmTemplateBuilder {
      * @param alarmId ?? подумать
      * @return Node созданный Node для напоминания
      */
-    public Node createAlarmNode(String fioTitle, String post, String alarmDate, int alarmId){
+    public Node createAlarmNode(String fioTitle, String post, int alarmId){
         VBox rootNode = null;
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(AppConfig.FXML_ALARM_URL));
         try {
@@ -63,10 +63,10 @@ public class AlarmTemplateBuilder {
         AnchorPane labelsPane = ((AnchorPane)children.get(0));
         AnchorPane buttonPane = ((AnchorPane)children.get(1));
         children = labelsPane.getChildren();
-        Label fioLabel = ((Label)children.get(1));
-        fioLabel.setText("(" + fioTitle + " - " + post + ")");
-        Label dateLabel = ((Label)children.get(2));
-        dateLabel.setText(alarmDate);
+        Label fioLabel = ((Label)children.get(0));
+        fioLabel.setText(fioTitle);
+        Label postLabel = ((Label)children.get(1));
+        postLabel.setText(post);
         children = buttonPane.getChildren();
         Button holdOverDefault = ((Button) children.get(0));
         Button holdOverByTime = ((Button) children.get(1));
