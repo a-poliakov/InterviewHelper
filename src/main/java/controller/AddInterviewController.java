@@ -30,7 +30,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class AddInterviewController {
+public class AddInterviewController extends ControllerTemplate {
     // ID используемых данных
     private int interviewId=0;
     private int candidateId=0;
@@ -69,6 +69,10 @@ public class AddInterviewController {
     private TextField lastWorkEdit;
     @FXML
     private TextArea commentsEdit;
+
+    public Stage getDlgAddInterviewStage() {
+        return dlgAddInterviewStage;
+    }
 
     // Связывание данных
     ObservableList<CategoryRow> marks = FXCollections.observableArrayList(); // источник данных для оценок

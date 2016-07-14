@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Created by momelnikov on 08.07.2016.
  */
-public class AddCandidateController {
+public class AddCandidateController extends ControllerTemplate {
     private Stage dlgStage;
     private int  candidateId;
 
