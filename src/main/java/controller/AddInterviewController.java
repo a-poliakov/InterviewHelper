@@ -245,7 +245,6 @@ public class AddInterviewController extends ControllerTemplate {
     }
 
     private void saveInterview() throws SQLException {
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         HelperFactory.getHelper().editOrAddInterview(
                 interviewId, DateUtil.format(datePicker.getValue()),
                 candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),

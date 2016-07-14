@@ -7,6 +7,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -23,21 +24,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.lang.management.ThreadInfo;
 import java.net.URL;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
-public class UIEntry  extends Application implements Runnable{
+public class UIEntry  extends Application{
 
     private Stage primaryStage;
     private MainController mainController;
     private FXMLLoader fxmlLoader;
     private VBox currentRoot;
-    private Runnable fxThread;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        fxThread = Thread.currentThread();
+        Platform.setImplicitExit(false);
         this.primaryStage = primaryStage;
         this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -46,31 +47,33 @@ public class UIEntry  extends Application implements Runnable{
                 if (SystemTray.isSupported()) {
                     SystemTray tray = SystemTray.getSystemTray();
                     java.awt.Image image = Toolkit.getDefaultToolkit().getImage("src/main/resources/icon/mainIcon.png");
+                    final JPopupMenu popup = new JPopupMenu();
+                    trayIcon = new TrayIcon(image, "Interview Helper");
+                    ActionListener restoreListener = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            restoreWindow();
+                            tray.remove(trayIcon);
+                        }
+                    };
                     ActionListener exitListener = new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             System.out.println("Exiting...");
                             System.exit(0);
                         }
                     };
-                    final JPopupMenu popup = new JPopupMenu();
-                    JMenuItem defaultItem = new JMenuItem("Exit");
-                    defaultItem.addActionListener(exitListener);
-                    popup.add(defaultItem);
-                    trayIcon = new TrayIcon(image, "Interview Helper");
-                    ActionListener actionListener = new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            trayIcon.displayMessage("Action Event",
-                                    "An Action Event Has Been Performed!",
-                                    TrayIcon.MessageType.INFO);
-                        }
-                    };
+                    JMenuItem restoreItem = new JMenuItem("Restore window");
+                    restoreItem.addActionListener(restoreListener);
+                    popup.add(restoreItem);
+                    JMenuItem exitItem = new JMenuItem("Exit");
+                    exitItem.addActionListener(exitListener);
+                    popup.add(exitItem);
                     trayIcon.setImageAutoSize(true);
-                    trayIcon.addActionListener(actionListener);
                     trayIcon.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            
-                            fxThread.run();
+                            restoreWindow();
+                            tray.remove(trayIcon);
                         }
 
                         @Override
@@ -94,6 +97,15 @@ public class UIEntry  extends Application implements Runnable{
                 } else {
                     primaryStage.close();
                 }
+            }
+
+            public void restoreWindow(){
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        primaryStage.show();
+                    }
+                });
             }
         });
         createGUI();
@@ -133,13 +145,5 @@ public class UIEntry  extends Application implements Runnable{
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
         primaryStage.show();
-    }
-
-    @Override
-    public void run() {
-        launch("");
-    }
-
-    public void showStage(){
     }
 }
