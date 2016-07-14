@@ -76,7 +76,6 @@ public class MainController {
             }
 
         });
-
         // реакция на двойной щелчок по таблице
         mainTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -91,7 +90,6 @@ public class MainController {
                 }
             }
         });
-
         // устанавливаем тип и значение которое должно хранится в колонке
         fioColumn.setCellValueFactory(new PropertyValueFactory<Interview, String>("idCandidate"));
         postColumn.setCellValueFactory(new PropertyValueFactory<Interview, String>("post"));
@@ -103,16 +101,13 @@ public class MainController {
 
     @FXML
     private void onNewInterviewAction() throws IOException, SQLException {
-
         ShowDialogClass<AddInterviewController> showDialogClass = new ShowDialogClass<AddInterviewController>();
         AddInterviewController addInterviewController = showDialogClass.showDialogWindow(primaryStage,AppConfig.FXML_ADD_INTERVIEW_DLG_URL,500,630,ConstantManager.ADD_INTERVIEW_TITLE);
         addInterviewController.addInterview();
         addInterviewController.getDlgAddInterviewStage().showAndWait();
-
         String fio = fioFilter.getText();
         String post = postFilter.getText();
         String date = dateFilter.getText();
-
         interviews.clear();
         interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
     }
@@ -136,7 +131,6 @@ public class MainController {
         String fio = fioFilter.getText();
         String post = postFilter.getText();
         String date = dateFilter.getText();
-
         interviews.clear();
         interviews.addAll(HelperFactory.getHelper().getInterviewsByCandidateFioAndDateAndPost(fio, post, date));
     }

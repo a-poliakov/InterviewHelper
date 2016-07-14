@@ -110,9 +110,7 @@ public class AddInterviewController extends ControllerTemplate {
             interviewerId = interviewer.getIdInterviewer();
         });
     }
-
-
-
+    
     @FXML
     private void onDialogResult() throws IOException, SQLException {
         saveInterview();
