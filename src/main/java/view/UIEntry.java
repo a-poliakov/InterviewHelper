@@ -62,15 +62,17 @@ public class UIEntry  extends Application{
                     trayIcon = new TrayIcon(image, "Interview Helper");
                     ActionListener actionListener = new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                            restoreWindow();
-                            trayIcon.displayMessage("Action Event",
-                                    "An Action Event Has Been Performed!",
-                                    TrayIcon.MessageType.INFO);
+                            // TODO: 14.07.2016
                         }
                     };
                     trayIcon.setImageAutoSize(true);
                     trayIcon.addActionListener(actionListener);
                     trayIcon.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            restoreWindow();
+                            tray.remove(trayIcon);
+                        }
 
                         @Override
                         public void mouseReleased(MouseEvent e) {
