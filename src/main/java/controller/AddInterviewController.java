@@ -98,7 +98,7 @@ public class AddInterviewController {
             Candidate candidate = event.getCompletion();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
             LocalDate date = LocalDate.parse(candidate.getBornDate(), formatter);
-            datePicker.setValue(date);
+            birthDatePicker.setValue(date);
             candidateId = candidate.getIdCandidate();
         });
         autoCompletionInterviewerBinding.setOnAutoCompleted(event -> {
