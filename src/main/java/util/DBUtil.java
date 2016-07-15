@@ -17,7 +17,7 @@ import java.nio.*;
 public class DBUtil {
     public static void createDbIfNotExist() throws SQLException{
         try {
-            ConnectionSource connectionSource = new JdbcConnectionSource(AppConfig.DATABASE_URL);
+            ConnectionSource connectionSource = new JdbcConnectionSource(AppConfig.DATABASE_PREFIX + AppConfig.DATABASE_FILENAME);
             createDbIfNotExist(connectionSource);
             connectionSource.close();
         } catch(Exception e){
@@ -38,20 +38,19 @@ public class DBUtil {
         }
     }
     public static void importDb(String url) throws IOException{
-        File database = new File("InterviewBD.db");
-        File newDatabase = new File(url + "\\InterviewBD.db");
+        File database = new File(AppConfig.DATABASE_FILENAME);
+        File newDatabase = new File(url + "\\" + AppConfig.DATABASE_FILENAME);
         try {
             Files.copy(database.toPath(), newDatabase.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {}
     }
 
     public static void exportDb(String url) throws IOException{
-        File newDatabase = new File("InterviewBD.db");
+        File newDatabase = new File(AppConfig.DATABASE_FILENAME);
         File database = new File(url);
         try {
             Files.copy(database.toPath(), newDatabase.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {}
     }
-
 
 }

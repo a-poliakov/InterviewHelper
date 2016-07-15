@@ -20,7 +20,6 @@ import util.DBUtil;
 
 public class DatabaseHelper {
     // URL для подключения к БД
-    private final String URL = "jdbc:sqlite:InterviewBD.db";
     // Подключение к БД
     private ConnectionSource connectionSource;
     //----------------------------------------------------------------------------
@@ -34,7 +33,7 @@ public class DatabaseHelper {
 
     public DatabaseHelper() throws SQLException {
 
-        connectionSource = new JdbcConnectionSource(URL);
+        connectionSource = new JdbcConnectionSource(AppConfig.DATABASE_PREFIX + AppConfig.DATABASE_FILENAME);
         candidateDao = DaoManager.createDao(connectionSource,Candidate.class);
         categoryDao = DaoManager.createDao(connectionSource,Category.class);
         interviewDao = DaoManager.createDao(connectionSource,Interview.class);
