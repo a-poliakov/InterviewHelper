@@ -166,7 +166,4 @@ public class MainController {
         interviews.add(interviewPosition, refreshedInterview);
     }
 
-
-
-
 }

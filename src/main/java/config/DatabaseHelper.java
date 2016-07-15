@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import util.DBUtil;
 
 public class DatabaseHelper {
     // URL для подключения к БД
@@ -40,13 +41,8 @@ public class DatabaseHelper {
         interviewCommentDao = DaoManager.createDao(connectionSource,InterviewComment.class);
         interviewerDao = DaoManager.createDao(connectionSource,Interviewer.class);
         markDao = DaoManager.createDao(connectionSource,Mark.class);
+        DBUtil.createDbIfNotExist(connectionSource);
 
-        TableUtils.createTableIfNotExists(connectionSource, Candidate.class);
-        TableUtils.createTableIfNotExists(connectionSource, Category.class);
-        TableUtils.createTableIfNotExists(connectionSource, Interview.class);
-        TableUtils.createTableIfNotExists(connectionSource, InterviewComment.class);
-        TableUtils.createTableIfNotExists(connectionSource, Interviewer.class);
-        TableUtils.createTableIfNotExists(connectionSource, Mark.class);
     }
 
     public List<Interview> getInterviewsByCandidateFioAndDateAndPost(String fio, String post, String date) throws SQLException {
