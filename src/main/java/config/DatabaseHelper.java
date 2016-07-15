@@ -189,7 +189,7 @@ public class DatabaseHelper {
     /**
      * Метод получает из БД комментарий к интервью по айди интервью
      * @param id фади интервью
-     * @return комментарий или null
+     * @return  InterviewComment комментарий или null
      * @throws SQLException
      */
     public InterviewComment getInterviewCommentByIdInterview(int id)throws SQLException{
@@ -232,7 +232,7 @@ public class DatabaseHelper {
     /**
      * Метод получающий из БД интервью по id
      * @param id то самое id
-     * @return нужное интервью или null
+     * @return Interview нужное интервью или null
      * @throws SQLException
      */
     public Interview getInterviewById(int id) throws SQLException {
@@ -248,7 +248,7 @@ public class DatabaseHelper {
     /**
      * Метод получающий из БД кандидата по id или создающий нового (если не найден)
      * @param id тот самый id
-     * @return нужный или новый кандидат
+     * @return Candidate нужный или новый кандидат
      * @throws SQLException
      */
     public Candidate getCandidateById(int id) throws SQLException {
@@ -264,7 +264,7 @@ public class DatabaseHelper {
     /**
      * Метод получающий из БД критерий по id
      * @param id тот самый id
-     * @return критерий
+     * @return Category критерий
      * @throws SQLException
      */
     public Category getCategoryById(int id) throws SQLException {
@@ -280,7 +280,7 @@ public class DatabaseHelper {
     /**
      * Метод получающий из БД рекрутера по id или создающий нового (если не найден)
      * @param id тот самый id
-     * @return рекрутер или пустой рекрутер
+     * @return Interviewer рекрутер или пустой рекрутер
      * @throws SQLException
      */
     public Interviewer getInterviewerById(int id) throws SQLException {
@@ -310,7 +310,7 @@ public class DatabaseHelper {
 
     /**
      * Метод получающий количество интервью в БД
-     * @return колво интервью
+     * @return long колво интервью
      * @throws SQLException
      */
     public long getCountOfInterview()throws SQLException {
@@ -320,7 +320,7 @@ public class DatabaseHelper {
 
     /**
      * Метод получающий количество кандидатов в БД
-     * @return колво кандидатов
+     * @return long колво кандидатов
      * @throws SQLException
      */
     public long getCountOfCandidate()throws SQLException {
