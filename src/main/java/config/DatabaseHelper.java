@@ -108,9 +108,7 @@ public class DatabaseHelper {
         return interviews;
     }
 
-<<<<<<< HEAD
     //Получить по полям
-=======
     /**
      * Метод получения из БД оценки по интервью и критерию
      * @param idInterview айди нужного интервью
@@ -118,7 +116,6 @@ public class DatabaseHelper {
      * @return Mark оценка или null
      * @throws SQLException
      */
->>>>>>> ff572165da6129c51261d0bb8da290372a64becd
     public Mark getMarkByInterviewAndCategory(int idInterview,String categoryName)throws SQLException{
         List<Mark> marks = getInterviewMarks(idInterview);
         for(Mark mark: marks)
