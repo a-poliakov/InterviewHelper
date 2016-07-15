@@ -284,14 +284,17 @@ public class DatabaseHelper {
         markDao.create(mark);
         return mark;
     }
-    public InterviewComment addInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)throws SQLException{
-        InterviewComment iCom = new InterviewComment();
-        iCom.setIdInterview(getInterviewById(idInterview));
+    public InterviewComment addOrEditInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)throws SQLException{
+        InterviewComment iCom = getInterviewCommentByIdInterview(idInterview);
+        if (iCom == null) {
+            iCom = new InterviewComment();
+            iCom.setIdInterview(getInterviewById(idInterview));
+        }
         iCom.setExperience(experience);
         iCom.setRecommendations(recommendations);
         iCom.setLastWork(lastWork);
         iCom.setComment(comment);
-        interviewCommentDao.create(iCom);
+        interviewCommentDao.createOrUpdate(iCom);
         return iCom;
     }
     public Candidate addCandidate(String fio, String date, String banned)  throws SQLException{
@@ -331,7 +334,7 @@ public class DatabaseHelper {
         candidateDao.delete(candidate);
     }
     //Редактировать
-    public void editOrAddInterview(int idInterview,String interviewDate, int idCandidate, String candidateFio, String bornDate, int idInterviewer, String interviewerFio, String result, String post, List<CategoryRow> marks) throws SQLException    {
+    public Interview editOrAddInterview(int idInterview,String interviewDate, int idCandidate, String candidateFio, String bornDate, int idInterviewer, String interviewerFio, String result, String post, List<CategoryRow> marks) throws SQLException    {
         Candidate candidate = getCandidateById(idCandidate);
         candidate.setFio(candidateFio);
         candidate.setBornDate(bornDate);
@@ -351,6 +354,7 @@ public class DatabaseHelper {
         interview.setPost(post);
         interviewDao.createOrUpdate(interview);
         editInterviewMarks(interview.getIdInterview(), marks);
+        return interview;
     }
     public void editInterview(int idInterview, String bornDate, String interviewDate, String result, String post, List<CategoryRow> marks)  throws SQLException{
         //if(idInterview == 0) новое
