@@ -22,7 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlarmTemplateBuilder {
-    /* Создается и показывается уведомление
+    /**
+     * Создается и показывается уведомление
      * @param fioTitle фамилия собеседуемого
      * @param post должность
      * @param alarmId ?? подумать
