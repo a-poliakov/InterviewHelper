@@ -24,21 +24,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.lang.management.ThreadInfo;
 import java.net.URL;
 
+<<<<<<< HEAD
+=======
+import static config.AppConfig.Name_File;
+
 // TODO: 05.07.2016 Потренироваться с локализацией
+>>>>>>> d8da99e09e225211dec0d02224076bfec5d2e3f0
 public class UIEntry  extends Application{
 
     private Stage primaryStage;
     private MainController mainController;
     private FXMLLoader fxmlLoader;
     private VBox currentRoot;
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);
+        //Interview Helper
+        File file = new File(System.getProperty("user.dir"));
+        String s;
+        try {
+            s = "reg add HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run /v " + Name_File + " /t REG_SZ /d " + file.getPath() + "\\" + Name_File;
+            Runtime.getRuntime().exec(s);
+        } catch (Exception ex) {
+        }
+
         this.primaryStage = primaryStage;
         this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -145,7 +159,5 @@ public class UIEntry  extends Application{
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
         primaryStage.show();
-        AlarmTemplateBuilder templateBuilder = new AlarmTemplateBuilder();
-        templateBuilder.createNotification("Иванов Иван Иванович", "программист", 1);
     }
 }
