@@ -108,9 +108,6 @@ public class DatabaseHelper {
         return interviews;
     }
 
-<<<<<<< HEAD
-    //Получить по полям
-=======
     /**
      * Метод получения из БД оценки по интервью и критерию
      * @param idInterview айди нужного интервью
@@ -118,7 +115,6 @@ public class DatabaseHelper {
      * @return Mark оценка или null
      * @throws SQLException
      */
->>>>>>> ff572165da6129c51261d0bb8da290372a64becd
     public Mark getMarkByInterviewAndCategory(int idInterview,String categoryName)throws SQLException{
         List<Mark> marks = getInterviewMarks(idInterview);
         for(Mark mark: marks)
@@ -369,9 +365,9 @@ public class DatabaseHelper {
     }
 
     /**
-     * Добавляет оценки в интервью 
-     * @param idInterview
-     * @param marks
+     * Добавляет оценкок определенного интервью в БД
+     * @param idInterview id этого интервью
+     * @param marks список типа List<CategoryRow> как имя критерия, оценка
      * @throws SQLException
      */
     public void addInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{
@@ -383,6 +379,18 @@ public class DatabaseHelper {
             }
         }
     }
+
+    /**
+     * Метод созающий интервью с кандидатом в БД
+     * @param name ФИО Кандидата
+     * @param bornDate Дата рождения кандидата
+     * @param interviewer Рекрутер
+     * @param interviewDate Дата интервью
+     * @param result Результат интервью
+     * @param post Претендуемая должность
+     * @return созданное интервью
+     * @throws SQLException
+     */
     public Interview addInterview(String name,String bornDate, String interviewer, String interviewDate, String result, String post)  throws SQLException{
         Interview interview = new Interview();
         Candidate candidate = getCandidateByFio(name);
@@ -396,6 +404,13 @@ public class DatabaseHelper {
         interviewDao.create(interview);
        return interview;
     }
+
+    /**
+     * Метод, создающий рекрутера по ФИО в БД
+     * @param fio ФИО
+     * @return добавленный рекрутер
+     * @throws SQLException
+     */
     public Interviewer addInterviewer(String fio)  throws SQLException{
         Interviewer interviewer = new Interviewer();
         interviewer.setFio(fio);
@@ -403,12 +418,28 @@ public class DatabaseHelper {
         interviewerDao.create(interviewer);
         return interviewer;
     }
+
+    /**
+     * Метод, добавляющий критерий в БД
+     * @param name Название критерия
+     * @return добавленный критерий
+     * @throws SQLException
+     */
     public Category addCategory(String name)  throws SQLException{
         Category category = new Category();
         category.setName(name);
         categoryDao.create(category);
         return category;
     }
+
+    /**
+     * Метод добавляющий оценку в БД по интервью и критерию
+     * @param idCategory id критерия
+     * @param idInterview id интервью
+     * @param value Значение оценки
+     * @return добавленную оценку
+     * @throws SQLException
+     */
     public Mark addMark(int idCategory, int idInterview, double value)  throws SQLException{
         //Перед добавлением оценки, убедись, что создано интервью!
         Mark mark = new Mark();
@@ -418,6 +449,17 @@ public class DatabaseHelper {
         markDao.create(mark);
         return mark;
     }
+
+    /**
+     * Метод редактирующий или создающий (если нет) В БД комментарий к интевью
+     * @param idInterview id интервью
+     * @param experience опыт
+     * @param recommendations рекомендации
+     * @param lastWork последнее место работы
+     * @param comment коментарий
+     * @return Отредактированный или созданный коментарий
+     * @throws SQLException
+     */
     public InterviewComment addOrEditInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)throws SQLException{
         InterviewComment iCom = getInterviewCommentByIdInterview(idInterview);
         if (iCom == null) {
@@ -431,6 +473,15 @@ public class DatabaseHelper {
         interviewCommentDao.createOrUpdate(iCom);
         return iCom;
     }
+
+    /**
+     * Метод добавляющий кандидата В БД
+     * @param fio ФИО кандидата
+     * @param date Дата рожденич
+     * @param banned запрет к принятию
+     * @return добавленного кандидата
+     * @throws SQLException
+     */
     public Candidate addCandidate(String fio, String date, String banned)  throws SQLException{
         Candidate candidate = new Candidate();
         candidate.setFio(fio);
@@ -439,7 +490,12 @@ public class DatabaseHelper {
         candidateDao.create(candidate);
         return candidate;
     }
-    //Удалить
+
+    /**
+     * Метод, удаляющий из БД критерий и все оценки по нему
+     * @param id id критерия
+     * @throws SQLException
+     */
     public void delCategoryById(int id)  throws SQLException{
         Category category = getCategoryById(id);
         QueryBuilder<Mark, Integer> markIntegerQueryBuilder = markDao.queryBuilder();
@@ -449,6 +505,12 @@ public class DatabaseHelper {
         markDao.delete(marks);
         categoryDao.delete(category);
     }
+
+    /**
+     * Метод, удаляющий интервью из БД, а также связанные с ним оценки и коментарий
+     * @param id id интервью
+     * @throws SQLException
+     */
     public void delInterviewById(int id)  throws SQLException{
         Interview interview = getInterviewById(id);
         QueryBuilder<InterviewComment, Integer> query = interviewCommentDao.queryBuilder();
@@ -463,11 +525,32 @@ public class DatabaseHelper {
         }
         interviewDao.delete(interview);
     }
+
+    /**
+     * Метод, удаляющий кандидата из БД
+     * @param id id кандидата
+     * @throws SQLException
+     */
     public void delCandidateById(int id)  throws SQLException{
         Candidate candidate = getCandidateById(id);
         candidateDao.delete(candidate);
     }
-    //Редактировать
+
+    /**
+     * Метод, редактирующий или добавляющий новое интервью в БД с кандидатом, рекрутером и оценками
+     * @param idInterview id интервью (если нет создастся новое)
+     * @param interviewDate дата проведения
+     * @param idCandidate id кандидата (если нет создастся новый кандидат )
+     * @param candidateFio ФИО кандидата
+     * @param bornDate дата рождения кандидатА
+     * @param idInterviewer id рекрутера (если нет создастся новый рекрутер )
+     * @param interviewerFio ФИО рекрутера
+     * @param result резальтат
+     * @param post дожность
+     * @param marks критерии с оценками
+     * @return добавленное или измененное интервью
+     * @throws SQLException
+     */
     public Interview editOrAddInterview(int idInterview,String interviewDate, int idCandidate, String candidateFio, String bornDate, int idInterviewer, String interviewerFio, String result, String post, List<CategoryRow> marks) throws SQLException    {
         Candidate candidate = getCandidateById(idCandidate);
         candidate.setFio(candidateFio);
@@ -490,6 +573,17 @@ public class DatabaseHelper {
         editInterviewMarks(interview.getIdInterview(), marks);
         return interview;
     }
+
+    /**
+     * По моему этот метод устарел и подлежит удалению
+     * @param idInterview
+     * @param bornDate
+     * @param interviewDate
+     * @param result
+     * @param post
+     * @param marks
+     * @throws SQLException
+     */
     public void editInterview(int idInterview, String bornDate, String interviewDate, String result, String post, List<CategoryRow> marks)  throws SQLException{
         //if(idInterview == 0) новое
         //public void editOrAddInterview(idInterview, idCandidate, fio, bornDate, idInterviewer, fio, String result, String post, List<CategoryRow> marks)
@@ -503,6 +597,12 @@ public class DatabaseHelper {
         editInterviewMarks(idInterview, marks);
     }
 
+    /**
+     * Метод, редактирующий оцеткаи интервью В БД
+     * @param idInterview id интервью
+     * @param marks список критериев с оценками
+     * @throws SQLException
+     */
     public void editInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{
         for(CategoryRow cat:marks)
         {
@@ -512,6 +612,14 @@ public class DatabaseHelper {
             }
         }
     }
+
+    /**
+     * Метод, изменяющий 1 оценку в БД
+     * @param idInterview id интервью
+     * @param idCategory id критерия
+     * @param value значение оценки
+     * @throws SQLException
+     */
     public void editMark(int idInterview, int idCategory, double value)throws SQLException {
         Mark mark = getMarkByInterviewAndCategory(idInterview, getCategoryById(idCategory).getName());
         if(mark == null)
@@ -522,31 +630,74 @@ public class DatabaseHelper {
         mark.setValue(value);
         markDao.createOrUpdate(mark);
     }
+
+    /**
+     * Метод, изменяющий критерий в БД (вроде не используется)
+     * @param id id критерия
+     * @param name новое название
+     * @throws SQLException
+     */
     public void editCategory(int id, String name)throws SQLException{
         Category cat = getCategoryById(id);
         cat.setName(name);
         categoryDao.createOrUpdate(cat);
     }
+
+    /**
+     * Метод, изменяющий дату провелдения интервью в БД (вроде устарел)
+     * @param idInterview id интервью
+     * @param date новая дата
+     * @throws SQLException
+     */
     public void editInterviewDate(int idInterview, String date)throws SQLException{
         Interview interview = getInterviewById(idInterview);
         interview.setDate(date);
         interviewDao.createOrUpdate(interview);
     }
+
+    /**
+     * Метод, изменяющий  результат интервью в БД (вроде устарел)
+     * @param idInterview id интервью
+     * @param result новый результат
+     * @throws SQLException
+     */
     public void editInterviewResult(int idInterview, String result)throws SQLException{
         Interview interview = getInterviewById(idInterview);
         interview.setResult(result);
         interviewDao.createOrUpdate(interview);
     }
+
+    /**
+     * Метод, изменяющий должность интервью в БД (вроде устарел)
+     * @param idInterview id интервью
+     * @param post новая должность
+     * @throws SQLException
+     */
     public void editInterviewPost(int idInterview, String post)throws SQLException{
         Interview interview = getInterviewById(idInterview);
         interview.setPost(post);
         interviewDao.createOrUpdate(interview);
     }
+
+    /**
+     * Метод, изменяющий рекрутера интервью в БД (вроде устарел)
+     * @param idInterview id интервью
+     * @param idInterviewer новый рекрутер
+     * @throws SQLException
+     */
     public void editInterviewInterviewer(int idInterview, int idInterviewer)throws SQLException{
         Interview interview = getInterviewById(idInterview);
         interview.setIdInterviewer(getInterviewerById(idInterviewer));
         interviewDao.createOrUpdate(interview);
     }
+
+    /**
+     * Метод, редактирующий кандидата в БД (вроде устарел)
+     * @param fio ФИО кандидата
+     * @param date дата рождения
+     * @param ban  запрет
+     * @throws SQLException
+     */
     public void editCandidate(String fio,String date,String ban) throws SQLException {
         Candidate candidate = getCandidateByFio(fio);
         candidate.setFio(fio);

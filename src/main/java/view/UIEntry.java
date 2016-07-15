@@ -29,12 +29,9 @@ import java.io.IOException;
 import java.lang.management.ThreadInfo;
 import java.net.URL;
 
-<<<<<<< HEAD
-=======
 import static config.AppConfig.Name_File;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
->>>>>>> d8da99e09e225211dec0d02224076bfec5d2e3f0
 public class UIEntry  extends Application{
 
     private Stage primaryStage;
