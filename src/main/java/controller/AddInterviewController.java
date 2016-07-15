@@ -243,12 +243,12 @@ public class AddInterviewController extends ControllerTemplate {
     }
 
     private void saveInterview() throws SQLException {
-        HelperFactory.getHelper().editOrAddInterview(
+        Interview interview = HelperFactory.getHelper().editOrAddInterview(
                 interviewId, DateUtil.format(datePicker.getValue()),
                 candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
                 interviewerId, interviewerEdit.getText(),
                 resultEdit.getText(), postEdit.getText(), marks);
-        HelperFactory.getHelper().addInterviewComment(interviewId, expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText())
+        HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText())
         dlgAddInterviewStage.close();
     }
 }
