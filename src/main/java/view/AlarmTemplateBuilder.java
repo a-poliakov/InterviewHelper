@@ -22,11 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlarmTemplateBuilder {
-    /* Создается уведомление
+    /* Создается и показывается уведомление
      * @param fioTitle фамилия собеседуемого
-     * @param alarmDate дата собеседования
+     * @param post должность
      * @param alarmId ?? подумать
-     * @return Node созданный Node для напоминания
      */
     public void createNotification(String fioTitle, String post, int alarmId){
         Node graphic = null;
@@ -47,7 +46,7 @@ public class AlarmTemplateBuilder {
 
     /* Создается и заполняется вьюха для напоминаний
      * @param fioTitle фамилия собеседуемого
-     * @param alarmDate дата собеседования
+     * @param post должность
      * @param alarmId ?? подумать
      * @return Node созданный Node для напоминания
      */
@@ -77,6 +76,9 @@ public class AlarmTemplateBuilder {
         return rootNode;
     }
 
+    /* Заполняется список часов
+     * @return ObservableList<Integer> часы
+     */
     private ObservableList<Integer> fillHours(){
         ObservableList<Integer> hoursList = FXCollections.observableArrayList();
         List<Integer> hours = new ArrayList<>();
@@ -87,6 +89,9 @@ public class AlarmTemplateBuilder {
         return hoursList;
     }
 
+    /* Заполняется список минут
+     * @return ObservableList<Integer> минуты
+     */
     private ObservableList<Integer> fillMinutes(){
         ObservableList<Integer> minutesList = FXCollections.observableArrayList();
         List<Integer> minutes = new ArrayList<>();
