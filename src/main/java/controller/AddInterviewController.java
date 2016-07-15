@@ -47,7 +47,6 @@ public class AddInterviewController extends ControllerTemplate {
 
     private VBox addInterviewerDlg;
     private VBox addCandidateDlg;
-    private AddCandidateController addCandidateController;
 
     @FXML
     private TextField fioEdit;
@@ -116,32 +115,7 @@ public class AddInterviewController extends ControllerTemplate {
         saveInterview();
     }
 
-    @FXML
-    private void onAddCandidateAction() throws IOException, SQLException {
-        ShowAddCandidateDialog();
-    }
 
-
-    public void ShowAddCandidateDialog() throws  IOException,SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        URL url = getClass().getClassLoader().getResource(AppConfig.FXML_ADD_CANDIDATE_DLG_URL);
-        fxmlLoader.setLocation(url);
-        VBox node = null;
-        node = (VBox) fxmlLoader.load();
-        addCandidateController = fxmlLoader.getController();
-        addCandidateDlg = node;
-        Scene scene = new Scene(addCandidateDlg, 419.0, 180);
-        dlgCandidateStage = new Stage();
-        dlgCandidateStage.setScene(scene);
-        dlgCandidateStage.setMinHeight(180);
-        dlgCandidateStage.setMinWidth(419.0);
-        dlgCandidateStage.initModality(Modality.WINDOW_MODAL);
-        dlgCandidateStage.initOwner(dlgAddInterviewStage);
-        addCandidateController.init(dlgCandidateStage);
-        addCandidateController.editCandidate(fioEdit.getText());
-        dlgCandidateStage.showAndWait();
-        fioEdit.setText(addCandidateController.retName());
-    }
 
     public void addInterview() throws SQLException {
         interviewId = 0;
