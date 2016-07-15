@@ -28,10 +28,10 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.management.ThreadInfo;
 import java.net.URL;
+
 import static config.AppConfig.Name_File;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
-
 public class UIEntry  extends Application{
 
     private Stage primaryStage;
