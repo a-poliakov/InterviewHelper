@@ -49,76 +49,10 @@ public class UIEntry  extends Application{
             Runtime.getRuntime().exec(s);
         } catch (Exception ex) {
         }
-
         this.primaryStage = primaryStage;
-        this.primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                final TrayIcon trayIcon;
-                if (SystemTray.isSupported()) {
-                    SystemTray tray = SystemTray.getSystemTray();
-                    java.awt.Image image = Toolkit.getDefaultToolkit().getImage("src/main/resources/icon/mainIcon.png");
-                    final JPopupMenu popup = new JPopupMenu();
-                    trayIcon = new TrayIcon(image, "Interview Helper");
-                    ActionListener restoreListener = new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            restoreWindow();
-                            tray.remove(trayIcon);
-                        }
-                    };
-                    ActionListener exitListener = new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            System.out.println("Exiting...");
-                            System.exit(0);
-                        }
-                    };
-                    JMenuItem restoreItem = new JMenuItem("Restore window");
-                    restoreItem.addActionListener(restoreListener);
-                    popup.add(restoreItem);
-                    JMenuItem exitItem = new JMenuItem("Exit");
-                    exitItem.addActionListener(exitListener);
-                    popup.add(exitItem);
-                    trayIcon.setImageAutoSize(true);
-                    trayIcon.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            restoreWindow();
-                            tray.remove(trayIcon);
-                        }
-
-                        @Override
-                        public void mouseReleased(MouseEvent e) {
-                            if (e.isPopupTrigger()) {
-                                popup.setLocation(e.getX(), e.getY());
-                                popup.setInvoker(popup);
-                                popup.setVisible(true);
-                            }
-                        }
-                    });
-
-                    try {
-                        tray.add(trayIcon);
-                        trayIcon.displayMessage("Interview Helper",
-                                "Приложение продолжит работу в трее",
-                                TrayIcon.MessageType.INFO);
-                    } catch (AWTException e) {
-                        System.err.println("TrayIcon could not be added.");
-                    }
-                } else {
-                    primaryStage.close();
-                }
-            }
-
-            public void restoreWindow(){
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        primaryStage.show();
-                    }
-                });
-            }
-        });
+        SystemTrayHandler<WindowEvent> systemTrayHandler = new SystemTrayHandler<>();
+        systemTrayHandler.setPrimaryStage(primaryStage);
+        this.primaryStage.setOnCloseRequest(systemTrayHandler);
         createGUI();
     }
     public static void main(String[] args) {
@@ -156,7 +90,5 @@ public class UIEntry  extends Application{
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
         primaryStage.show();
-        AlarmTemplateBuilder templateBuilder = new AlarmTemplateBuilder();
-        templateBuilder.createNotification("Иванов Иван Иванович", "программист", 1);
     }
 }

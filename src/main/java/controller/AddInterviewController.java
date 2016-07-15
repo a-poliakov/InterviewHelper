@@ -1,31 +1,23 @@
 package controller;
 
-import config.AppConfig;
 import config.HelperFactory;
 import entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.CategoryRow;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
-import util.ConstantManager;
 import util.DateUtil;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -89,8 +81,21 @@ public class AddInterviewController extends ControllerTemplate {
     private AutoCompletionBinding<Interviewer> autoCompletionInterviewerBinding;
     private ObservableSet<Interviewer> possibleInterviewerSuggestions = FXCollections.observableSet();
 
+    /**
+     * Метод для инициализации компонентов формы
+     * @param stage окно диалога
+     * @throws SQLException
+     */
     public void init(Stage stage) throws SQLException {
         dlgAddInterviewStage = stage;
+        initAutoCompletion();
+    }
+
+    /**
+     * Инициализация живого поиска
+     * @throws SQLException
+     */
+    private void initAutoCompletion()throws SQLException {
         possibleCandidateSuggestions.addAll(HelperFactory.getHelper().getCandidates());
         autoCompletionCandidateBinding = TextFields.bindAutoCompletion(
                 fioEdit, possibleCandidateSuggestions);
@@ -109,51 +114,45 @@ public class AddInterviewController extends ControllerTemplate {
             interviewerId = interviewer.getIdInterviewer();
         });
     }
-    
+
+    /**
+     * Обработка результата диалога (по нажатию на кнопку "ОК")
+     * @throws SQLException
+     * @throws IOException
+     */
     @FXML
     private void onDialogResult() throws IOException, SQLException {
         saveInterview();
     }
 
-
-
+    /**
+     * Добавление нового интервью
+     * @throws SQLException
+     */
     public void addInterview() throws SQLException {
         interviewId = 0;
-        try {
-            // устанавливаем тип и значение которое должно хранится в колонке
-            valueCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Double>("value"));
-            categoryCol.setCellValueFactory(new PropertyValueFactory<CategoryRow, Category>("category"));
-            // заполняем таблицу данными
-            marks.addAll(HelperFactory.getHelper().getInterviewMarksAll(interviewId));
-            categoriesTable.setItems(marks);
-            categoriesTable.setEditable(true);
-            StringConverter<Double> converter = new StringConverter<Double>() {
-                @Override
-                public String toString(Double object) {
-                    return object.toString();
-                }
-
-                @Override
-                public Double fromString(String string) {
-                    return Double.parseDouble(string);
-                }
-            };
-            valueCol.setCellFactory(
-                    TextFieldTableCell.<CategoryRow,Double>forTableColumn(converter));
-            valueCol.setOnEditCommit(
-                    (TableColumn.CellEditEvent<CategoryRow, Double> t) -> {
-                        ((CategoryRow) t.getTableView().getItems().get(
-                                t.getTablePosition().getRow())
-                        ).setValue(t.getNewValue());
-                    });
-        }catch (Exception e){}
+        fillMarksTable();
     }
 
+    /**
+     * Редактирование существующего интервью
+     * @throws SQLException
+     */
     public void editInterview(int id) throws SQLException {
         interviewId = id;
         Interview interview = HelperFactory.getHelper().getInterviewById(id);
         candidateId = interview.getIdCandidate().getIdCandidate();
         interviewerId = interview.getIdInterviewer().getIdInterviewer();
+        fillRequiredFields(interview);
+        fillMarksTable();
+        fillCommentsFilds();
+    }
+
+    /**
+     * Метод для заполнения обязательных полей интервью
+     * @param interview интервью, из которого берутся данные
+     */
+    private void fillRequiredFields(Interview interview){
         try {
             fioEdit.setText(interview.getIdCandidate().getFio());
         } catch (Exception e){}
@@ -176,6 +175,12 @@ public class AddInterviewController extends ControllerTemplate {
         try {
             interviewerEdit.setText(interview.getIdInterviewer().getFio());
         } catch (Exception e){}
+    }
+
+    /**
+     * Метод для заполнения таблицы оценок интервью
+     */
+    private void fillMarksTable(){
         try {
             // устанавливаем тип и значение которое должно хранится в колонке
             valueCol.setCellValueFactory(new PropertyValueFactory("value"));
@@ -203,7 +208,13 @@ public class AddInterviewController extends ControllerTemplate {
                                 t.getTablePosition().getRow())
                         ).setValue(t.getNewValue());
                     });
-        } catch (Exception e){}
+        } catch (SQLException e){}
+    }
+
+    /**
+     * Метод для заполнения комментариев к интервью
+     */
+    private void fillCommentsFilds(){
         try {
             InterviewComment interviewComment = HelperFactory.getHelper().getInterviewCommentByIdInterview(interviewId);
             if (interviewComment == null) {
@@ -216,6 +227,11 @@ public class AddInterviewController extends ControllerTemplate {
         } catch (Exception e){}
     }
 
+    /**
+     * Сохранение интервью
+     * (передает введенные данные об интервью в Dao)
+     * @throws SQLException
+     */
     private void saveInterview() throws SQLException {
         Interview interview = HelperFactory.getHelper().editOrAddInterview(
                 interviewId, DateUtil.format(datePicker.getValue()),
