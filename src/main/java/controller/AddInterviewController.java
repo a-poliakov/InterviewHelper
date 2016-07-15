@@ -233,7 +233,7 @@ public class AddInterviewController extends ControllerTemplate {
         try {
             InterviewComment interviewComment = HelperFactory.getHelper().getInterviewCommentByIdInterview(interviewId);
             if (interviewComment == null) {
-                interviewComment = HelperFactory.getHelper().addInterviewComment(interviewId, "", "", "", "");
+                interviewComment = HelperFactory.getHelper().addOrEditInterviewComment(interviewId, "", "", "", "");
             }
             expEdit.setText(interviewComment.getExperience());
             recommendationEdit.setText(interviewComment.getRecommendations());
@@ -248,7 +248,7 @@ public class AddInterviewController extends ControllerTemplate {
                 candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
                 interviewerId, interviewerEdit.getText(),
                 resultEdit.getText(), postEdit.getText(), marks);
-        HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText())
+        HelperFactory.getHelper().addOrEditInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
         dlgAddInterviewStage.close();
     }
 }
