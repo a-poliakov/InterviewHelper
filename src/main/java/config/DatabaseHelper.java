@@ -19,7 +19,6 @@ import java.util.Locale;
 import util.DBUtil;
 
 public class DatabaseHelper {
-    // URL для подключения к БД
     // Подключение к БД
     private ConnectionSource connectionSource;
     //----------------------------------------------------------------------------
@@ -54,7 +53,7 @@ public class DatabaseHelper {
         return interviews;
     }
 
-    /*
+    /**
      * Метод для фильтрации интервью по ФИО кандидата
      * @author Андрей Поляков
      * @param fio ФамилияИмяОтчество необходимого кандидата

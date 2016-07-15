@@ -37,6 +37,7 @@ public class DBUtil {
         TableUtils.createTableIfNotExists(connectionSource, Mark.class);
         }
     }
+    
     public static void importDb(String url) throws IOException{
         File database = new File(AppConfig.DATABASE_FILENAME);
         File newDatabase = new File(url + "\\" + AppConfig.DATABASE_FILENAME);

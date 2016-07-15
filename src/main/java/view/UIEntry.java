@@ -1,13 +1,11 @@
 package view;
 
 import config.AppConfig;
-import controller.AddInterviewController;
+import config.SystemConfig;
 import controller.MainController;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
@@ -15,21 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.ConstantManager;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageIO;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
-import java.lang.management.ThreadInfo;
 import java.net.URL;
-
-import static config.AppConfig.Name_File;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
 public class UIEntry  extends Application{
@@ -41,14 +25,6 @@ public class UIEntry  extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);
-        //Interview Helper
-        File file = new File(System.getProperty("user.dir"));
-        String s;
-        try {
-            s = "reg add HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run /v " + Name_File + " /t REG_SZ /d " + file.getPath() + "\\" + Name_File;
-            Runtime.getRuntime().exec(s);
-        } catch (Exception ex) {
-        }
         this.primaryStage = primaryStage;
         SystemTrayHandler<WindowEvent> systemTrayHandler = new SystemTrayHandler<>();
         systemTrayHandler.setPrimaryStage(primaryStage);
@@ -56,10 +32,18 @@ public class UIEntry  extends Application{
         createGUI();
     }
     public static void main(String[] args) {
+
+        if(!SystemConfig.hasAutoRunRegistryKey()){
+            SystemConfig.setupAutoRun();
+        }
         launch(args);
     }
 
-    // загружает дерево компонентов и возвращает в виде VBox (корневой элемент в FXML)
+    /**
+     * загружает дерево компонентов главной view из .fxml файла
+     * @return VBox возвращает дерево компонентов в виде VBox (корневой элемент в FXML)
+     * @throws Exception
+     */
     private VBox loadFXML() throws Exception {
         fxmlLoader = new FXMLLoader();
         URL url = getClass().getClassLoader().getResource(AppConfig.FXML_MAIN_URL);
