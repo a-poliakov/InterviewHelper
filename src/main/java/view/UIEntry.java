@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.lang.management.ThreadInfo;
 import java.net.URL;
 
-// TODO: 05.07.2016 Потренироваться с локализацией
 public class UIEntry  extends Application{
 
     private Stage primaryStage;
@@ -145,7 +144,5 @@ public class UIEntry  extends Application{
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
         primaryStage.show();
-        AlarmTemplateBuilder templateBuilder = new AlarmTemplateBuilder();
-        templateBuilder.createNotification("Иванов Иван Иванович", "программист", 1);
     }
 }

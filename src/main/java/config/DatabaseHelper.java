@@ -95,6 +95,7 @@ public class DatabaseHelper {
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
     }
+
     //Получить по полям
     public Mark getMarkByInterviewAndCategory(int idInterview,String categoryName)throws SQLException{
         List<Mark> marks = getInterviewMarks(idInterview);
