@@ -56,7 +56,7 @@ public class DatabaseHelper {
     }
 
     /*
-     * Метод для получения всех интервью, в которых собеседовали нужного кандидата
+     * Метод для фильтрации интервью по ФИО кандидата
      * @author Андрей Поляков
      * @param fio ФамилияИмяОтчество необходимого кандидата
      * @return List<Interview> все подходящие интервью
@@ -80,6 +80,12 @@ public class DatabaseHelper {
         return interviews;
     }
 
+    /**
+     * Метод для фильтрации интервью по дате
+     * @param date строкка выражающая частично определенную дату
+     * @return List<Interview> все подходящие интервью
+     * @throws SQLException
+     */
     public List<Interview> getInterviewsByDate(String date) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
         interviewQueryBuilder.where().like("Date", "%" + date + "%");
@@ -88,6 +94,12 @@ public class DatabaseHelper {
         return interviews;
     }
 
+    /**
+     * Метод для фильтрации интервью по должноти, на которую претендуют
+     * @param post должность на котурую претендуют
+     * @return List<Interview> все подходящие интервью
+     * @throws SQLException
+     */
     public List<Interview> getInterviewsByPost(String post) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
         interviewQueryBuilder.where().like("Post","%" + post + "%");
@@ -95,7 +107,14 @@ public class DatabaseHelper {
         List<Interview> interviews = interviewDao.query(preparedQuery);
         return interviews;
     }
-    //Получить по полям
+
+    /**
+     * Метод получения из БД оценки по интервью и критерию
+     * @param idInterview айди нужного интервью
+     * @param categoryName Имя критерия
+     * @return Mark оценка или null
+     * @throws SQLException
+     */
     public Mark getMarkByInterviewAndCategory(int idInterview,String categoryName)throws SQLException{
         List<Mark> marks = getInterviewMarks(idInterview);
         for(Mark mark: marks)
@@ -108,6 +127,13 @@ public class DatabaseHelper {
         // TODO: 07.07.2016 Костыль
         return null;
     }
+
+    /**
+     * Метод, получающий из БД кандидата по ФИО или созает нового (если не найден)
+     * @param fio ФИО для поиска
+     * @return Candidate искомый или новый кандидат
+     * @throws SQLException
+     */
     public Candidate getCandidateByFio(String fio)throws SQLException{
         List<Candidate> candidates = candidateDao.queryForAll();
         for(Candidate candidate: candidates)
@@ -120,6 +146,13 @@ public class DatabaseHelper {
         // TODO: 07.07.2016 Костыль создания новых пользователей
         return addCandidate(fio, "01.02.1975", "-");
     }
+
+    /**
+     *  Метод, получающий из БД рекрутера по ФИО или создающий нового (если не найден)
+     * @param fio ФИО для поиска
+     * @return Interviewer найденный или новый
+     * @throws SQLException
+     */
     public Interviewer getInterviewerByFio(String fio) throws SQLException{
         //если не нашел, то создаст нового
         List<Interviewer> interviewers = interviewerDao.queryForAll();
@@ -133,6 +166,12 @@ public class DatabaseHelper {
         return addInterviewer(fio);
     }
 
+    /**
+     * Метод получающий из БД критерий по названию
+     * @param name название критерия
+     * @return Category критерий или null
+     * @throws SQLException
+     */
     public Category getCategoryByName(String name) throws SQLException{
         //если не нашел, то создаст нового
         List<Category> categoryes = categoryDao.queryForAll();
@@ -146,6 +185,13 @@ public class DatabaseHelper {
         return null;
     }
     //Получить по Id
+
+    /**
+     * Метод получает из БД комментарий к интервью по айди интервью
+     * @param id фади интервью
+     * @return комментарий или null
+     * @throws SQLException
+     */
     public InterviewComment getInterviewCommentByIdInterview(int id)throws SQLException{
         List<InterviewComment> interviewComments = interviewCommentDao.queryForAll();
         for(InterviewComment ic: interviewComments)
@@ -157,6 +203,13 @@ public class DatabaseHelper {
         }
         return null;
     }
+
+    /**
+     * Метод, получающий из БД все оценки из некоторого интервью
+     * @param idInterview айди нужного интервью
+     * @return List<CategoryRow> Список в виде название категории, оцентка
+     * @throws SQLException
+     */
     public List<CategoryRow> getInterviewMarksAll(int idInterview)throws SQLException  {
         List<Category> categories = getCategories();
         List<Mark> marks = getInterviewMarks(idInterview);
@@ -175,6 +228,13 @@ public class DatabaseHelper {
         return categoryRows;
         // TODO: 06.07.2016 отсортировать лексикографически
     }
+
+    /**
+     * Метод получающий из БД интервью по id
+     * @param id то самое id
+     * @return нужное интервью или null
+     * @throws SQLException
+     */
     public Interview getInterviewById(int id) throws SQLException {
         QueryBuilder<Interview, Integer> interviewQueryBuilder = interviewDao.queryBuilder();
         interviewQueryBuilder.where().eq("idInterview", id);
@@ -184,6 +244,13 @@ public class DatabaseHelper {
             return null;
         return interviews.get(0);
     }
+
+    /**
+     * Метод получающий из БД кандидата по id или создающий нового (если не найден)
+     * @param id тот самый id
+     * @return нужный или новый кандидат
+     * @throws SQLException
+     */
     public Candidate getCandidateById(int id) throws SQLException {
         QueryBuilder<Candidate, Integer> candidateQueryBuilder = candidateDao.queryBuilder();
         candidateQueryBuilder.where().idEq(id);
@@ -193,6 +260,13 @@ public class DatabaseHelper {
             return addCandidate("empty", "01.01.2013", "-");
         return candidates.get(0);
     }
+
+    /**
+     * Метод получающий из БД критерий по id
+     * @param id тот самый id
+     * @return критерий
+     * @throws SQLException
+     */
     public Category getCategoryById(int id) throws SQLException {
         QueryBuilder<Category, Integer> query = categoryDao.queryBuilder();
         query.where().idEq(id);
@@ -368,14 +442,7 @@ public class DatabaseHelper {
         editInterviewPost(idInterview, post);
         editInterviewMarks(idInterview, marks);
     }
-    public void editInterviewComment(int idInterview, String experience, String recommendations, String lastWork, String comment)throws SQLException{
-        InterviewComment iCom = getInterviewCommentByIdInterview(idInterview);
-        iCom.setExperience(experience);
-        iCom.setRecommendations(recommendations);
-        iCom.setLastWork(lastWork);
-        iCom.setComment(comment);
-        interviewCommentDao.createOrUpdate(iCom);
-    }
+
     public void editInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{
         for(CategoryRow cat:marks)
         {
