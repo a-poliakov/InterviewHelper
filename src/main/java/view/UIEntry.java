@@ -145,5 +145,7 @@ public class UIEntry  extends Application{
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
         primaryStage.show();
+        AlarmTemplateBuilder templateBuilder = new AlarmTemplateBuilder();
+        templateBuilder.createNotification("Иванов Иван Иванович", "программист", 1);
     }
 }
