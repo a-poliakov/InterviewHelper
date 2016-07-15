@@ -145,7 +145,6 @@ public class AddInterviewController extends ControllerTemplate {
         interviewerId = interview.getIdInterviewer().getIdInterviewer();
         fillRequiredFields(interview);
         fillMarksTable();
-        // загружаем из Dao комментарий к интервью
         fillCommentsFilds();
     }
 

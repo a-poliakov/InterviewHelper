@@ -32,7 +32,6 @@ public class DatabaseHelper {
     private Dao<Mark, Integer> markDao = null;
 
     public DatabaseHelper() throws SQLException {
-
         connectionSource = new JdbcConnectionSource(AppConfig.DATABASE_PREFIX + AppConfig.DATABASE_FILENAME);
         candidateDao = DaoManager.createDao(connectionSource,Candidate.class);
         categoryDao = DaoManager.createDao(connectionSource,Category.class);
