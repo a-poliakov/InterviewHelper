@@ -205,7 +205,7 @@ public class DatabaseHelper {
     }
 
     /**
-     * Метод, получающий из БД все оценки из некоторого интервью
+     * Метод, получающий из БД все оценки по критерия из некоторого интервью
      * @param idInterview айди нужного интервью
      * @return List<CategoryRow> Список в виде название категории, оцентка
      * @throws SQLException
@@ -276,6 +276,13 @@ public class DatabaseHelper {
             return null;
         return categories.get(0);
     }
+
+    /**
+     * Метод получающий из БД рекрутера по id или создающий нового (если не найден)
+     * @param id тот самый id
+     * @return рекрутер или пустой рекрутер
+     * @throws SQLException
+     */
     public Interviewer getInterviewerById(int id) throws SQLException {
         QueryBuilder<Interviewer, Integer> interviewerQueryBuilder = interviewerDao.queryBuilder();
         interviewerQueryBuilder.where().idEq(id);
@@ -285,6 +292,13 @@ public class DatabaseHelper {
             return addInterviewer("empty");
         return interviewers.get(0);
     }
+
+    /**
+     * Метод получающий все оценки из БД по интервью
+     * @param idInterview id интервью
+     * @return List <Mark> лист оценок
+     * @throws SQLException
+     */
     private List <Mark> getInterviewMarks(int idInterview)throws SQLException{
         QueryBuilder<Mark, Integer> markIntegerQueryBuilder = markDao.queryBuilder();
         markIntegerQueryBuilder.where().eq("idInterview", idInterview);
@@ -293,27 +307,69 @@ public class DatabaseHelper {
         return marks;
     }
     //Получить всех
+
+    /**
+     * Метод получающий количество интервью в БД
+     * @return колво интервью
+     * @throws SQLException
+     */
     public long getCountOfInterview()throws SQLException {
         long countOfInterview = interviewDao.countOf();
         return countOfInterview;
     }
+
+    /**
+     * Метод получающий количество кандидатов в БД
+     * @return колво кандидатов
+     * @throws SQLException
+     */
     public long getCountOfCandidate()throws SQLException {
         long countOfCandidate = candidateDao.countOf();
         return countOfCandidate;
     }
+
+    /**
+     * Метод, получающий все критерии из БД
+     * @return List<Category>  список критериев
+     * @throws SQLException
+     */
     public List<Category> getCategories() throws SQLException {
         return categoryDao.queryForAll();
     }
+
+    /**
+     * Метод, получающий всех кандидатов из БД
+     * @return List<Candidate> список кандидатов
+     * @throws SQLException
+     */
     public List<Candidate> getCandidates() throws SQLException {
         return candidateDao.queryForAll();
     }
+
+    /**
+     *  Метод, получающий все интервью из БД
+     * @return  List<Interview> список кандидатов
+     * @throws SQLException
+     */
     public List<Interview> getInterview() throws SQLException{
         return interviewDao.queryForAll();
     }
+
+    /**
+     * Метод, получающий всех рекрутеров из БД
+     * @return List<Interviewer> список рекрутеров
+     * @throws SQLException
+     */
     public List<Interviewer> getInterviewers() throws SQLException {
         return interviewerDao.queryForAll();
     }
-    //Добавить
+
+    /**
+     * Добавляет оценки в интервью 
+     * @param idInterview
+     * @param marks
+     * @throws SQLException
+     */
     public void addInterviewMarks(int idInterview, List<CategoryRow> marks) throws SQLException{
         for(CategoryRow cat:marks)
         {
