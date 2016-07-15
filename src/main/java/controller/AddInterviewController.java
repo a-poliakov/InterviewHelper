@@ -248,11 +248,7 @@ public class AddInterviewController extends ControllerTemplate {
                 candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
                 interviewerId, interviewerEdit.getText(),
                 resultEdit.getText(), postEdit.getText(), marks);
-<<<<<<< HEAD
-        HelperFactory.getHelper().addInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
-=======
         HelperFactory.getHelper().addOrEditInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
->>>>>>> 46c055c1420aa32b9ec939a0b58cf06a7c9773b9
         dlgAddInterviewStage.close();
     }
 }
