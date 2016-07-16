@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.ConstantManager;
 
+import java.io.IOException;
 import java.net.URL;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
@@ -31,8 +32,17 @@ public class UIEntry  extends Application{
         this.primaryStage.setOnCloseRequest(systemTrayHandler);
         createGUI();
     }
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException{
+        //Если приложение уже запущено, то что-то делаем.
+        if(SystemConfig.isRun())
+        {
+            return;
+        }
+        else
+        {
+            //Делаем пометку, что приложение запущено.
+            SystemConfig.run();
+        }
         if(!SystemConfig.hasAutoRunRegistryKey()){
             SystemConfig.setupAutoRun();
         }
