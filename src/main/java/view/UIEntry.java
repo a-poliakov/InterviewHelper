@@ -11,10 +11,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import util.AlarmManager;
 import util.ConstantManager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 
 // TODO: 05.07.2016 Потренироваться с локализацией
 public class UIEntry  extends Application{
@@ -23,6 +25,7 @@ public class UIEntry  extends Application{
     private MainController mainController;
     private FXMLLoader fxmlLoader;
     private VBox currentRoot;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);
@@ -31,8 +34,12 @@ public class UIEntry  extends Application{
         systemTrayHandler.setPrimaryStage(primaryStage);
         this.primaryStage.setOnCloseRequest(systemTrayHandler);
         createGUI();
+        AlarmManager alarmManager = new AlarmManager();
+        alarmManager.fillTodayAlarmList();
+        alarmManager.start();
     }
-    public static void main(String[] args) throws IOException{
+
+    public static void main(String[] args) throws IOException, SQLException {
         //Если приложение уже запущено, то что-то делаем.
         if(SystemConfig.isRun())
         {
