@@ -18,14 +18,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 
-// TODO: 05.07.2016 Потренироваться с локализацией
 public class UIEntry  extends Application{
-
     private Stage primaryStage;
     private MainController mainController;
     private FXMLLoader fxmlLoader;
     private VBox currentRoot;
 
+    /**
+     * Стартует javafx приложение
+     * @param primaryStage главная сцена
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Platform.setImplicitExit(false);
@@ -41,12 +44,10 @@ public class UIEntry  extends Application{
 
     public static void main(String[] args) throws IOException, SQLException {
         //Если приложение уже запущено, то что-то делаем.
-        if(SystemConfig.isRun())
-        {
+        if(SystemConfig.isRun()) {
             return;
         }
-        else
-        {
+        else {
             //Делаем пометку, что приложение запущено.
             SystemConfig.run();
         }
@@ -82,6 +83,10 @@ public class UIEntry  extends Application{
         return node;
     }
 
+    /**
+     * создания узла, содержащего главную view
+     * @throws Exception
+     */
     private void createGUI() throws Exception {
         currentRoot = loadFXML();
         Scene scene = new Scene(currentRoot, 590, 390);

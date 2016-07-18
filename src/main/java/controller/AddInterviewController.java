@@ -200,7 +200,22 @@ public class AddInterviewController extends ControllerTemplate implements Except
 
                 @Override
                 public Double fromString(String string) {
-                    return Double.parseDouble(string);
+                    try{
+                        return Double.parseDouble(string);
+                    } catch (NumberFormatException e) {
+                        try{
+                            if(string.contains(",")){
+                                string = string.replace(',', '.');
+                            } else if(string.contains(".")){
+                                string = string.replace('.', ',');
+                            }
+                            return Double.parseDouble(string);
+                        }catch (NumberFormatException ex){
+                            handleExceptionAndShowDialog(ex);
+                            return  0.0;
+                        }
+                    }
+//                    string = string.replace(',', '.');
                 }
             };
             valueCol.setCellFactory(
@@ -236,20 +251,32 @@ public class AddInterviewController extends ControllerTemplate implements Except
      * @throws SQLException
      */
     private void saveInterview() throws SQLException {
-        Interview interview = HelperFactory.getHelper().editOrAddInterview(
-                interviewId, DateUtil.format(datePicker.getValue()),
-                candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
-                interviewerId, interviewerEdit.getText(),
-                resultEdit.getText(), postEdit.getText(), marks);
-        HelperFactory.getHelper().addOrEditInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
+        try {
+            Interview interview = HelperFactory.getHelper().editOrAddInterview(
+                    interviewId, DateUtil.format(datePicker.getValue()),
+                    candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
+                    interviewerId, interviewerEdit.getText(),
+                    resultEdit.getText(), postEdit.getText(), marks);
+            HelperFactory.getHelper().addOrEditInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
+        } catch (Exception e){
+            
+        }
         dlgAddInterviewStage.close();
     }
 
+    /**
+     * Обрабатывает произошедшие в ui исключения и отображает диалоговое окно
+     * @param throwable произошедшее исключение
+     */
     @Override
     public void handleExceptionAndShowDialog(Throwable throwable) {
         DialogManager.showErrorDialog("It's an error, breathe deeply", throwable.getMessage());
     }
 
+    /**
+     * Обрабатывает исключения и отображает в консоль
+     * @param exception
+     */
     @Override
     public void handleExceptionAndDisplayItInCodeArea(Exception exception) {
 
