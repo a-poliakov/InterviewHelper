@@ -84,7 +84,6 @@ public class AlarmTemplateBuilder {
         minutes.setValue(ConstantManager.DEFAULT_DELAY_MINUTES);
         holdOverByTime.setOnMouseClicked(event -> {
             context.delayTask((Integer)hours.getValue(), (Integer)minutes.getValue());
-
         });
         return rootNode;
     }
