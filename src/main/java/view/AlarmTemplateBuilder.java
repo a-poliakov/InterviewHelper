@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import util.AlarmTask;
+import util.ConstantManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,17 +75,16 @@ public class AlarmTemplateBuilder {
         Label postLabel = ((Label)children.get(1));
         postLabel.setText(post);
         children = buttonPane.getChildren();
-        Button holdOverDefault = ((Button) children.get(0));
-        Button holdOverByTime = ((Button) children.get(1));
-        ChoiceBox hours = ((ChoiceBox) children.get(2));
+        Button holdOverByTime = ((Button) children.get(0));
+        ChoiceBox hours = ((ChoiceBox) children.get(1));
         hours.setItems(fillHours());
-        ChoiceBox minutes = ((ChoiceBox) children.get(4));
+        hours.setValue(ConstantManager.DEFAULT_DELAY_HOURS);
+        ChoiceBox minutes = ((ChoiceBox) children.get(3));
         minutes.setItems(fillMinutes());
-        holdOverDefault.setOnMouseClicked(event -> {
-            context.delayTask(1, 0);
-        });
+        minutes.setValue(ConstantManager.DEFAULT_DELAY_MINUTES);
         holdOverByTime.setOnMouseClicked(event -> {
             context.delayTask((Integer)hours.getValue(), (Integer)minutes.getValue());
+
         });
         return rootNode;
     }

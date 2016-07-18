@@ -14,7 +14,7 @@ import java.util.Timer;
 
 public class AlarmManager{
     private  List<Alarm> alarms = new ArrayList<>();
-    private java.util.Timer  timer = new Timer();
+    private java.util.Timer timer = new Timer();
 
     public void start(){
         for (Alarm o : alarms) {
@@ -34,9 +34,10 @@ public class AlarmManager{
 
     // заполнение коллекции alarms актуальными записями
     // TODO : добавить потом удаление старых записей
-    public  void fillTodayAlarmList() throws SQLException {
+    public  void updateTodayAlarmList() throws SQLException {
         String curDate = getTodayDateString();
         List<Interview> interviews = HelperFactory.getHelper().getInterviewsByDate(curDate);
+        alarms.clear();
         for (Interview o : interviews){
             Alarm alarm = new Alarm(o.getIdCandidate().getFio(), o.getPost(), null, true);
             alarms.add(alarm);
@@ -44,6 +45,8 @@ public class AlarmManager{
     }
 
     public void addAlarmTask(Alarm alarm, int delayHours, int delayMinutes) {
-
+        AlarmTask task = new AlarmTask(alarm, this);
+        long delay = delayHours * ConstantManager.MILLISECOND_IN_HOUR + delayMinutes * ConstantManager.MILLISECOND_IN_MINUTE;
+        timer.schedule(task, delay);
     }
 }

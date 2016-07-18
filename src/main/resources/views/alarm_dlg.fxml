@@ -5,34 +5,33 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="193.0" prefWidth="329.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="142.0" prefWidth="278.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane prefHeight="77.0" prefWidth="459.0">
+      <AnchorPane prefHeight="70.0" prefWidth="280.0">
          <children>
-            <Label layoutX="55.0" layoutY="14.0" prefHeight="27.0" prefWidth="200.0" text="Иванов Иван Иваныч" textAlignment="CENTER" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="74.0">
+            <Label layoutX="31.0" layoutY="10.0" prefHeight="27.0" prefWidth="249.0" text="Иванов Иван Иваныч" textAlignment="CENTER" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="14.0">
                <font>
-                  <Font size="18.0" />
+                  <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="55.0" layoutY="42.0" text="программист" AnchorPane.leftAnchor="60.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="133.0" prefWidth="329.0">
-         <children>
-            <Button layoutX="61.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="249.0" text="Отложить" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="14.0" />
-            <Button layoutX="61.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="249.0" text="Напомнить через" AnchorPane.leftAnchor="60.0" />
-            <ChoiceBox layoutX="61.0" layoutY="85.0" prefHeight="25.0" prefWidth="68.0" AnchorPane.leftAnchor="60.0" />
-            <Label layoutX="135.0" layoutY="85.0" text="часов">
+            <Label layoutX="31.0" layoutY="31.0" prefHeight="27.0" prefWidth="249.0" text="программист" AnchorPane.leftAnchor="31.0">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <ChoiceBox layoutX="186.0" layoutY="85.0" prefHeight="25.0" prefWidth="68.0" />
-            <Label layoutX="265.0" layoutY="85.0" text="минут">
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="103.0" prefWidth="278.0">
+         <children>
+            <Button layoutX="80.0" layoutY="8.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="249.0" text="Напомнить через" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0" />
+            <ChoiceBox layoutX="80.0" layoutY="45.0" prefHeight="25.0" prefWidth="68.0" AnchorPane.rightAnchor="181.0" AnchorPane.topAnchor="45.0" />
+            <Label layoutX="154.0" layoutY="45.0" text="часов" AnchorPane.rightAnchor="132.0" AnchorPane.topAnchor="45.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <ChoiceBox layoutX="208.0" layoutY="45.0" prefHeight="25.0" prefWidth="68.0" AnchorPane.rightAnchor="53.0" AnchorPane.topAnchor="45.0" />
+            <Label layoutX="284.0" layoutY="45.0" text="минут" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                <font>
                   <Font size="16.0" />
                </font>

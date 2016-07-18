@@ -10,7 +10,8 @@ public class AlarmTask extends TimerTask {
     private Alarm alarm;
     private AlarmManager context;
     public AlarmTask(Alarm alarm, AlarmManager context) {
-        this.alarm=alarm;
+        this.alarm = alarm;
+        this.context = context;
     }
 
     @Override
