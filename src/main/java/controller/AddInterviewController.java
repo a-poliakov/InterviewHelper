@@ -16,13 +16,16 @@ import model.CategoryRow;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import util.DateUtil;
+import view.DialogManager;
+import view.ExceptionListener;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class AddInterviewController extends ControllerTemplate {
+public class AddInterviewController extends ControllerTemplate implements ExceptionListener {
     // ID используемых данных
     private int interviewId=0;
     private int candidateId=0;
@@ -240,5 +243,15 @@ public class AddInterviewController extends ControllerTemplate {
                 resultEdit.getText(), postEdit.getText(), marks);
         HelperFactory.getHelper().addOrEditInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
         dlgAddInterviewStage.close();
+    }
+
+    @Override
+    public void handleExceptionAndShowDialog(Throwable throwable) {
+        DialogManager.showErrorDialog("It's an error, breathe deeply", throwable.getMessage());
+    }
+
+    @Override
+    public void handleExceptionAndDisplayItInCodeArea(Exception exception) {
+
     }
 }
