@@ -50,6 +50,7 @@ public class AlarmTemplateBuilder {
                 .hideAfter(Duration.hours(1))
                 .position(Pos.BOTTOM_RIGHT);
         notificationBuilder.show();
+
     }
 
     /* Создается и заполняется вьюха для напоминаний
