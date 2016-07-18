@@ -1,8 +1,6 @@
-import config.Validator;
-import jdk.Exported;
-import org.junit.Rule;
+import util.Validator;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
 /**
  * Created by mpmayorov on 18.07.2016.
  */
