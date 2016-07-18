@@ -25,7 +25,7 @@ public class AlarmManager{
 
     // получение строки текущей даты в формате "дд.мм.гггг"
     // обращается к DateUtil
-    public String getTodayDateString(){
+    public String getTodayDateString() throws Exception {
         String curDate;
         LocalDate date = LocalDate.now();
         curDate = DateUtil.format(date);
@@ -34,7 +34,7 @@ public class AlarmManager{
 
     // заполнение коллекции alarms актуальными записями
     // TODO : добавить потом удаление старых записей
-    public  void updateTodayAlarmList() throws SQLException {
+    public  void updateTodayAlarmList() throws Exception {
         String curDate = getTodayDateString();
         List<Interview> interviews = HelperFactory.getHelper().getInterviewsByDate(curDate);
         alarms.clear();

@@ -22,9 +22,9 @@ public class DateUtil {
      * @param date - дата, которая будет возвращена в виде строки
      * @return отформатированную строку
      */
-    public static String format(LocalDate date) {
+    public static String format(LocalDate date) throws Exception {
         if (date == null) {
-            return null;
+            throw new Exception("Дата пустая!!!");
         }
         return DATE_FORMATTER.format(date);
     }
