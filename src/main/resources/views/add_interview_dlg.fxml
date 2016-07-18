@@ -67,13 +67,13 @@
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
                               <TextField fx:id="interviewerEdit" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="299.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <DatePicker fx:id="datePicker" editable="false" prefHeight="25.0" prefWidth="299.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Label prefHeight="17.0" prefWidth="102.0" text="Дата рождения:" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="25.0" />
                                  </GridPane.margin>
                               </Label>
-                              <DatePicker fx:id="birthDatePicker" prefHeight="25.0" prefWidth="299.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="birthDatePicker" editable="false" prefHeight="25.0" prefWidth="299.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="fioEdit" prefHeight="25.0" prefWidth="299.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
