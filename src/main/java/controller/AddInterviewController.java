@@ -16,6 +16,7 @@ import model.CategoryRow;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import util.DateUtil;
+import util.Validator;
 import view.DialogManager;
 import view.ExceptionListener;
 
@@ -250,18 +251,22 @@ public class AddInterviewController extends ControllerTemplate implements Except
      * (передает введенные данные об интервью в Dao)
      * @throws SQLException
      */
-    private void saveInterview() throws SQLException {
+    private void saveInterview(){
         try {
+            Validator.checkFio(fioEdit.getText());
+            Validator.checkFio(interviewerEdit.getText());
+            Validator.checkDate(DateUtil.format(datePicker.getValue()));
+            Validator.checkDate(DateUtil.format(birthDatePicker.getValue()));
             Interview interview = HelperFactory.getHelper().editOrAddInterview(
                     interviewId, DateUtil.format(datePicker.getValue()),
                     candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
                     interviewerId, interviewerEdit.getText(),
                     resultEdit.getText(), postEdit.getText(), marks);
             HelperFactory.getHelper().addOrEditInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
+            dlgAddInterviewStage.close();
         } catch (Exception e){
-            
+            handleExceptionAndShowDialog(e);
         }
-        dlgAddInterviewStage.close();
     }
 
     /**
