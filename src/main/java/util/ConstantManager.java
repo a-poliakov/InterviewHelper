@@ -9,4 +9,9 @@ public interface ConstantManager {
     String EDIT_CATEGORY_TITLE = "Редактирование критериев";
     String ABOUT_TITLE = "О программе";
     int PORT = 9999;
+    //Константы для AlarmManager
+    int MILLISECOND_IN_HOUR = 60*60*1000;
+    int MILLISECOND_IN_MINUTE = 60*1000;
+    int DEFAULT_DELAY_HOURS = 1;
+    int DEFAULT_DELAY_MINUTES = 0;
 }
