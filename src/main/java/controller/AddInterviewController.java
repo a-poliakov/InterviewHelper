@@ -16,6 +16,7 @@ import model.CategoryRow;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import util.DateUtil;
+import util.Validator;
 import view.DialogManager;
 import view.ExceptionListener;
 
@@ -200,7 +201,22 @@ public class AddInterviewController extends ControllerTemplate implements Except
 
                 @Override
                 public Double fromString(String string) {
-                    return Double.parseDouble(string);
+                    try{
+                        return Double.parseDouble(string);
+                    } catch (NumberFormatException e) {
+                        try{
+                            if(string.contains(",")){
+                                string = string.replace(',', '.');
+                            } else if(string.contains(".")){
+                                string = string.replace('.', ',');
+                            }
+                            return Double.parseDouble(string);
+                        }catch (NumberFormatException ex){
+                            handleExceptionAndShowDialog(ex);
+                            return  0.0;
+                        }
+                    }
+//                    string = string.replace(',', '.');
                 }
             };
             valueCol.setCellFactory(
@@ -235,21 +251,37 @@ public class AddInterviewController extends ControllerTemplate implements Except
      * (передает введенные данные об интервью в Dao)
      * @throws SQLException
      */
-    private void saveInterview() throws SQLException {
-        Interview interview = HelperFactory.getHelper().editOrAddInterview(
-                interviewId, DateUtil.format(datePicker.getValue()),
-                candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
-                interviewerId, interviewerEdit.getText(),
-                resultEdit.getText(), postEdit.getText(), marks);
-        HelperFactory.getHelper().addOrEditInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
-        dlgAddInterviewStage.close();
+    private void saveInterview(){
+        try {
+            Validator.checkFio(fioEdit.getText());
+            Validator.checkFio(interviewerEdit.getText());
+            Validator.checkDate(DateUtil.format(datePicker.getValue()));
+            Validator.checkDate(DateUtil.format(birthDatePicker.getValue()));
+            Interview interview = HelperFactory.getHelper().editOrAddInterview(
+                    interviewId, DateUtil.format(datePicker.getValue()),
+                    candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
+                    interviewerId, interviewerEdit.getText(),
+                    resultEdit.getText(), postEdit.getText(), marks);
+            HelperFactory.getHelper().addOrEditInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
+            dlgAddInterviewStage.close();
+        } catch (Exception e){
+            handleExceptionAndShowDialog(e);
+        }
     }
 
+    /**
+     * Обрабатывает произошедшие в ui исключения и отображает диалоговое окно
+     * @param throwable произошедшее исключение
+     */
     @Override
     public void handleExceptionAndShowDialog(Throwable throwable) {
         DialogManager.showErrorDialog("It's an error, breathe deeply", throwable.getMessage());
     }
 
+    /**
+     * Обрабатывает исключения и отображает в консоль
+     * @param exception
+     */
     @Override
     public void handleExceptionAndDisplayItInCodeArea(Exception exception) {
 
