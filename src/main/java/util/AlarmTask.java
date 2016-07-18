@@ -26,6 +26,6 @@ public class AlarmTask extends TimerTask {
     }
 
     public void delayTask(int delayHours, int delayMinutes){
-        context.
+        context.addAlarmTask(alarm, delayHours, delayMinutes);
     }
 }

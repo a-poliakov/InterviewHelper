@@ -42,4 +42,8 @@ public class AlarmManager{
             alarms.add(alarm);
         }
     }
+
+    public void addAlarmTask(Alarm alarm, int delayHours, int delayMinutes) {
+
+    }
 }

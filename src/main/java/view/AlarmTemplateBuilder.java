@@ -26,6 +26,9 @@ import java.util.List;
 public class AlarmTemplateBuilder {
     AlarmTask context;
 
+    public AlarmTemplateBuilder() {
+    }
+
     public AlarmTemplateBuilder(AlarmTask context) {
         this.context = context;
     }
@@ -43,13 +46,8 @@ public class AlarmTemplateBuilder {
                 .title("Предстоящее собеседование")
                 .text("")
                 .graphic(graphic)
-                .hideAfter(Duration.seconds(30))
-                .position(Pos.BOTTOM_RIGHT)
-                .onAction(new EventHandler<ActionEvent>() {
-                    @Override public void handle(ActionEvent arg0) {
-                        System.out.println("Notification clicked on!");
-                    }
-                });
+                .hideAfter(Duration.hours(1))
+                .position(Pos.BOTTOM_RIGHT);
         notificationBuilder.show();
     }
 
