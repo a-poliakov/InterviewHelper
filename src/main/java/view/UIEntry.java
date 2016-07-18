@@ -35,7 +35,7 @@ public class UIEntry  extends Application{
         this.primaryStage.setOnCloseRequest(systemTrayHandler);
         createGUI();
         AlarmManager alarmManager = new AlarmManager();
-        alarmManager.fillTodayAlarmList();
+        alarmManager.updateTodayAlarmList();
         alarmManager.start();
     }
 
