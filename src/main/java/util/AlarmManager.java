@@ -18,7 +18,7 @@ public class AlarmManager{
 
     public void start(){
         for (Alarm o : alarms) {
-            AlarmTask task = new AlarmTask(o);
+            AlarmTask task = new AlarmTask(o, this);
             timer.schedule(task, 0);
         }
     }
@@ -42,24 +42,4 @@ public class AlarmManager{
             alarms.add(alarm);
         }
     }
-
-}
-
-class AlarmTask extends TimerTask {
-        private Alarm alarm;
-        public AlarmTask(Alarm alarm) {
-            this.alarm=alarm;
-        }
-
-        @Override
-        public void run() {
-            AlarmTemplateBuilder alarmView = new AlarmTemplateBuilder();
-            // криво, можно лучше
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    alarmView.createNotification(alarm.getFio(), alarm.getPost(), 0);
-                }
-            });
-        }
 }

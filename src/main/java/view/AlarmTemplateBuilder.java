@@ -12,16 +12,24 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import util.AlarmTask;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlarmTemplateBuilder {
+    AlarmTask context;
+
+    public AlarmTemplateBuilder(AlarmTask context) {
+        this.context = context;
+    }
+
     /**
      * Создается и показывается уведомление
      * @param fioTitle фамилия собеседуемого
@@ -74,6 +82,12 @@ public class AlarmTemplateBuilder {
         hours.setItems(fillHours());
         ChoiceBox minutes = ((ChoiceBox) children.get(4));
         minutes.setItems(fillMinutes());
+        holdOverDefault.setOnMouseClicked(event -> {
+            context.delayTask(1, 0);
+        });
+        holdOverByTime.setOnMouseClicked(event -> {
+            context.delayTask((Integer)hours.getValue(), (Integer)minutes.getValue());
+        });
         return rootNode;
     }
 
