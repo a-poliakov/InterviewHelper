@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import util.AlarmTask;
@@ -26,6 +27,7 @@ import java.util.List;
 
 public class AlarmTemplateBuilder {
     AlarmTask context;
+    Stage stage;
 
     public AlarmTemplateBuilder() {
     }
@@ -39,8 +41,10 @@ public class AlarmTemplateBuilder {
      * @param fioTitle фамилия собеседуемого
      * @param post должность
      * @param alarmId ?? подумать
+     * @param stage ссылка на внешнее окно
      */
-    public void createNotification(String fioTitle, String post, int alarmId){
+    public void createNotification(String fioTitle, String post, int alarmId, Stage stage){
+        this.stage = stage;
         Node graphic = null;
         graphic = createAlarmNode(fioTitle, post, alarmId);
         Notifications notificationBuilder = Notifications.create()
@@ -49,6 +53,7 @@ public class AlarmTemplateBuilder {
                 .graphic(graphic)
                 .hideAfter(Duration.hours(1))
                 .position(Pos.BOTTOM_RIGHT);
+        stage.show();
         notificationBuilder.show();
     }
 
@@ -94,7 +99,7 @@ public class AlarmTemplateBuilder {
     private ObservableList<Integer> fillHours(){
         ObservableList<Integer> hoursList = FXCollections.observableArrayList();
         List<Integer> hours = new ArrayList<>();
-        for(int i = 0; i < 24; i++){
+        for(int i = 0; i < 9; i++){
             hours.add(i);
         }
         hoursList.addAll(hours);
@@ -107,7 +112,7 @@ public class AlarmTemplateBuilder {
     private ObservableList<Integer> fillMinutes(){
         ObservableList<Integer> minutesList = FXCollections.observableArrayList();
         List<Integer> minutes = new ArrayList<>();
-        for(int i = 0; i < 59; i++){
+        for(int i = 0; i < 59; i+=5){
             minutes.add(i);
         }
         minutesList.addAll(minutes);

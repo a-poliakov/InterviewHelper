@@ -3,6 +3,7 @@ package util;
 import config.HelperFactory;
 import entity.Interview;
 import javafx.application.Platform;
+import javafx.stage.Stage;
 import model.Alarm;
 import view.AlarmTemplateBuilder;
 
@@ -13,12 +14,17 @@ import java.util.Timer;
 
 
 public class AlarmManager{
-    private  List<Alarm> alarms = new ArrayList<>();
+    private List<Alarm> alarms = new ArrayList<>();
     private java.util.Timer timer = new Timer();
+    private Stage stage;
+
+    public AlarmManager(Stage stage) {
+        this.stage = stage;
+    }
 
     public void start(){
         for (Alarm o : alarms) {
-            AlarmTask task = new AlarmTask(o, this);
+            AlarmTask task = new AlarmTask(o, this, stage);
             timer.schedule(task, 0);
         }
     }
@@ -45,7 +51,7 @@ public class AlarmManager{
     }
 
     public void addAlarmTask(Alarm alarm, int delayHours, int delayMinutes) {
-        AlarmTask task = new AlarmTask(alarm, this);
+        AlarmTask task = new AlarmTask(alarm, this, stage);
         long delay = delayHours * ConstantManager.MILLISECOND_IN_HOUR + delayMinutes * ConstantManager.MILLISECOND_IN_MINUTE;
         timer.schedule(task, delay);
     }
