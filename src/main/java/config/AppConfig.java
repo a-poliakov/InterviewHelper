@@ -14,5 +14,5 @@ public interface AppConfig {
     String DATABASE_PREFIX = "jdbc:sqlite:" ;
     String DATABASE_FILENAME = "InterviewBD.db";
     // Jar
-    String INTERVIEW_HELPER_JAR = "InterviewHelper.jar";
+    String INTERVIEW_HELPER_JAR = "InterviewHelper";
 }
