@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <SplitPane dividerPositions="0.68561872909699" prefHeight="80.0" prefWidth="600.0">
         <items>
@@ -24,7 +31,7 @@
                         <Font name="Times New Roman" size="30.0" />
                      </font>
                   </Label>
-                  <Label layoutX="151.0" layoutY="47.0" text="ООО &quot;РУСОФТ&quot;, version 1.2" textFill="#bfb7b7" AnchorPane.leftAnchor="110.0" />
+                  <Label layoutX="151.0" layoutY="47.0" text="ООО &quot;РУСОФТ&quot;, version 1.3" textFill="#bfb7b7" AnchorPane.leftAnchor="110.0" />
                   <ImageView fitHeight="49.0" fitWidth="67.0" layoutX="82.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="50.0">
                      <image>
                         <Image url="@../icon/mainIcon.png" />
@@ -34,18 +41,48 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="78.0" prefWidth="115.0">
                <children>
-                  <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAboutAction" prefHeight="79.0" prefWidth="50.0" text="i" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
+                  <Button layoutX="101.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAboutAction" prefHeight="79.0" prefWidth="50.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="14.0">
                      <font>
                         <Font name="Arial Bold" size="22.0" />
-                     </font></Button>
-                  <Button layoutX="38.0" layoutY="14.0" mnemonicParsing="false" onAction="#onNewInterviewAction" prefHeight="50.0" prefWidth="50.0" text="+" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="14.0">
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/info.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button layoutX="38.0" layoutY="14.0" mnemonicParsing="false" onAction="#onNewInterviewAction" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="14.0">
                      <font>
                         <Font name="Britannic Bold" size="24.0" />
-                     </font></Button>
-                  <Button layoutX="68.0" layoutY="14.0" mnemonicParsing="false" onAction="#onEditCategoryAction" prefHeight="50.0" prefWidth="50.0" text="⚙" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="68.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="14.0">
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/add.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button layoutX="68.0" layoutY="14.0" mnemonicParsing="false" onAction="#onEditCategoryAction" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="68.0" AnchorPane.rightAnchor="68.0" AnchorPane.topAnchor="14.0">
                      <font>
                         <Font size="21.0" />
                      </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/gear.png" />
+                           </image>
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children>
             </AnchorPane>
