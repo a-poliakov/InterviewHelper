@@ -1,7 +1,9 @@
 package controller;
 
+import config.AppConfig;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -32,6 +34,7 @@ public class ShowDialogClass<T extends ControllerTemplate> {
         dlgStage.initOwner(primaryStage);
         dlgStage.setResizable(false);
         dlgStage.setTitle(title);
+        dlgStage.getIcons().add(new Image(AppConfig.MAIN_VIEW_ICON));
         controller.init(dlgStage);
       //  dlgStage.showAndWait();
         return controller;
