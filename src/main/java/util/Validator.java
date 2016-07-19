@@ -11,14 +11,14 @@ public class Validator {
         Pattern p = Pattern.compile("^[ a-zA-Zа-яА-Я\\.]+$");
         Matcher m = p.matcher(fio);
         if(!m.matches()){
-            throw new Exception("ФИО '"+ fio + "' содержит запрещенные символы");
+            throw new Exception("Фамилия '"+ fio + "' содержит запрещенные символы.");
         }
     }
     public static void checkDate (String date)throws Exception{
         Pattern p = Pattern.compile("^[0-9]{1,2}[.][0-9]{1,2}[.][0-9]{4}$");
         Matcher m = p.matcher(date);
         if(!m.matches()){
-            throw new Exception("Дата '" + date + "' указан не верно.");
+            throw new Exception("Дата '" + date + "' указана не верно.");
         }
     }
 

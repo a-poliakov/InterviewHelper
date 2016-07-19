@@ -15,7 +15,12 @@ public class SystemConfig {
         File file = new File(System.getProperty("user.dir"));
         String s;
         try {
-            s = "reg add HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run /v Hello /t REG_SZ /d " + file.getPath() + "\\Hello.jar";
+            s = "reg add HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run /v " + AppConfig.INTERVIEW_HELPER_JAR + " /t REG_SZ /d " + file.getPath() + "\\" + AppConfig.INTERVIEW_HELPER_JAR + ".jar";
+            Runtime.getRuntime().exec(s);
+        } catch (Exception ex) {
+        }
+        try {
+            s = "taskkill /IM reg.exe /F";
             Runtime.getRuntime().exec(s);
         } catch (Exception ex) {
         }
