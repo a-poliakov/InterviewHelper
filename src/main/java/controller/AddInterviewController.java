@@ -91,6 +91,10 @@ public class AddInterviewController extends ControllerTemplate implements Except
      * @throws SQLException
      */
     public void init(Stage stage) throws SQLException {
+        //Установка даты рождения по умолчанию
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate date = LocalDate.parse("01.01.1990", formatter);
+        birthDatePicker.setValue(date);
         dlgAddInterviewStage = stage;
         initAutoCompletion();
     }

@@ -583,8 +583,7 @@ public class DatabaseHelper {
      * @throws SQLException
      */
     public void editInterview(int idInterview, String bornDate, String interviewDate, String result, String post, List<CategoryRow> marks)  throws SQLException{
-        //if(idInterview == 0) новое
-        //public void editOrAddInterview(idInterview, idCandidate, fio, bornDate, idInterviewer, fio, String result, String post, List<CategoryRow> marks)
+
         Interview interview = getInterviewById(idInterview);
         Candidate candidate = interview.getIdCandidate();
         candidate.setBornDate(bornDate);

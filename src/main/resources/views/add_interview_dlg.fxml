@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
@@ -15,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddInterviewController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddInterviewController">
    <children>
       <ScrollPane prefHeight="449.0" prefWidth="600.0">
         <content>
@@ -73,7 +77,7 @@
                                     <Insets left="25.0" />
                                  </GridPane.margin>
                               </Label>
-                              <DatePicker fx:id="birthDatePicker" editable="false" prefHeight="25.0" prefWidth="299.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="birthDatePicker" editable="false" prefHeight="25.0" prefWidth="299.0" promptText="01.01.1990" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="fioEdit" prefHeight="25.0" prefWidth="299.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
