@@ -15,4 +15,7 @@ public interface AppConfig {
     String DATABASE_FILENAME = "InterviewBD.db";
     // Jar
     String INTERVIEW_HELPER_JAR = "InterviewHelper";
+    // Icons
+    String MAIN_VIEW_ICON = "icon/mainIcon.png";
+    String TRAY_ICON = "src/main/resources/icon/mainIcon.png";
 }

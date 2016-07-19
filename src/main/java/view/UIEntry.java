@@ -94,7 +94,7 @@ public class UIEntry  extends Application{
         primaryStage.setMinHeight(390);
         primaryStage.setMinWidth(590);
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image("icon/mainIcon.png"));
+        primaryStage.getIcons().add(new Image(AppConfig.MAIN_VIEW_ICON));
         primaryStage.show();
     }
 }

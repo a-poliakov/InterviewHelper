@@ -1,5 +1,6 @@
 package view;
 
+import config.AppConfig;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -27,7 +28,7 @@ public class SystemTrayHandler<T> implements EventHandler {
         final TrayIcon trayIcon;
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
-            java.awt.Image image = Toolkit.getDefaultToolkit().getImage("src/main/resources/icon/mainIcon.png");
+            java.awt.Image image = Toolkit.getDefaultToolkit().getImage(AppConfig.TRAY_ICON);
             final JPopupMenu popup = new JPopupMenu();
             trayIcon = new TrayIcon(image, "Interview Helper");
             ActionListener restoreListener = new ActionListener() {
