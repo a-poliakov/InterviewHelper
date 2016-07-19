@@ -28,7 +28,7 @@ public class SystemTrayHandler<T> implements EventHandler {
         final TrayIcon trayIcon;
         if (SystemTray.isSupported()) {
             SystemTray tray = SystemTray.getSystemTray();
-            java.awt.Image image = Toolkit.getDefaultToolkit().getImage(AppConfig.TRAY_ICON);
+            java.awt.Image image = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource(AppConfig.TRAY_ICON));
             final JPopupMenu popup = new JPopupMenu();
             trayIcon = new TrayIcon(image, "Interview Helper");
             ActionListener restoreListener = new ActionListener() {

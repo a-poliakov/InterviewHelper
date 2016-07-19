@@ -34,7 +34,7 @@ public class ShowDialogClass<T extends ControllerTemplate> {
         dlgStage.initOwner(primaryStage);
         dlgStage.setResizable(false);
         dlgStage.setTitle(title);
-        dlgStage.getIcons().add(new Image(AppConfig.MAIN_VIEW_ICON));
+        dlgStage.getIcons().add(new Image(getClass().getClassLoader().getResource(AppConfig.MAIN_VIEW_ICON).toString()));
         controller.init(dlgStage);
       //  dlgStage.showAndWait();
         return controller;
