@@ -24,6 +24,17 @@ public class Interview {
     @DatabaseField
     private String result;
 
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    @DatabaseField
+    private String time;
+
     @DatabaseField (canBeNull = false)
     private String post;
 

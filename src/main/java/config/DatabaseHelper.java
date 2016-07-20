@@ -389,7 +389,7 @@ public class DatabaseHelper {
      * @return созданное интервью
      * @throws SQLException
      */
-    public Interview addInterview(String name,String bornDate, String interviewer, String interviewDate, String result, String post)  throws SQLException{
+    public Interview addInterview(String name,String bornDate, String interviewer, String interviewDate, String result, String post,String time)  throws SQLException{
         Interview interview = new Interview();
         Candidate candidate = getCandidateByFio(name);
         candidate.setBornDate(bornDate);
@@ -399,6 +399,7 @@ public class DatabaseHelper {
         interview.setDate(interviewDate);
         interview.setResult(result);
         interview.setPost(post);
+        interview.setTime(time);
         interviewDao.create(interview);
        return interview;
     }
@@ -549,7 +550,7 @@ public class DatabaseHelper {
      * @return добавленное или измененное интервью
      * @throws SQLException
      */
-    public Interview editOrAddInterview(int idInterview,String interviewDate, int idCandidate, String candidateFio, String bornDate, int idInterviewer, String interviewerFio, String result, String post, List<CategoryRow> marks) throws SQLException    {
+    public Interview editOrAddInterview(int idInterview,String interviewDate, int idCandidate, String candidateFio, String bornDate, int idInterviewer, String interviewerFio, String result, String post,String time, List<CategoryRow> marks) throws SQLException    {
         Candidate candidate = getCandidateById(idCandidate);
         candidate.setFio(candidateFio);
         candidate.setBornDate(bornDate);
@@ -567,6 +568,7 @@ public class DatabaseHelper {
         interview.setIdCandidate(candidate);
         interview.setResult(result);
         interview.setPost(post);
+        interview.setTime(time);
         interviewDao.createOrUpdate(interview);
         editInterviewMarks(interview.getIdInterview(), marks);
         return interview;
@@ -582,17 +584,7 @@ public class DatabaseHelper {
      * @param marks
      * @throws SQLException
      */
-    public void editInterview(int idInterview, String bornDate, String interviewDate, String result, String post, List<CategoryRow> marks)  throws SQLException{
 
-        Interview interview = getInterviewById(idInterview);
-        Candidate candidate = interview.getIdCandidate();
-        candidate.setBornDate(bornDate);
-        candidateDao.createOrUpdate(candidate);
-        editInterviewDate(idInterview, interviewDate);
-        editInterviewResult(idInterview, result);
-        editInterviewPost(idInterview, post);
-        editInterviewMarks(idInterview, marks);
-    }
 
     /**
      * Метод, редактирующий оцеткаи интервью В БД
@@ -640,53 +632,6 @@ public class DatabaseHelper {
         categoryDao.createOrUpdate(cat);
     }
 
-    /**
-     * Метод, изменяющий дату провелдения интервью в БД (вроде устарел)
-     * @param idInterview id интервью
-     * @param date новая дата
-     * @throws SQLException
-     */
-    public void editInterviewDate(int idInterview, String date)throws SQLException{
-        Interview interview = getInterviewById(idInterview);
-        interview.setDate(date);
-        interviewDao.createOrUpdate(interview);
-    }
-
-    /**
-     * Метод, изменяющий  результат интервью в БД (вроде устарел)
-     * @param idInterview id интервью
-     * @param result новый результат
-     * @throws SQLException
-     */
-    public void editInterviewResult(int idInterview, String result)throws SQLException{
-        Interview interview = getInterviewById(idInterview);
-        interview.setResult(result);
-        interviewDao.createOrUpdate(interview);
-    }
-
-    /**
-     * Метод, изменяющий должность интервью в БД (вроде устарел)
-     * @param idInterview id интервью
-     * @param post новая должность
-     * @throws SQLException
-     */
-    public void editInterviewPost(int idInterview, String post)throws SQLException{
-        Interview interview = getInterviewById(idInterview);
-        interview.setPost(post);
-        interviewDao.createOrUpdate(interview);
-    }
-
-    /**
-     * Метод, изменяющий рекрутера интервью в БД (вроде устарел)
-     * @param idInterview id интервью
-     * @param idInterviewer новый рекрутер
-     * @throws SQLException
-     */
-    public void editInterviewInterviewer(int idInterview, int idInterviewer)throws SQLException{
-        Interview interview = getInterviewById(idInterview);
-        interview.setIdInterviewer(getInterviewerById(idInterviewer));
-        interviewDao.createOrUpdate(interview);
-    }
 
     /**
      * Метод, редактирующий кандидата в БД (вроде устарел)

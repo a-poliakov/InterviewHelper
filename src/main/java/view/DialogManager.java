@@ -35,7 +35,6 @@ public class DialogManager {
         alert.setContentText(text);
         alert.setHeaderText("");
         alert.showAndWait();
-        alert.getResult().getButtonData().isCancelButton();
         return !alert.getResult().getButtonData().isCancelButton();
     }
 }
