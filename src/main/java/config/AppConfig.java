@@ -18,7 +18,6 @@ public interface AppConfig {
     // Icons
     String MAIN_VIEW_ICON = "icon/mainIcon.png";
     String TRAY_ICON = "icon/mainIcon.png";
-
-
+    // Порт для проверки копий запущенного приложения
     int PORT = 9999;
 }

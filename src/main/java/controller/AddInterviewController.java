@@ -95,10 +95,9 @@ public class AddInterviewController extends ControllerTemplate implements Except
      * @throws SQLException
      */
     public void init(Stage stage) throws SQLException {
-        //Установка даты рождения по умолчанию
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         LocalDate date = LocalDate.parse("01.01.1990", formatter);
-        birthDatePicker.setValue(date);
+        birthDatePicker.setValue(DateUtil.parse("01.01.1990"));
         dlgAddInterviewStage = stage;
         initAutoCompletion();
     }
@@ -169,9 +168,7 @@ public class AddInterviewController extends ControllerTemplate implements Except
             fioEdit.setText(interview.getIdCandidate().getFio());
         } catch (Exception e){}
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            LocalDate date = LocalDate.parse(interview.getIdCandidate().getBornDate(), formatter);
-            birthDatePicker.setValue(date);
+            birthDatePicker.setValue(DateUtil.parse(interview.getIdCandidate().getBornDate()));
         } catch (Exception e){}
         try {
             postEdit.setText(interview.getPost());
@@ -180,9 +177,7 @@ public class AddInterviewController extends ControllerTemplate implements Except
             resultEdit.setText(interview.getResult());
         } catch (Exception e){}
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-            LocalDate date = LocalDate.parse(interview.getDate(), formatter);
-            datePicker.setValue(date);
+            datePicker.setValue(DateUtil.parse(interview.getDate()));
         } catch (Exception e){}
         try {
             interviewerEdit.setText(interview.getIdInterviewer().getFio());

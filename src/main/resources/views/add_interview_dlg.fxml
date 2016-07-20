@@ -5,7 +5,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -15,8 +14,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-
 <?import util.TimeSpinner?>
+
+<?import jfxtras.scene.control.LocalDateTimeTextField?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="497.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddInterviewController">
    <children>
       <ScrollPane prefHeight="449.0" prefWidth="600.0">
@@ -83,7 +83,8 @@
                                     <Insets left="25.0" />
                                  </GridPane.margin>
                               </Label>
-                              <TimeSpinner fx:id="timeSpinner" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                               <LocalDateTimeTextField fx:id="dateTimeTextField" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                              <!--<TimeSpinner fx:id="timeSpinner" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />-->
                            </children>
                         </GridPane>
                      </children>
