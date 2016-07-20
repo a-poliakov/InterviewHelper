@@ -1,14 +1,17 @@
 package config;
 
+import com.sun.deploy.association.utility.WinRegistryWrapper;
 import util.ConstantManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.net.BindException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.nio.channels.FileLock;
+import java.rmi.registry.Registry;
 
 public class SystemConfig {
     public static void setupAutoRun() {
@@ -28,6 +31,7 @@ public class SystemConfig {
 
     // TODO: 15.07.2016 Сделать!
     public static boolean hasAutoRunRegistryKey() {
+
         return false;
     }
 
@@ -45,7 +49,6 @@ public class SystemConfig {
 
     }
     public static void run () throws IOException {
-
         try {
             socket = new ServerSocket(ConstantManager.PORT,0, InetAddress.getByAddress(new byte[] {127,0,0,1}));
         }
