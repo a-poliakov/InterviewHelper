@@ -3,6 +3,7 @@ package controller;
 import config.AppConfig;
 import config.DatabaseHelper;
 import config.HelperFactory;
+import config.SystemConfig;
 import entity.Interview;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import util.ConstantManager;
 import controller.ShowDialogClass;
+import view.DialogManager;
 
 import java.io.*;
 import java.net.URL;
@@ -62,7 +64,8 @@ public class MainController {
 
     // инициализируем форму данными
     @FXML
-    private void initialize() throws SQLException {
+    private void initialize() throws SQLException, IOException {
+
         // реакция на нажатие кнопки DELETE
         mainTable.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
@@ -136,7 +139,10 @@ public class MainController {
     }
 
     private void onDeleteInterview() throws SQLException {
+
         Interview selectedInterview = mainTable.getSelectionModel().getSelectedItem();
+        if(!DialogManager.showConfirmDialog("Подтверждение удаления", "Удалить: " + selectedInterview.getIdCandidate().getFio()))
+            return;
         if (selectedInterview != null) {
             int selectedInterviewId = selectedInterview.getIdInterview();
             HelperFactory.getHelper().delInterviewById(selectedInterviewId);
