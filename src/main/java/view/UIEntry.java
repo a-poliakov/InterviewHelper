@@ -31,6 +31,15 @@ public class UIEntry  extends Application{
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        if(SystemConfig.isRun()) {
+            DialogManager.showInfoDialog(ConstantManager.MAIN_VIEW_TITLE,"Приложение уже запущено!");
+            return;
+            // Runtime.getRuntime().halt(0);
+        }
+        else {
+            //Делаем пометку, что приложение запущено.
+            SystemConfig.run();
+        }
         Platform.setImplicitExit(false);
         this.primaryStage = primaryStage;
         SystemTrayHandler<WindowEvent> systemTrayHandler = new SystemTrayHandler<>();
@@ -44,17 +53,11 @@ public class UIEntry  extends Application{
 
     public static void main(String[] args) throws IOException, SQLException {
         //Если приложение уже запущено, то что-то делаем.
-        if(SystemConfig.isRun()) {
-            return;
-        }
-        else {
-            //Делаем пометку, что приложение запущено.
-            SystemConfig.run();
-        }
         if(!SystemConfig.hasAutoRunRegistryKey()){
             SystemConfig.setupAutoRun();
         }
         launch(args);
+
     }
 
     /**
