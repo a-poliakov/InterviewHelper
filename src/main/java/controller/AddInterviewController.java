@@ -16,6 +16,7 @@ import model.CategoryRow;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import util.DateUtil;
+import util.TimeSpinner;
 import util.Validator;
 import view.DialogManager;
 import view.ExceptionListener;
@@ -24,6 +25,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class AddInterviewController extends ControllerTemplate implements ExceptionListener {
@@ -54,6 +56,8 @@ public class AddInterviewController extends ControllerTemplate implements Except
     private DatePicker datePicker;
     @FXML
     private DatePicker birthDatePicker;
+    @FXML
+    private TimeSpinner timeSpinner;
     @FXML
     private TextField interviewerEdit;
     @FXML
@@ -183,6 +187,9 @@ public class AddInterviewController extends ControllerTemplate implements Except
         try {
             interviewerEdit.setText(interview.getIdInterviewer().getFio());
         } catch (Exception e){}
+        try {
+            timeSpinner.getValueFactory().setValue(fromString(interview.getTime()));
+        } catch (Exception e){}
     }
 
     /**
@@ -265,7 +272,9 @@ public class AddInterviewController extends ControllerTemplate implements Except
                     interviewId, DateUtil.format(datePicker.getValue()),
                     candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
                     interviewerId, interviewerEdit.getText(),
-                    resultEdit.getText(), postEdit.getText(), marks);
+                    resultEdit.getText(), postEdit.getText(),
+                    timeSpinner.getValue().toString(),
+                    marks);
             HelperFactory.getHelper().addOrEditInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
             dlgAddInterviewStage.close();
         } catch (Exception e){
@@ -289,5 +298,21 @@ public class AddInterviewController extends ControllerTemplate implements Except
     @Override
     public void handleExceptionAndDisplayItInCodeArea(Exception exception) {
 
+    }
+
+    private LocalTime fromString(String string) {
+        String[] tokens = string.split(":");
+        int hours = getIntField(tokens, 0);
+        int minutes = getIntField(tokens, 1) ;
+        int seconds = getIntField(tokens, 2);
+        int totalSeconds = (hours * 60 + minutes) * 60 + seconds ;
+        return LocalTime.of((totalSeconds / 3600) % 24, (totalSeconds / 60) % 60, seconds % 60);
+    }
+
+    private int getIntField(String[] tokens, int index) {
+        if (tokens.length <= index || tokens[index].isEmpty()) {
+            return 0 ;
+        }
+        return Integer.parseInt(tokens[index]);
     }
 }
