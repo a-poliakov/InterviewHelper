@@ -264,6 +264,7 @@ public class AddInterviewController extends ControllerTemplate implements Except
      */
     private void saveInterview(){
         try {
+            timeSpinner.getValueFactory().setValue(fromString(timeSpinner.getEditor().getText()));
             Validator.checkFio(fioEdit.getText());
             Validator.checkFio(interviewerEdit.getText());
             Validator.checkDate(DateUtil.format(datePicker.getValue()));

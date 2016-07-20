@@ -15,6 +15,7 @@ public class TimeSpinner extends Spinner<LocalTime> {
     // Mode represents the unit that is currently being edited.
     // For convenience expose methods for incrementing and decrementing that
     // unit, and for selecting the appropriate portion in a spinner's editor
+
     enum Mode {
 
         HOURS {
@@ -73,6 +74,7 @@ public class TimeSpinner extends Spinner<LocalTime> {
     public final void setMode(Mode mode) {
         modeProperty().set(mode);
     }
+
 
 
     public TimeSpinner(LocalTime time) {
@@ -137,12 +139,14 @@ public class TimeSpinner extends Spinner<LocalTime> {
             public void decrement(int steps) {
                 setValue(mode.get().decrement(getValue(), steps));
                 mode.get().select(TimeSpinner.this);
+                getValueFactory().setValue(getValue());
             }
 
             @Override
             public void increment(int steps) {
                 setValue(mode.get().increment(getValue(), steps));
                 mode.get().select(TimeSpinner.this);
+                getValueFactory().setValue(getValue());
             }
 
         };
@@ -166,6 +170,7 @@ public class TimeSpinner extends Spinner<LocalTime> {
             } else {
                 mode.set( Mode.SECONDS );
             }
+            //getValueFactory().setValue();
         });
 
         // When the mode changes, select the new portion:

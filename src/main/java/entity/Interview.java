@@ -24,13 +24,6 @@ public class Interview {
     @DatabaseField
     private String result;
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 
     @DatabaseField
     private String time;
@@ -110,5 +103,13 @@ public class Interview {
                 ", Result='" + result + '\'' +
                 ", Post='" + post +
         '}';
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

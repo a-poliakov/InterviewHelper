@@ -1,6 +1,5 @@
 package config;
 
-import com.sun.deploy.association.utility.WinRegistryWrapper;
 import util.ConstantManager;
 
 import java.io.File;
