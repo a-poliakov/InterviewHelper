@@ -17,7 +17,7 @@ import java.awt.event.MouseEvent;
  * Created by avpolyakov on 15.07.2016.
  */
 public class SystemTrayHandler<T> implements EventHandler {
-    Stage primaryStage;
+    private Stage primaryStage;
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;

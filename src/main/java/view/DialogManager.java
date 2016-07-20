@@ -29,6 +29,11 @@ public class DialogManager {
         alert.showAndWait();
     }
 
+    /**
+     * Создает и выводит диалоговое окно с запросом подтверждения действия
+     * @param title заголовок окна
+     * @param text текст сообщения
+     */
     public static boolean showConfirmDialog(String title, String text){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);

@@ -18,17 +18,13 @@ import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 import util.DateTimeUtil;
 import util.DateUtil;
-import util.TimeSpinner;
 import util.Validator;
 import view.DialogManager;
 import view.ExceptionListener;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
