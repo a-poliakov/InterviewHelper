@@ -18,4 +18,7 @@ public interface AppConfig {
     // Icons
     String MAIN_VIEW_ICON = "icon/mainIcon.png";
     String TRAY_ICON = "icon/mainIcon.png";
+
+
+    int PORT = 9999;
 }

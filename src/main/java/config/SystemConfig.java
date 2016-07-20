@@ -35,7 +35,7 @@ public class SystemConfig {
     private static ServerSocket socket;
     public static boolean isRun () throws IOException {
         try {
-            socket = new ServerSocket(ConstantManager.PORT,0, InetAddress.getByAddress(new byte[] {127,0,0,1}));
+            socket = new ServerSocket(AppConfig.PORT,0, InetAddress.getByAddress(new byte[] {127,0,0,1}));
             socket.close();
             return false;
         }catch (BindException e)
@@ -47,7 +47,7 @@ public class SystemConfig {
     public static void run () throws IOException {
 
         try {
-            socket = new ServerSocket(ConstantManager.PORT,0, InetAddress.getByAddress(new byte[] {127,0,0,1}));
+            socket = new ServerSocket(AppConfig.PORT,0, InetAddress.getByAddress(new byte[] {127,0,0,1}));
         }
         catch (BindException e) {
             System.out.print("Что-то пошло не так");
