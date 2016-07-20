@@ -12,9 +12,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import jfxtras.scene.control.LocalDateTimeTextField;
 import model.CategoryRow;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
+import util.DateTimeUtil;
 import util.DateUtil;
 import util.TimeSpinner;
 import util.Validator;
@@ -25,8 +27,10 @@ import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class AddInterviewController extends ControllerTemplate implements ExceptionListener {
     // ID используемых данных
@@ -53,11 +57,9 @@ public class AddInterviewController extends ControllerTemplate implements Except
     @FXML
     private TextField resultEdit;
     @FXML
-    private DatePicker datePicker;
-    @FXML
     private DatePicker birthDatePicker;
     @FXML
-    private TimeSpinner timeSpinner;
+    private LocalDateTimeTextField interviewDateTimePicker;
     @FXML
     private TextField interviewerEdit;
     @FXML
@@ -95,8 +97,6 @@ public class AddInterviewController extends ControllerTemplate implements Except
      * @throws SQLException
      */
     public void init(Stage stage) throws SQLException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        LocalDate date = LocalDate.parse("01.01.1990", formatter);
         birthDatePicker.setValue(DateUtil.parse("01.01.1990"));
         dlgAddInterviewStage = stage;
         initAutoCompletion();
@@ -177,13 +177,14 @@ public class AddInterviewController extends ControllerTemplate implements Except
             resultEdit.setText(interview.getResult());
         } catch (Exception e){}
         try {
-            datePicker.setValue(DateUtil.parse(interview.getDate()));
-        } catch (Exception e){}
+            LocalDateTime dateTime = DateTimeUtil.parse(interview.getDate(), interview.getTime());
+            interviewDateTimePicker.setDisplayedLocalDateTime(dateTime);
+            interviewDateTimePicker.setLocalDateTime(dateTime);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         try {
             interviewerEdit.setText(interview.getIdInterviewer().getFio());
-        } catch (Exception e){}
-        try {
-            timeSpinner.getValueFactory().setValue(fromString(interview.getTime()));
         } catch (Exception e){}
     }
 
@@ -259,17 +260,19 @@ public class AddInterviewController extends ControllerTemplate implements Except
      */
     private void saveInterview(){
         try {
-            timeSpinner.getValueFactory().setValue(fromString(timeSpinner.getEditor().getText()));
+            String interviewDateTime = interviewDateTimePicker.getText();
+            String interviewDate = interviewDateTime.split(" ")[0];
+            String interviewTime = interviewDateTime.split(" ")[1];
             Validator.checkFio(fioEdit.getText());
             Validator.checkFio(interviewerEdit.getText());
-            Validator.checkDate(DateUtil.format(datePicker.getValue()));
+            Validator.checkDate(interviewDate);
             Validator.checkDate(DateUtil.format(birthDatePicker.getValue()));
             Interview interview = HelperFactory.getHelper().editOrAddInterview(
-                    interviewId, DateUtil.format(datePicker.getValue()),
+                    interviewId, interviewDate,
                     candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),
                     interviewerId, interviewerEdit.getText(),
                     resultEdit.getText(), postEdit.getText(),
-                    timeSpinner.getValue().toString(),
+                    interviewTime,
                     marks);
             HelperFactory.getHelper().addOrEditInterviewComment(interview.getIdInterview(), expEdit.getText(), recommendationEdit.getText(), lastWorkEdit.getText(), commentsEdit.getText());
             dlgAddInterviewStage.close();
@@ -294,21 +297,5 @@ public class AddInterviewController extends ControllerTemplate implements Except
     @Override
     public void handleExceptionAndDisplayItInCodeArea(Exception exception) {
 
-    }
-
-    private LocalTime fromString(String string) {
-        String[] tokens = string.split(":");
-        int hours = getIntField(tokens, 0);
-        int minutes = getIntField(tokens, 1) ;
-        int seconds = getIntField(tokens, 2);
-        int totalSeconds = (hours * 60 + minutes) * 60 + seconds ;
-        return LocalTime.of((totalSeconds / 3600) % 24, (totalSeconds / 60) % 60, seconds % 60);
-    }
-
-    private int getIntField(String[] tokens, int index) {
-        if (tokens.length <= index || tokens[index].isEmpty()) {
-            return 0 ;
-        }
-        return Integer.parseInt(tokens[index]);
     }
 }
