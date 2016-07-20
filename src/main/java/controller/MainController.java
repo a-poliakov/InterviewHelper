@@ -139,7 +139,10 @@ public class MainController {
     }
 
     private void onDeleteInterview() throws SQLException {
+
         Interview selectedInterview = mainTable.getSelectionModel().getSelectedItem();
+        if(!DialogManager.showConfirmDialog("Подтверждение удаления", "Удалить: " + selectedInterview.getIdCandidate().getFio()))
+            return;
         if (selectedInterview != null) {
             int selectedInterviewId = selectedInterview.getIdInterview();
             HelperFactory.getHelper().delInterviewById(selectedInterviewId);

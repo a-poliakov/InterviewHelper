@@ -28,4 +28,14 @@ public class DialogManager {
         alert.setHeaderText("");
         alert.showAndWait();
     }
+
+    public static boolean showConfirmDialog(String title, String text){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setContentText(text);
+        alert.setHeaderText("");
+        alert.showAndWait();
+        alert.getResult().getButtonData().isCancelButton();
+        return !alert.getResult().getButtonData().isCancelButton();
+    }
 }
