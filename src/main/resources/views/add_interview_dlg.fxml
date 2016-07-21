@@ -74,7 +74,7 @@
                                     <Insets left="25.0" />
                                  </GridPane.margin>
                               </Label>
-                              <DatePicker fx:id="birthDatePicker" editable="false" prefHeight="25.0" prefWidth="300.0" promptText="01.01.1990" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="birthDatePicker" editable="true" prefHeight="25.0" prefWidth="300.0" promptText="01.01.1990" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="fioEdit" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" />
                            </children>
                         </GridPane>
