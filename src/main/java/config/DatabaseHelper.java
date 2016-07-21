@@ -555,7 +555,11 @@ public class DatabaseHelper {
         candidate.setFio(candidateFio);
         candidate.setBornDate(bornDate);
         candidateDao.createOrUpdate(candidate);
-        Interviewer interviewer = getInterviewerByFio(interviewerFio);
+
+        Interviewer interviewer  = getInterviewerById(idInterviewer);
+        if(interviewer.getFio().compareTo(interviewerFio) != 0)
+            interviewer = addInterviewer(interviewerFio);
+
         Interview interview = getInterviewById(idInterview);
         if(interview == null)
         {
