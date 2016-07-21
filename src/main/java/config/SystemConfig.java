@@ -31,7 +31,7 @@ public class SystemConfig {
     // TODO: 15.07.2016 Сделать!
     public static boolean hasAutoRunRegistryKey() {
 
-        return false;
+        return true;
     }
 
     // TODO: 16.07.2016 Проверка на запуск осуществляется через порт. После закрытия приложения автоматически закрывается порт
