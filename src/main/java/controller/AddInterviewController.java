@@ -257,12 +257,12 @@ public class AddInterviewController extends ControllerTemplate implements Except
     private void saveInterview(){
         try {
             String interviewDateTime = interviewDateTimePicker.getText();
-            String interviewDate = interviewDateTime.split(" ")[0];
-            String interviewTime = interviewDateTime.split(" ")[1];
             Validator.checkFio(fioEdit.getText());
             Validator.checkFio(interviewerEdit.getText());
-            Validator.checkDate(interviewDate);
+            Validator.checkDateTime(interviewDateTime);
             Validator.checkDate(DateUtil.format(birthDatePicker.getValue()));
+            String interviewDate = interviewDateTime.split(" ")[0];
+            String interviewTime = interviewDateTime.split(" ")[1];
             Interview interview = HelperFactory.getHelper().editOrAddInterview(
                     interviewId, interviewDate,
                     candidateId, fioEdit.getText(), DateUtil.format(birthDatePicker.getValue()),

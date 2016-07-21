@@ -22,4 +22,11 @@ public class Validator {
         }
     }
 
+    public static void checkDateTime (String date)throws Exception{
+        Pattern p = Pattern.compile("^[0-9]{1,2}[.][0-9]{1,2}[.][0-9]{4} [0-9]{1,2}[:][0-9]{1,2}[:][0-9]{1,2}$");
+        Matcher m = p.matcher(date);
+        if(!m.matches()){
+            throw new Exception("Дата '" + date + "' указана не верно.");
+        }
+    }
 }
