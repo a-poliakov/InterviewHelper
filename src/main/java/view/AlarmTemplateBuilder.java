@@ -51,7 +51,7 @@ public class AlarmTemplateBuilder {
                 .title("Предстоящее собеседование")
                 .text("")
                 .graphic(graphic)
-                .hideAfter(Duration.hours(1))
+                .hideAfter(Duration.hours(6))
                 .position(Pos.BOTTOM_RIGHT);
         stage.show();
         notificationBuilder.show();
